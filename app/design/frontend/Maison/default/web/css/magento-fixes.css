@@ -63,7 +63,11 @@ body {
 /* Fix product page content to start below header */
 .catalog-product-view .page-main {
     margin-top: 0 !important;
-    padding-top: 0 !important;
+    padding-top: 180px !important;
+}
+
+body.scrolled .catalog-product-view .page-main {
+    padding-top: 120px !important;
 }
 
 .catalog-product-view .column.main {

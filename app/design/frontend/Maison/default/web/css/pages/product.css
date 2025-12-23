@@ -1,23 +1,31 @@
 /* ==================== PRODUCT DETAIL PAGE STYLES ==================== */
 
-/* Ensure page content starts below fixed header */
-.catalog-product-view .page-main,
-.catalog-product-view .page-main .columns,
+/* Ensure page content starts below fixed header - CRITICAL FIX */
+.catalog-product-view .page-main {
+    padding-top: 180px !important;
+    margin-top: 0 !important;
+}
+
+.catalog-product-view .page-main .columns {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
 .catalog-product-view .column.main {
     padding-top: 0 !important;
     margin-top: 0 !important;
 }
 
-/* Product View Container */
-.product-view {
-    padding: 180px 0 80px;
-    background-color: var(--white);
-    margin-top: 0;
+/* When header is scrolled, reduce padding */
+body.scrolled .catalog-product-view .page-main {
+    padding-top: 120px !important;
 }
 
-/* When header is scrolled, reduce padding */
-body.scrolled .product-view {
-    padding-top: 120px;
+/* Product View Container */
+.product-view {
+    padding: 0 0 80px;
+    background-color: var(--white);
+    margin-top: 0;
 }
 
 .product-view .product-info-main {
