@@ -1,24 +1,56 @@
 /* ==================== PRODUCT DETAIL PAGE STYLES ==================== */
 
 /* Ensure page content starts below fixed header - CRITICAL FIX */
-.catalog-product-view .page-main {
+/* Apply to all possible selectors to ensure it works */
+body.catalog-product-view .page-main,
+.catalog-product-view .page-main,
+body.catalog-product-view #maincontent,
+.catalog-product-view #maincontent,
+body.catalog-product-view .columns,
+.catalog-product-view .columns,
+/* Also target by product-view class as fallback */
+body:has(.product-view) .page-main,
+body:has(.product-view) #maincontent {
     padding-top: 180px !important;
     margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
 }
 
+/* Ensure first element inside page-main doesn't have negative margin */
+body.catalog-product-view .page-main > *:first-child,
+.catalog-product-view .page-main > *:first-child,
+body.catalog-product-view #maincontent > *:first-child,
+.catalog-product-view #maincontent > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+body.catalog-product-view .page-main .columns,
 .catalog-product-view .page-main .columns {
     padding-top: 0 !important;
     margin-top: 0 !important;
 }
 
+body.catalog-product-view .column.main,
 .catalog-product-view .column.main {
     padding-top: 0 !important;
     margin-top: 0 !important;
 }
 
 /* When header is scrolled, reduce padding */
-body.scrolled .catalog-product-view .page-main {
+body.scrolled.catalog-product-view .page-main,
+body.scrolled .catalog-product-view .page-main,
+body.scrolled.catalog-product-view #maincontent,
+body.scrolled .catalog-product-view #maincontent {
     padding-top: 120px !important;
+}
+
+/* Also apply to first child elements inside page-main */
+body.catalog-product-view .page-main > *:first-child,
+.catalog-product-view .page-main > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
 
 /* Product View Container */
@@ -26,6 +58,21 @@ body.scrolled .catalog-product-view .page-main {
     padding: 0 0 80px;
     background-color: var(--white);
     margin-top: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure all product page elements start below header */
+body.catalog-product-view .product.media,
+.catalog-product-view .product.media,
+body.catalog-product-view .product-info-main,
+.catalog-product-view .product-info-main,
+body.catalog-product-view .product.info.detailed,
+.catalog-product-view .product.info.detailed {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative;
+    z-index: 1;
 }
 
 .product-view .product-info-main {

@@ -578,11 +578,17 @@
     }
     
     /* Product Detail Page Responsive */
-    .catalog-product-view .page-main {
+    body.catalog-product-view .page-main,
+    .catalog-product-view .page-main,
+    body.catalog-product-view #maincontent,
+    .catalog-product-view #maincontent {
         padding-top: 140px !important;
     }
     
-    body.scrolled .catalog-product-view .page-main {
+    body.scrolled.catalog-product-view .page-main,
+    body.scrolled .catalog-product-view .page-main,
+    body.scrolled.catalog-product-view #maincontent,
+    body.scrolled .catalog-product-view #maincontent {
         padding-top: 100px !important;
     }
     

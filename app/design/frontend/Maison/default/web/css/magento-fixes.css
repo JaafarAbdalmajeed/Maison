@@ -60,16 +60,23 @@ body {
     overflow-y: visible !important;
 }
 
-/* Fix product page content to start below header */
-.catalog-product-view .page-main {
+/* Fix product page content to start below header - Multiple selectors for maximum compatibility */
+body.catalog-product-view .page-main,
+.catalog-product-view .page-main,
+body.catalog-product-view #maincontent,
+.catalog-product-view #maincontent {
     margin-top: 0 !important;
     padding-top: 180px !important;
 }
 
-body.scrolled .catalog-product-view .page-main {
+body.scrolled.catalog-product-view .page-main,
+body.scrolled .catalog-product-view .page-main,
+body.scrolled.catalog-product-view #maincontent,
+body.scrolled .catalog-product-view #maincontent {
     padding-top: 120px !important;
 }
 
+body.catalog-product-view .column.main,
 .catalog-product-view .column.main {
     margin-top: 0 !important;
     padding-top: 0 !important;
@@ -116,8 +123,21 @@ header#mainHeader {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    z-index: 1000 !important;
+    z-index: 9999 !important;
     width: 100% !important;
+}
+
+/* Ensure page wrapper and main content are below header */
+.page-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* Force product page content below header */
+body.catalog-product-view .page-wrapper,
+.catalog-product-view .page-wrapper {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
 
 /* Ensure hero section is full viewport and breaks out of Magento wrappers */
