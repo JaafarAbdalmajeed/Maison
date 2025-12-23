@@ -36,6 +36,41 @@ html body header#mainHeader {
     background-color: var(--primary-gold) !important;
 }
 
+/* ==================== PRODUCT PAGE FIX - FINAL OVERRIDE ==================== */
+/* This ensures product page content starts below header - highest priority */
+/* Target exact DOM elements with maximum specificity */
+html body main#maincontent.page-main,
+html body #maincontent.page-main,
+html body.catalog-product-view main#maincontent.page-main,
+html body.catalog-product-view #maincontent.page-main {
+    padding: 180px 0 0 0 !important; /* top right bottom left */
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+html body.scrolled main#maincontent.page-main,
+html body.scrolled #maincontent.page-main,
+html body.scrolled.catalog-product-view main#maincontent.page-main,
+html body.scrolled.catalog-product-view #maincontent.page-main {
+    padding: 120px 0 0 0 !important;
+}
+
+/* ==================== NAVIGATION LINKS COLOR FIX ==================== */
+/* Ensure nav links are white (not blue) - highest priority */
+html body header .nav-link-custom,
+html body .nav-link-custom,
+html body .nav-menu .nav-link-custom,
+html body .header-nav .nav-link-custom,
+html body .nav-item .nav-link-custom,
+html body header:not(.scrolled) .nav-link-custom {
+    color: #FFFFFF !important;
+}
+
+html body header.scrolled .nav-link-custom {
+    color: var(--text-dark) !important;
+}
+
 
 
 

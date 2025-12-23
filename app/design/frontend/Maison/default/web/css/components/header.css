@@ -222,7 +222,7 @@ header.scrolled .header-scrolled-icons-right {
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
@@ -231,14 +231,24 @@ header.scrolled .header-scrolled-icons-right {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* Ensure white color for all nav links - override any blue colors */
+.nav-link-custom,
+.nav-menu .nav-link-custom,
+header .nav-link-custom,
+.header-nav .nav-link-custom,
+.nav-item .nav-link-custom,
+.nav-item > .nav-link-custom {
+    color: #FFFFFF !important;
+}
+
 .nav-link-custom:hover {
-    color: var(--primary-gold);
+    color: var(--primary-gold) !important;
     transform: translateY(-2px);
 }
 
 /* Dark text when scrolled */
 header.scrolled .nav-link-custom {
-    color: var(--text-dark);
+    color: var(--text-dark) !important;
     text-shadow: none;
 }
 
@@ -589,7 +599,7 @@ header.scrolled .fullscreen-submenu {
 
 .submenu-list li a {
     font-size: 13px;
-    color: var(--text-dark);
+    color: var(--text-dark) !important;
     text-decoration: none;
     letter-spacing: 0.3px;
     transition: all 0.2s ease;
@@ -597,6 +607,6 @@ header.scrolled .fullscreen-submenu {
 }
 
 .submenu-list li a:hover {
-    color: var(--primary-gold);
+    color: var(--primary-gold) !important;
     transform: translateX(5px);
 }

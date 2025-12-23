@@ -37,7 +37,6 @@
         <css src="css/pages/home.css"/>
         <css src="css/pages/404.css"/>
         <css src="css/pages/category.css"/>
-        <css src="css/pages/product.css"/>
         <css src="css/pages/cart.css"/>
         <css src="css/pages/checkout.css"/>
         <css src="css/pages/account.css"/>
@@ -54,5 +53,8 @@
         
         <!-- Transparent Header Override (FINAL - Maximum Specificity) -->
         <css src="css/header-transparent.css"/>
+        
+        <!-- Product Page Fix (MUST load VERY LAST to override everything!) -->
+        <css src="css/pages/product.css"/>
     </head>
 </page>
