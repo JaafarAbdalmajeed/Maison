@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Product Detail Page Layout
+ * Custom layout for product view page
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="catalog-product-view"/>
+        
+        <!-- Ensure content starts below header -->
+        <referenceContainer name="content">
+            <container name="product.content.wrapper" htmlTag="div" htmlClass="product-content-wrapper">
+                <!-- Product content will be rendered here by Magento -->
+            </container>
+        </referenceContainer>
+    </body>
+</page>
+
