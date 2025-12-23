@@ -1,0 +1,173 @@
+<?php
+/**
+ * Product list template - Custom Design
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+use Magento\Framework\App\Action\Action;
+
+$_productCollection = $block->getLoadedProductCollection();
+/** @var \Magento\Catalog\Helper\Output $_helper */
+$_helper = $block->getData('outputHelper');
+?>
+<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty">
+        <div><?= $escaper->escapeHtml(__('We can\'t find products matching the selection.')) ?></div>
+    </div>
+<?php else: ?>
+    <?= $block->getToolbarHtml() ?>
+    <?= $block->getAdditionalHtml() ?>
+    <?php
+    // Force grid view only
+    $viewMode = 'grid';
+    $imageDisplayArea = 'category_page_grid';
+    $showDescription = false;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    $pos = $block->getPositioned();
+    ?>
+    <div class="products wrapper grid products-grid">
+        <div class="products-grid" id="productsGrid">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+            <div class="product-card product-item grid-item" 
+                 data-container="product-grid"
+                 id="product-item-info_<?= /* @noEscape */ $_product->getId() ?>">
+                <?php
+                $productImage = $block->getImage($_product, $imageDisplayArea);
+                ?>
+                
+                <!-- Product Image Wrapper -->
+                <div class="product-image-wrapper">
+                    <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>" 
+                       class="product-image-link"
+                       title="<?= $escaper->escapeHtmlAttr($_product->getName()) ?>">
+                        <?= $productImage->toHtml() ?>
+                    </a>
+                    
+                    <?php
+                    // Product Badge (if bestseller or new)
+                    $isBestseller = false;
+                    $isNew = false;
+                    
+                    // Safely check for bestseller attribute
+                    try {
+                        $bestsellerAttr = $_product->getResource()->getAttribute('bestseller');
+                        if ($bestsellerAttr && $bestsellerAttr->getId()) {
+                            $bestsellerValue = $_product->getData('bestseller');
+                            if ($bestsellerValue) {
+                                $isBestseller = $bestsellerAttr->getSource()->getOptionText($bestsellerValue);
+                            }
+                        }
+                    } catch (\Exception $e) {
+                        // Attribute doesn't exist, ignore
+                    }
+                    
+                    // Safely check for new attribute
+                    try {
+                        $newAttr = $_product->getResource()->getAttribute('new');
+                        if ($newAttr && $newAttr->getId()) {
+                            $newValue = $_product->getData('new');
+                            if ($newValue) {
+                                $isNew = $newAttr->getSource()->getOptionText($newValue);
+                            }
+                        }
+                    } catch (\Exception $e) {
+                        // Attribute doesn't exist, ignore
+                    }
+                    
+                    if ($isBestseller): ?>
+                        <div class="product-badge"><?= $escaper->escapeHtml(__('BEST SELLER')) ?></div>
+                    <?php elseif ($isNew): ?>
+                        <div class="product-badge" style="background-color: var(--primary-gold);"><?= $escaper->escapeHtml(__('NEW')) ?></div>
+                    <?php endif; ?>
+                    
+                    <div class="product-quick-view"><?= $escaper->escapeHtml(__('QUICK VIEW')) ?></div>
+                </div>
+                
+                <!-- Product Info -->
+                <div class="product-info">
+                    <?php
+                    // Get brand attribute
+                    $brand = null;
+                    try {
+                        $brandAttr = $_product->getResource()->getAttribute('brand');
+                        if ($brandAttr && $brandAttr->getId()) {
+                            $brandValue = $_product->getData('brand');
+                            if ($brandValue) {
+                                $brand = $brandAttr->getSource()->getOptionText($brandValue);
+                            }
+                        }
+                    } catch (\Exception $e) {
+                        // Attribute doesn't exist, ignore
+                    }
+                    if ($brand): ?>
+                        <div class="product-brand mb-2"><?= $escaper->escapeHtml($brand) ?></div>
+                    <?php endif; ?>
+                    
+                    <div class="product-details-row">
+                        <div class="product-info-text">
+                            <h3 class="product-name mb-2">
+                                <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>" 
+                                   class="product-item-link"
+                                   title="<?= $escaper->escapeHtmlAttr($_product->getName()) ?>">
+                                    <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
+                                </a>
+                            </h3>
+                            <div class="product-price">
+                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            </div>
+                        </div>
+                        
+                        <?php if ($_product->isSaleable()): ?>
+                            <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                            <form data-role="tocart-form"
+                                  data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>"
+                                  action="<?= $escaper->escapeUrl($postParams['action']) ?>"
+                                  data-mage-init='{"catalogAddToCart": {}}'
+                                  method="post">
+                                <?php $options = $block->getData('viewModel')->getOptionsData($_product); ?>
+                                <?php foreach ($options as $optionItem): ?>
+                                    <input type="hidden"
+                                           name="<?= $escaper->escapeHtmlAttr($optionItem['name']) ?>"
+                                           value="<?= $escaper->escapeHtmlAttr($optionItem['value']) ?>">
+                                <?php endforeach; ?>
+                                <input type="hidden"
+                                       name="product"
+                                       value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+                                <input type="hidden"
+                                       name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                       value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <button type="submit"
+                                        title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                        class="product-add-to-cart action tocart primary"
+                                        disabled>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                    </svg>
+                                    <span><?= $escaper->escapeHtml(__('ADD TO CART')) ?></span>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <?php if ($_product->isAvailable()): ?>
+                                <div class="stock available">
+                                    <span><?= $escaper->escapeHtml(__('In stock')) ?></span>
+                                </div>
+                            <?php else: ?>
+                                <div class="stock unavailable">
+                                    <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?= $block->getChildBlock('toolbar')->setIsBottom(true)->toHtml() ?>
+<?php endif; ?>
+

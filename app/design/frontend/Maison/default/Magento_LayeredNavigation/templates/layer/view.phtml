@@ -1,0 +1,84 @@
+<?php
+/**
+ * Category layered navigation - Custom Design
+ * @var $block \Magento\LayeredNavigation\Block\Navigation
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<?php if ($block->canShowBlock()) : ?>
+    <div class="block filter">
+        <div class="block-title filter-title">
+            <strong><?= $escaper->escapeHtml(__('Filter By')) ?></strong>
+        </div>
+
+        <div class="block-content filter-content">
+            <?= $block->getChildHtml('state') ?>
+
+            <?php if ($block->getLayer()->getState()->getFilters()) : ?>
+                <div class="block-actions filter-actions">
+                    <a href="<?= $escaper->escapeUrl($block->getClearUrl()) ?>" class="action clear filter-clear">
+                        <span><?= $escaper->escapeHtml(__('Clear All')) ?></span>
+                    </a>
+                </div>
+            <?php endif; ?>
+            
+            <dl class="filter-options" id="narrow-by-list">
+                <!-- Custom Category Filter -->
+                <?php 
+                $categoriesHtml = $block->getChildHtml('category.filter.categories');
+                if (empty($categoriesHtml)) {
+                    $categoriesHtml = $block->getChildHtml('category.filter.categories.overlay');
+                }
+                echo $categoriesHtml;
+                ?>
+                
+                <!-- Custom Brand Filter -->
+                <?php 
+                $brandsHtml = $block->getChildHtml('category.filter.brands');
+                if (empty($brandsHtml)) {
+                    $brandsHtml = $block->getChildHtml('category.filter.brands.overlay');
+                }
+                echo $brandsHtml;
+                ?>
+                
+                <!-- Custom Size Filter -->
+                <?php 
+                $sizesHtml = $block->getChildHtml('category.filter.size');
+                if (empty($sizesHtml)) {
+                    $sizesHtml = $block->getChildHtml('category.filter.size.overlay');
+                }
+                echo $sizesHtml;
+                ?>
+                
+                <!-- Standard Magento Filters -->
+                <?php foreach ($block->getFilters() as $filter) : ?>
+                    <?php if ($filter->getItemsCount()) : ?>
+                        <dt role="heading" aria-level="3" class="filter-options-title"><?= $escaper->escapeHtml(__($filter->getName())) ?></dt>
+                        <dd class="filter-options-content">
+                            <?php if ($filter->getName() == 'Price' || $filter->getRequestVar() == 'price'): ?>
+                                <?php
+                                // Custom price filter with range slider
+                                $renderer = $block->getChildBlock('renderer');
+                                if ($renderer) {
+                                    $renderer->assign('filter', $filter);
+                                    $renderer->assign('filterItems', $filter->getItems());
+                                    echo $renderer->setTemplate('Magento_LayeredNavigation::layer/filter/price.phtml')->toHtml();
+                                } else {
+                                    // Fallback to default renderer
+                                    echo /* @noEscape */ $block->getChildBlock('renderer')->render($filter);
+                                }
+                                ?>
+                            <?php else: ?>
+                                <?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?>
+                            <?php endif; ?>
+                        </dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+        </div>
+    </div>
+<?php endif; ?>
+
+
+

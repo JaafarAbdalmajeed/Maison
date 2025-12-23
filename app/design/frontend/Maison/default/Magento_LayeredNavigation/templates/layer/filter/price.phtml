@@ -1,0 +1,258 @@
+<?php
+/**
+ * Custom Price Filter Template with Range Slider
+ * @var \Magento\LayeredNavigation\Block\Navigation\FilterRenderer $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$filter = $block->getData('filter');
+$filterItems = $block->getData('filterItems') ?: [];
+
+// Get layer from parent block or filter
+$layer = null;
+if ($filter && method_exists($filter, 'getLayer')) {
+    $layer = $filter->getLayer();
+} else {
+    // Try to get layer from parent navigation block
+    $parentBlock = $block->getLayout()->getBlock('catalog.leftnav');
+    if ($parentBlock && method_exists($parentBlock, 'getLayer')) {
+        $layer = $parentBlock->getLayer();
+    } else {
+        // Fallback: use object manager to get current layer
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $layerResolver = $objectManager->get(\Magento\Catalog\Model\Layer\Resolver::class);
+        $layer = $layerResolver->get();
+    }
+}
+
+// Get price data provider to get max price
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$dataProviderFactory = $objectManager->get(\Magento\Catalog\Model\Layer\Filter\DataProvider\PriceFactory::class);
+$dataProvider = $dataProviderFactory->create(['layer' => $layer]);
+
+// Get max price from data provider
+$maxPrice = (float) $dataProvider->getMaxPrice();
+
+// Get min price from product collection
+$collection = $layer->getProductCollection();
+$minPrice = (float) $collection->getMinPrice();
+if ($minPrice <= 0) {
+    $minPrice = 0;
+}
+
+// Get current selected range from URL
+$currentMin = $minPrice;
+$currentMax = $maxPrice;
+$request = $block->getRequest();
+$priceParam = $request->getParam('price');
+if ($priceParam) {
+    // Parse price range from URL (e.g., "0-1000" or "300-400")
+    if (preg_match('/(\d+)-(\d+)/', $priceParam, $matches)) {
+        $currentMin = (float) $matches[1];
+        $currentMax = (float) $matches[2];
+    }
+}
+
+// Get currency symbol
+$storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+$store = $storeManager->getStore();
+$currencyCode = $store->getCurrentCurrencyCode();
+$currency = $objectManager->get(\Magento\Framework\Locale\CurrencyInterface::class);
+$currencySymbol = $currency->getCurrency($currencyCode)->getSymbol();
+
+// Ensure we have valid values
+if ($minPrice <= 0) $minPrice = 0;
+if ($maxPrice <= 0) $maxPrice = 1000;
+if ($currentMin < $minPrice) $currentMin = $minPrice;
+if ($currentMax > $maxPrice) $currentMax = $maxPrice;
+?>
+
+<div class="price-filter-container" 
+     data-min="<?= $escaper->escapeHtmlAttr($minPrice) ?>" 
+     data-max="<?= $escaper->escapeHtmlAttr($maxPrice) ?>"
+     data-current-min="<?= $escaper->escapeHtmlAttr($currentMin) ?>"
+     data-current-max="<?= $escaper->escapeHtmlAttr($currentMax) ?>"
+     data-filter-var="<?= $escaper->escapeHtmlAttr($filter ? $filter->getRequestVar() : 'price') ?>">
+    
+    <div class="price-inputs">
+        <div class="price-input-wrapper">
+            <input type="number" 
+                   class="price-input price-input-min" 
+                   value="<?= $escaper->escapeHtmlAttr($currentMin) ?>" 
+                   min="<?= $escaper->escapeHtmlAttr($minPrice) ?>" 
+                   max="<?= $escaper->escapeHtmlAttr($maxPrice) ?>"
+                   step="1">
+            <span class="currency"><?= $escaper->escapeHtml($currencySymbol) ?></span>
+        </div>
+        <span class="price-separator">-</span>
+        <div class="price-input-wrapper">
+            <input type="number" 
+                   class="price-input price-input-max" 
+                   value="<?= $escaper->escapeHtmlAttr($currentMax) ?>" 
+                   min="<?= $escaper->escapeHtmlAttr($minPrice) ?>" 
+                   max="<?= $escaper->escapeHtmlAttr($maxPrice) ?>"
+                   step="1">
+            <span class="currency"><?= $escaper->escapeHtml($currencySymbol) ?></span>
+        </div>
+    </div>
+    
+    <div class="price-slider-wrapper">
+        <div class="price-slider-track">
+            <div class="price-slider-progress" 
+                 style="left: 0%; width: 100%;"></div>
+        </div>
+        <input type="range" 
+               class="price-slider price-slider-min" 
+               min="<?= $escaper->escapeHtmlAttr($minPrice) ?>" 
+               max="<?= $escaper->escapeHtmlAttr($maxPrice) ?>" 
+               value="<?= $escaper->escapeHtmlAttr($currentMin) ?>"
+               step="1">
+        <input type="range" 
+               class="price-slider price-slider-max" 
+               min="<?= $escaper->escapeHtmlAttr($minPrice) ?>" 
+               max="<?= $escaper->escapeHtmlAttr($maxPrice) ?>" 
+               value="<?= $escaper->escapeHtmlAttr($currentMax) ?>"
+               step="1">
+    </div>
+    
+    <div class="price-range-display">
+        <span class="price-range-text">
+            <?= $escaper->escapeHtml($currencySymbol) ?><?= number_format($currentMin, 2) ?> - 
+            <?= $escaper->escapeHtml($currencySymbol) ?><?= number_format($currentMax, 2) ?>
+        </span>
+    </div>
+    
+    <button type="button" class="price-filter-apply" style="display: none;">
+        <?= $escaper->escapeHtml(__('Apply')) ?>
+    </button>
+</div>
+
+<script>
+require(['jquery', 'domReady!'], function($) {
+    var container = $('.price-filter-container');
+    if (container.length) {
+        var minSlider = container.find('.price-slider-min');
+        var maxSlider = container.find('.price-slider-max');
+        var minInput = container.find('.price-input-min');
+        var maxInput = container.find('.price-input-max');
+        var progress = container.find('.price-slider-progress');
+        var rangeDisplay = container.find('.price-range-text');
+        var minVal = parseFloat(container.data('min'));
+        var maxVal = parseFloat(container.data('max'));
+        var filterVar = container.data('filter-var') || 'price';
+        var currencySymbol = container.find('.currency').first().text() || '$';
+        
+        function updateProgress() {
+            var min = parseFloat(minSlider.val());
+            var max = parseFloat(maxSlider.val());
+            
+            // Ensure min doesn't exceed max and vice versa
+            if (min > max) {
+                min = max;
+                minSlider.val(min);
+            }
+            if (max < min) {
+                max = min;
+                maxSlider.val(max);
+            }
+            
+            // Calculate percentages
+            var range = maxVal - minVal;
+            if (range > 0) {
+                var leftPercent = ((min - minVal) / range) * 100;
+                var rightPercent = ((maxVal - max) / range) * 100;
+                
+                // Update progress bar
+                progress.css({
+                    'left': leftPercent + '%',
+                    'width': (100 - leftPercent - rightPercent) + '%'
+                });
+            }
+            
+            // Update inputs
+            minInput.val(Math.round(min));
+            maxInput.val(Math.round(max));
+            
+            // Update display
+            rangeDisplay.text(currencySymbol + min.toFixed(2) + ' - ' + currencySymbol + max.toFixed(2));
+        }
+        
+        function applyFilter() {
+            var min = Math.round(parseFloat(minSlider.val()));
+            var max = Math.round(parseFloat(maxSlider.val()));
+            
+            // Only apply if different from current
+            var currentUrl = window.location.href.split('?')[0];
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentPrice = urlParams.get(filterVar);
+            var newPrice = min + '-' + max;
+            
+            if (currentPrice !== newPrice) {
+                urlParams.set(filterVar, newPrice);
+                var newUrl = currentUrl + '?' + urlParams.toString();
+                
+                // Use AJAX if available
+                if (typeof require !== 'undefined') {
+                    require(['ajaxFilters'], function(ajaxFilters) {
+                        ajaxFilters.applyFilter(newUrl);
+                    });
+                } else {
+                    window.location.href = newUrl;
+                }
+            }
+        }
+        
+        // Slider events
+        minSlider.on('input', function() {
+            var min = parseFloat($(this).val());
+            var max = parseFloat(maxSlider.val());
+            if (min > max) {
+                $(this).val(max);
+                min = max;
+            }
+            updateProgress();
+        });
+        
+        maxSlider.on('input', function() {
+            var max = parseFloat($(this).val());
+            var min = parseFloat(minSlider.val());
+            if (max < min) {
+                $(this).val(min);
+                max = min;
+            }
+            updateProgress();
+        });
+        
+        // Apply filter when slider is released (with AJAX support)
+        minSlider.add(maxSlider).on('mouseup touchend', function() {
+            applyFilter();
+        });
+        
+        // Input events
+        minInput.on('change', function() {
+            var val = parseFloat($(this).val());
+            if (isNaN(val) || val < minVal) val = minVal;
+            if (val > maxVal) val = maxVal;
+            var max = parseFloat(maxSlider.val());
+            if (val > max) val = max;
+            minSlider.val(val);
+            updateProgress();
+            applyFilter();
+        });
+        
+        maxInput.on('change', function() {
+            var val = parseFloat($(this).val());
+            if (isNaN(val) || val < minVal) val = minVal;
+            if (val > maxVal) val = maxVal;
+            var min = parseFloat(minSlider.val());
+            if (val < min) val = min;
+            maxSlider.val(val);
+            updateProgress();
+            applyFilter();
+        });
+        
+        // Initialize
+        updateProgress();
+    }
+});
+</script>
+

@@ -1,0 +1,29 @@
+<?php
+/**
+ * Category Filter Template
+ * @var \Maison\Catalog\Block\Category\Filter\Categories $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$subcategories = $block->getSubcategories();
+?>
+<?php if (!empty($subcategories)): ?>
+    <dt class="filter-options-title" role="heading" aria-level="3">
+        <span><?= $escaper->escapeHtml(__('Category')) ?></span>
+    </dt>
+    <dd class="filter-options-content">
+        <ol class="items filter-items">
+            <?php foreach ($subcategories as $category): ?>
+                <li class="item filter-item">
+                    <a href="<?= $escaper->escapeUrl($category['url']) ?>" 
+                       class="filter-link"
+                       rel="nofollow">
+                        <span class="filter-label"><?= $escaper->escapeHtml($category['name']) ?></span>
+                        <span class="count">(<?= $escaper->escapeHtml($category['count']) ?>)</span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </dd>
+<?php endif; ?>
+
+

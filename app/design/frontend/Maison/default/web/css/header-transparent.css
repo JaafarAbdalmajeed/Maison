@@ -1,0 +1,46 @@
+/* ==================== TRANSPARENT HEADER OVERRIDES ==================== */
+/* This file ensures header transparency with maximum specificity */
+
+/* Force header transparency - before scroll */
+html body header#mainHeader:not(.scrolled),
+html body .page-header:not(.scrolled),
+html body .header-container:not(.scrolled),
+html body header#mainHeader:not(.scrolled) .header-wrapper,
+html body header#mainHeader:not(.scrolled) .header-top-row,
+html body header#mainHeader:not(.scrolled) .header-nav {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Force header solid white - after scroll */
+html body header#mainHeader.scrolled,
+html body .page-header.scrolled,
+html body .header-container.scrolled {
+    background: var(--white) !important;
+    background-color: var(--white) !important;
+    background-image: none !important;
+}
+
+/* Ensure no spacing issues */
+html body .page-header,
+html body .header-container,
+html body header#mainHeader {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Keep cart badge gold */
+.cart-count {
+    background: var(--primary-gold) !important;
+    background-color: var(--primary-gold) !important;
+}
+
+
+
+
+
+
+
+
+

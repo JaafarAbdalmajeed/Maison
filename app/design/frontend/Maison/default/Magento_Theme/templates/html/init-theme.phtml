@@ -1,0 +1,122 @@
+<?php /** * Maison de Pierre - Initialize Theme JavaScript * Using plain JavaScript - No RequireJS dependencies */ ?> <script>
+(function() {
+    'use strict';
+    
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTheme);
+    } else {
+        initTheme();
+    }
+    
+    function initTheme() {
+        console.log('✅ Maison Theme: Initializing...');
+        
+        
+        setTimeout(function() {
+            var loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                }, 300);
+            }
+        }, 1000);
+        
+        
+        var burgerMenu = document.getElementById('burgerMenu');
+        if (burgerMenu) {
+            burgerMenu.addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.add('active');
+            });
+        }
+        
+        var mobileNavClose = document.getElementById('mobileNavClose');
+        if (mobileNavClose) {
+            mobileNavClose.addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.remove('active');
+            });
+        }
+        
+        var mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        if (mobileNavOverlay) {
+            mobileNavOverlay.addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.remove('active');
+            });
+        }
+        
+        
+        var cartBtns = document.querySelectorAll('#cartBtn, #cartBtnScrolled');
+        cartBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('miniCart').classList.add('active');
+            });
+        });
+        
+        var miniCartClose = document.getElementById('miniCartClose');
+        if (miniCartClose) {
+            miniCartClose.addEventListener('click', function() {
+                document.getElementById('miniCart').classList.remove('active');
+            });
+        }
+        
+        var miniCartOverlay = document.getElementById('miniCartOverlay');
+        if (miniCartOverlay) {
+            miniCartOverlay.addEventListener('click', function() {
+                document.getElementById('miniCart').classList.remove('active');
+            });
+        }
+        
+        
+        var searchBtns = document.querySelectorAll('#searchBtn, #searchBtnScrolled');
+        searchBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('searchOverlay').classList.add('active');
+                var searchInput = document.getElementById('searchInput');
+                if (searchInput) searchInput.focus();
+            });
+        });
+        
+        var searchClose = document.getElementById('searchClose');
+        if (searchClose) {
+            searchClose.addEventListener('click', function() {
+                document.getElementById('searchOverlay').classList.remove('active');
+            });
+        }
+        
+        
+        window.addEventListener('scroll', function() {
+            var header = document.getElementById('mainHeader');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+        });
+        
+        
+        window.scrollCarousel = function(direction) {
+            var carousel = document.getElementById('productsCarousel');
+            if (carousel) {
+                var scrollAmount = 320;
+                carousel.scrollLeft += (direction * scrollAmount);
+            }
+        };
+        
+        
+        window.scrollBrandsCarousel = function(direction) {
+            var carousel = document.getElementById('brandsCarousel');
+            if (carousel) {
+                var scrollAmount = 250;
+                carousel.scrollLeft += (direction * scrollAmount);
+            }
+        };
+        
+        console.log('✅ Maison Theme: All interactions initialized');
+        console.log('✅ Maison Theme: Ready!');
+    }
+})();</script>

@@ -1,0 +1,29 @@
+<?php
+/**
+ * Size Filter Template
+ * @var \Maison\Catalog\Block\Category\Filter\Size $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$sizes = $block->getSizes();
+?>
+<?php if (!empty($sizes)): ?>
+    <dt class="filter-options-title" role="heading" aria-level="3">
+        <span><?= $escaper->escapeHtml(__('Size')) ?></span>
+    </dt>
+    <dd class="filter-options-content">
+        <ol class="items filter-items">
+            <?php foreach ($sizes as $size): ?>
+                <li class="item filter-item">
+                    <a href="<?= $escaper->escapeUrl($block->getSizeUrl($size['value'])) ?>" 
+                       class="filter-link"
+                       rel="nofollow">
+                        <span class="filter-label"><?= $escaper->escapeHtml($size['label']) ?></span>
+                        <span class="count">(<?= $escaper->escapeHtml($size['count']) ?>)</span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </dd>
+<?php endif; ?>
+
+

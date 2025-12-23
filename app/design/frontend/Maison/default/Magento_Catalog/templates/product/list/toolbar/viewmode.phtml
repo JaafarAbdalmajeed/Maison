@@ -1,0 +1,71 @@
+<?php
+/**
+ * Product list toolbar view mode - Custom Design
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php if ($block->isEnabledViewSwitcher()) :?>
+    <div class="view-mode">
+        <?php $_modes = $block->getModes(); ?>
+        <?php if ($_modes && count($_modes) > 1) :?>
+            <?php foreach ($block->getModes() as $_code => $_label) :?>
+                <?php if ($block->isModeActive($_code)) :?>
+                    <button type="button" 
+                            title="<?= $escaper->escapeHtmlAttr($_label) ?>"
+                            class="view-btn active mode-<?= $escaper->escapeHtmlAttr(strtolower($_code)) ?>"
+                            data-value="<?= $escaper->escapeHtmlAttr(strtolower($_code)) ?>"
+                            aria-label="<?= $escaper->escapeHtmlAttr($_label) ?>">
+                        <?php if ($_code === 'grid'): ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        <?php endif; ?>
+                    </button>
+                <?php else :?>
+                    <a href="#"
+                       class="view-btn mode-<?= $escaper->escapeHtmlAttr(strtolower($_code)) ?>"
+                       title="<?= $escaper->escapeHtmlAttr($_label) ?>"
+                       data-role="mode-switcher"
+                       data-value="<?= $escaper->escapeHtmlAttr(strtolower($_code)) ?>"
+                       id="mode-<?= $escaper->escapeHtmlAttr(strtolower($_code)) ?>"
+                       aria-label="<?= $escaper->escapeHtmlAttr($_label) ?>">
+                        <?php if ($_code === 'grid'): ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        <?php else: ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        <?php endif; ?>
+                    </a>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
+
+
+

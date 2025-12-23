@@ -1,0 +1,96 @@
+<?php
+/**
+ * Category Header/Banner Template
+ * @var \Magento\Catalog\Block\Category\View $block
+ */
+$category = $block->getCurrentCategory();
+$imageUrl = $category->getImageUrl();
+$categoryName = $category->getName();
+$categoryDescription = $category->getDescription();
+
+// Get breadcrumbs - try to get from breadcrumbs block first, then fallback to catalog helper
+$crumbs = [];
+try {
+    $breadcrumbsBlock = $block->getChildBlock('category.breadcrumbs');
+    if ($breadcrumbsBlock && method_exists($breadcrumbsBlock, 'getCrumbs')) {
+        $crumbs = $breadcrumbsBlock->getCrumbs() ?: [];
+    }
+    
+    // If no crumbs from block, try to get from main breadcrumbs block
+    if (empty($crumbs)) {
+        $mainBreadcrumbsBlock = $block->getLayout()->getBlock('breadcrumbs');
+        if ($mainBreadcrumbsBlock && method_exists($mainBreadcrumbsBlock, 'getCrumbs')) {
+            $crumbs = $mainBreadcrumbsBlock->getCrumbs() ?: [];
+        }
+    }
+    
+    // Fallback: use catalog helper directly
+    if (empty($crumbs)) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $catalogHelper = $objectManager->get(\Magento\Catalog\Helper\Data::class);
+        $breadcrumbPath = $catalogHelper->getBreadcrumbPath();
+        if ($breadcrumbPath && is_array($breadcrumbPath)) {
+            // Add home breadcrumb
+            $storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+            $homeUrl = $storeManager->getStore()->getBaseUrl();
+            $crumbs['home'] = [
+                'label' => __('Home'),
+                'title' => __('Go to Home Page'),
+                'link' => $homeUrl
+            ];
+            // Add category breadcrumbs
+            foreach ($breadcrumbPath as $name => $breadcrumb) {
+                $crumbs[$name] = $breadcrumb;
+            }
+        }
+    }
+} catch (\Exception $e) {
+    // If breadcrumbs fail, just show empty array
+    $crumbs = [];
+}
+?>
+<!-- Category Header -->
+<section class="category-header">
+    <div class="category-banner">
+        <?php if ($imageUrl && $imageUrl != 'no_selection'): ?>
+            <img src="<?= $block->escapeUrl($imageUrl) ?>" alt="<?= $block->escapeHtmlAttr($categoryName) ?>" class="category-banner-image">
+        <?php else: ?>
+            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1920&h=500&fit=crop&q=80" alt="<?= $block->escapeHtmlAttr($categoryName) ?>" class="category-banner-image">
+        <?php endif; ?>
+        <div class="category-banner-overlay">
+            <div class="container-fluid px-4 px-lg-5">
+                <h1 class="category-title"><?= $block->escapeHtml($categoryName) ?></h1>
+                <?php if ($categoryDescription): ?>
+                    <p class="category-description"><?= $block->escapeHtml($categoryDescription) ?></p>
+                <?php else: ?>
+                    <p class="category-description"><?= __('Discover our curated collection of luxury furniture') ?></p>
+                <?php endif; ?>
+                
+                <!-- Breadcrumbs -->
+                <?php if ($crumbs && is_array($crumbs)): ?>
+                <nav class="category-breadcrumbs">
+                    <ul class="items">
+                        <?php foreach ($crumbs as $crumbName => $crumbInfo): ?>
+                            <li class="item <?= $block->escapeHtmlAttr($crumbName) ?>">
+                            <?php if ($crumbInfo['link']): ?>
+                                <a href="<?= $block->escapeUrl($crumbInfo['link']) ?>"
+                                   title="<?= $block->escapeHtml($crumbInfo['title'] ?? '') ?>">
+                                    <?= $block->escapeHtml($crumbInfo['label']) ?>
+                                </a>
+                            <?php elseif ($crumbInfo['last'] ?? false): ?>
+                                <strong><?= $block->escapeHtml($crumbInfo['label']) ?></strong>
+                            <?php else: ?>
+                                <?= $block->escapeHtml($crumbInfo['label']) ?>
+                            <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </nav>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

@@ -1,0 +1,317 @@
+<?php
+/**
+ * Maison de Pierre - Header (Exact from /Users/naserodeh/Desktop/maison design/index.html)
+ */
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$itemsCount = $cart->getQuote()->getItemsCount();
+?>
+<!-- Header with Bootstrap -->
+<header id="mainHeader">
+    <div class="header-wrapper">
+        <div class="container-fluid px-4 px-lg-5">
+            <!-- Top Row: Logo (Before Scroll) / Icons Row (Always) -->
+            <div class="header-top-row">
+                <div class="header-left-icons">
+                    <!-- Burger Menu (Mobile Only) -->
+                    <button class="burger-menu d-lg-none" id="burgerMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <!-- Search -->
+                    <a href="#" class="icon-link-custom" id="searchBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <span class="d-none d-lg-inline"><?= __('SEARCH') ?></span>
+                    </a>
+                </div>
+
+                <!-- Logo (Animates to center of nav on scroll) -->
+                <div class="header-logo-container">
+                    <a href="<?= $block->getUrl('') ?>" class="header-logo-link">
+                        <img src="<?= $block->getViewFileUrl('images/maison-logo.png') ?>" alt="Maison de Pierre" class="header-logo">
+                    </a>
+                </div>
+
+                <div class="header-right-icons">
+                    <a href="#" class="icon-link-custom language-toggle d-none d-lg-flex" id="langSwitcher">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span class="d-none d-lg-inline current-lang"><?= __('EN') ?></span>
+                    </a>
+                    <a href="<?= $block->getUrl('customer/account') ?>" class="icon-link-custom">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="d-none d-lg-inline"><?= __('LOGIN') ?></span>
+                    </a>
+                    <a href="<?= $block->getUrl('checkout/cart') ?>" class="icon-link-custom" id="cartBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span class="cart-count"><?= $itemsCount > 0 ? $itemsCount : '0' ?></span>
+                        <span class="d-none d-lg-inline"><?= __('CART') ?></span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Navigation Row -->
+            <nav class="header-nav d-none d-lg-block">
+                <div class="container-fluid px-4 px-lg-5">
+                    <!-- Left icons (appear when scrolled) -->
+                    <div class="header-scrolled-icons-left">
+                        <a href="#" class="icon-link-custom" id="searchBtnScrolled">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span class="d-none d-lg-inline"><?= __('SEARCH') ?></span>
+                        </a>
+                    </div>
+                
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="<?= $block->getUrl('') ?>" class="nav-link-custom"><?= __('HOME') ?></a></li>
+                        <li class="nav-item submenu-dropdown">
+                            <a href="<?= $block->getUrl('catalog') ?>" class="nav-link-custom"><?= __('PRODUCTS') ?></a>
+                            <div class="fullscreen-submenu">
+                                <div class="submenu-container">
+                                    <div class="submenu-layout">
+                                        <!-- Left Featured Image -->
+                                        <div class="submenu-featured-image left">
+                                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop" alt="Premium Seating">
+                                            <div class="featured-overlay">
+                                                <h3><?= __('Premium Seating') ?></h3>
+                                                <a href="<?= $block->getUrl('catalog/category/view', ['id' => 3]) ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Center Text Columns -->
+                                        <div class="submenu-grid">
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('By Room') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 3]) ?>"><?= __('Living Room') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 4]) ?>"><?= __('Dining Room') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 5]) ?>"><?= __('Bedroom') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 6]) ?>"><?= __('Home Office') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 7]) ?>"><?= __('Outdoor') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 8]) ?>"><?= __('Entryway') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('By Category') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 9]) ?>"><?= __('Sofas & Seating') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 10]) ?>"><?= __('Tables & Desks') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 11]) ?>"><?= __('Beds & Mattresses') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 12]) ?>"><?= __('Storage & Cabinets') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 13]) ?>"><?= __('Lighting') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 14]) ?>"><?= __('Rugs & Textiles') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 15]) ?>"><?= __('Accessories') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('By Style') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'modern']) ?>"><?= __('Modern') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'contemporary']) ?>"><?= __('Contemporary') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'classic']) ?>"><?= __('Classic') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'minimalist']) ?>"><?= __('Minimalist') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'art deco']) ?>"><?= __('Art Deco') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('More Selection') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'new']) ?>"><?= __('New Arrivals') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'bestseller']) ?>"><?= __('Best Sellers') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'sale']) ?>"><?= __('Sale Items') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('custom-orders') ?>"><?= __('Custom Orders') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('designer-picks') ?>"><?= __('Designer Picks') ?></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Right Featured Image -->
+                                        <div class="submenu-featured-image right">
+                                            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&h=800&fit=crop" alt="Designer Lighting">
+                                            <div class="featured-overlay">
+                                                <h3><?= __('Designer Lighting') ?></h3>
+                                                <a href="<?= $block->getUrl('catalog/category/view', ['id' => 13]) ?>" class="featured-link"><?= __('EXPLORE') ?></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item submenu-dropdown">
+                            <a href="#" class="nav-link-custom"><?= __('BRANDS') ?></a>
+                            <div class="fullscreen-submenu">
+                                <div class="submenu-container">
+                                    <div class="submenu-layout">
+                                        <!-- Left Featured Image -->
+                                        <div class="submenu-featured-image left">
+                                            <img src="https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?w=600&h=800&fit=crop" alt="D&G Casa">
+                                            <div class="featured-overlay">
+                                                <h3><?= __('D&G CASA') ?></h3>
+                                                <a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'dolce gabbana']) ?>" class="featured-link"><?= __('EXPLORE') ?></a>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Center Text Columns -->
+                                        <div class="submenu-grid">
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('Luxury Brands') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'dolce gabbana']) ?>"><?= __('Dolce & Gabbana Casa') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'vido']) ?>"><?= __('Vido') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'bitossi']) ?>"><?= __('Bitossi') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'baci milano']) ?>"><?= __('Baci Milano') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'voluspa']) ?>"><?= __('Voluspa') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'taschen']) ?>"><?= __('Taschen') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('By Category') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 9]) ?>"><?= __('Furniture') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 15]) ?>"><?= __('Home Décor') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 16]) ?>"><?= __('Tableware') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 17]) ?>"><?= __('Candles & Scents') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 18]) ?>"><?= __('Books & Art') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('Discover') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('brands') ?>"><?= __('All Brands') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('brand-stories') ?>"><?= __('Brand Stories') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('exclusive-collections') ?>"><?= __('Exclusive Collections') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('new-partnerships') ?>"><?= __('New Partnerships') ?></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Right Featured Image -->
+                                        <div class="submenu-featured-image right">
+                                            <img src="https://images.unsplash.com/photo-1602872030219-ad2b9a54315c?w=600&h=800&fit=crop" alt="Voluspa">
+                                            <div class="featured-overlay">
+                                                <h3><?= __('VOLUSPA') ?></h3>
+                                                <a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'voluspa']) ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    
+                        <!-- Logo placeholder (will show logo when scrolled) -->
+                        <li class="nav-item nav-logo-placeholder">
+                            <a href="<?= $block->getUrl('') ?>" class="header-logo-link">
+                                <img src="<?= $block->getViewFileUrl('images/maison-logo.png') ?>" alt="Maison de Pierre" class="header-logo">
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item submenu-dropdown">
+                            <a href="#" class="nav-link-custom"><?= __('COLLECTIONS') ?></a>
+                            <div class="fullscreen-submenu">
+                                <div class="submenu-container">
+                                    <div class="submenu-layout">
+                                        <!-- Left Featured Image -->
+                                        <div class="submenu-featured-image left">
+                                            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=800&fit=crop" alt="New Collection">
+                                            <div class="featured-overlay">
+                                                <h3><?= __('New Arrivals') ?></h3>
+                                                <a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'new']) ?>" class="featured-link"><?= __('DISCOVER') ?></a>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Center Text Columns -->
+                                        <div class="submenu-grid">
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('Signature Collections') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('collections/heritage') ?>"><?= __('The Heritage') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/modern-classics') ?>"><?= __('Modern Classics') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/urban-living') ?>"><?= __('Urban Living') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/coastal-retreat') ?>"><?= __('Coastal Retreat') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/boutique-hotel') ?>"><?= __('Boutique Hotel') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('Seasonal') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('collections/spring') ?>"><?= __('Spring Collection') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/summer') ?>"><?= __('Summer Essentials') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/autumn') ?>"><?= __('Autumn Warmth') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/winter') ?>"><?= __('Winter Comfort') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/holiday') ?>"><?= __('Holiday Special') ?></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="submenu-column">
+                                                <h4 class="submenu-title"><?= __('Shop By') ?></h4>
+                                                <ul class="submenu-list">
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'new']) ?>"><?= __('New Arrivals') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'bestseller']) ?>"><?= __('Best Sellers') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/limited-edition') ?>"><?= __('Limited Edition') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'sale']) ?>"><?= __('Sale Items') ?></a></li>
+                                                    <li><a href="<?= $block->getUrl('collections/exclusive') ?>"><?= __('Exclusive Pieces') ?></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Right Featured Image -->
+                                        <div class="submenu-featured-image right">
+                                            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=800&fit=crop" alt="Best Sellers">
+                                            <div class="featured-overlay">
+                                                <h3><?= __('Best Sellers') ?></h3>
+                                                <a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'bestseller']) ?>" class="featured-link"><?= __('VIEW ALL') ?></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="<?= $block->getUrl('about') ?>" class="nav-link-custom"><?= __('ABOUT') ?></a></li>
+                        <li class="nav-item"><a href="<?= $block->getUrl('contact') ?>" class="nav-link-custom"><?= __('CONTACT') ?></a></li>
+                    </ul>
+            
+                    <!-- Right icons (appear when scrolled) -->
+                    <div class="header-scrolled-icons-right">
+                        <a href="#" class="icon-link-custom language-toggle" id="langSwitcherScrolled">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                            <span class="d-none d-lg-inline current-lang"><?= __('EN') ?></span>
+                        </a>
+                        <a href="<?= $block->getUrl('customer/account') ?>" class="icon-link-custom" id="accountScrolled">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span class="d-none d-lg-inline"><?= __('LOGIN') ?></span>
+                        </a>
+                        <a href="<?= $block->getUrl('checkout/cart') ?>" class="icon-link-custom" id="cartBtnScrolled">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                            <span class="cart-count"><?= $itemsCount > 0 ? $itemsCount : '0' ?></span>
+                            <span class="d-none d-lg-inline"><?= __('CART') ?></span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

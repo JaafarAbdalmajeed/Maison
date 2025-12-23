@@ -1,0 +1,180 @@
+<?php
+/**
+ * Maison de Pierre - Best Sellers Section
+ * Dynamic products from Magento catalog
+ */
+/** @var \Maison\Homepage\Block\Bestsellers $block */
+$products = $block->getBestsellerProducts();
+?>
+<!-- Best Sellers Section -->
+<section class="py-5 bg-white" style="padding-top: 120px !important; padding-bottom: 120px !important;">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h2 class="section-title mb-3"><?= __('Best Sellers') ?></h2>
+            <p class="section-subtitle"><?= __('Our Most Coveted Furniture Pieces') ?></p>
+        </div>
+        
+        <?php if ($products && $products->getSize() > 0): ?>
+            <div class="position-relative">
+                <div class="carousel-nav carousel-prev" onclick="scrollCarousel(-1)">‹</div>
+                <div class="carousel-nav carousel-next" onclick="scrollCarousel(1)">›</div>
+                
+                <div class="products-carousel" id="productsCarousel">
+                    <?php foreach ($products as $product): ?>
+                        <div class="product-card">
+                            <div class="product-image-wrapper">
+                                <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>">
+                                    <img src="<?= $block->escapeUrl($block->getProductImageUrl($product)) ?>" 
+                                         alt="<?= $block->escapeHtmlAttr($product->getName()) ?>" 
+                                         class="product-image">
+                                </a>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-flip-card">
+                                    <div class="product-flip-front">
+                                        <div class="product-brand-wrapper mb-2">
+                                            <span class="product-badge-inline"><?= __('BEST SELLER') ?></span>
+                                            <?php
+                                            // Get brand - try multiple sources: product attribute, parent configurable, or category
+                                            $brand = null;
+                                            $brandValue = null;
+                                            
+                                            try {
+                                                // Method 1: Get brand from product attribute
+                                                $brandValue = $product->getData('brand');
+                                                
+                                                // Method 2: If no brand on simple product, try parent configurable
+                                                if ((!$brandValue || $brandValue == '' || $brandValue == '0' || $brandValue === null) && $product->getTypeId() == 'simple') {
+                                                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                                                    $configurableType = $objectManager->get(\Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\Configurable::class);
+                                                    $parentIds = $configurableType->getParentIdsByChild($product->getId());
+                                                    if (!empty($parentIds)) {
+                                                        $parentId = $parentIds[0];
+                                                        $productRepository = $objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+                                                        try {
+                                                            $parentProduct = $productRepository->getById($parentId);
+                                                            $brandValue = $parentProduct->getData('brand');
+                                                        } catch (\Exception $e) {
+                                                            // Parent not found
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                // Method 3: If still no brand, try to get from category (Brand -> Category structure)
+                                                if ((!$brandValue || $brandValue == '' || $brandValue == '0' || $brandValue === null)) {
+                                                    $categoryIds = $product->getCategoryIds();
+                                                    if (!empty($categoryIds)) {
+                                                        $categoryRepository = $objectManager->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
+                                                        try {
+                                                            $category = $categoryRepository->get($categoryIds[0]);
+                                                            $parentCategory = $category->getParentCategory();
+                                                            // If parent category exists and is not root (ID > 2), it might be the brand category
+                                                            if ($parentCategory && $parentCategory->getId() > 2) {
+                                                                $parentName = $parentCategory->getName();
+                                                                // Check if this looks like a brand name (not "Default Category" or root)
+                                                                if ($parentName != 'Default Category' && $parentName != 'Root Catalog') {
+                                                                    // Use category name as brand (since we structured Brand -> Category)
+                                                                    $brand = $parentName;
+                                                                }
+                                                            }
+                                                        } catch (\Exception $e) {
+                                                            // Category error
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                // Get brand text from attribute if we have a brand value
+                                                if ($brandValue && $brandValue != '' && $brandValue != '0' && $brandValue !== null && !$brand) {
+                                                    $brandAttr = $product->getResource()->getAttribute('brand');
+                                                    if ($brandAttr && $brandAttr->getId()) {
+                                                        $brandText = $brandAttr->getSource()->getOptionText($brandValue);
+                                                        if ($brandText && $brandText != '' && $brandText != '0' && strtolower(trim($brandText)) != 'maison') {
+                                                            $brand = trim($brandText);
+                                                        }
+                                                    }
+                                                }
+                                            } catch (\Exception $e) {
+                                                // Error getting brand, ignore
+                                            }
+                                            ?>
+                                            <?php if ($brand && trim($brand) != ''): ?>
+                                                <span class="product-brand">
+                                                    <?= $block->escapeHtml($brand) ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <h3 class="product-name mb-2">
+                                            <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>" class="text-decoration-none">
+                                                <?= $block->escapeHtml($product->getName()) ?>
+                                            </a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <?= $block->getFormattedPrice($product) ?: $block->escapeHtml($product->getFormattedPrice()) ?>
+                                        </div>
+                                    </div>
+                                    <div class="product-flip-back">
+                                        <p class="product-description">
+                                            <?= $block->escapeHtml($product->getShortDescription() ?: $product->getDescription() ?: __('Premium luxury furniture piece.')) ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php else: ?>
+            <!-- Fallback: Show sample products if no products exist -->
+            <div class="position-relative">
+                <div class="carousel-nav carousel-prev" onclick="scrollCarousel(-1)">‹</div>
+                <div class="carousel-nav carousel-next" onclick="scrollCarousel(1)">›</div>
+                
+                <div class="products-carousel" id="productsCarousel">
+                    <!-- Sample Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&h=1000&fit=crop&q=80" alt="Luxor Velvet Armchair" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-flip-card">
+                                <div class="product-flip-front">
+                                    <div class="product-brand-wrapper mb-2">
+                                        <span class="product-badge-inline"><?= __('BEST SELLER') ?></span>
+                                        <span class="product-brand">D&G</span>
+                                    </div>
+                                    <h3 class="product-name mb-2"><?= __('Luxor Velvet Armchair') ?></h3>
+                                    <div class="product-price">$3,450</div>
+                                </div>
+                                <div class="product-flip-back">
+                                    <p class="product-description"><?= __('Elegant velvet armchair with luxurious comfort. Handcrafted with premium materials and timeless design. Perfect for modern living spaces.') ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+
+<script>
+function scrollCarousel(direction) {
+    const carousel = document.getElementById('productsCarousel');
+    if (!carousel) return;
+
+    const firstCard = carousel.querySelector('.product-card');
+    if (!firstCard) return;
+
+    const cardWidth = firstCard.offsetWidth;
+    const gap = 14;
+    const scrollAmount = cardWidth + gap;
+
+    const isRTL = document.documentElement.dir === 'rtl';
+    const scrollDirection = isRTL ? -direction : direction;
+
+    carousel.scrollBy({
+        left: scrollDirection * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+</script>

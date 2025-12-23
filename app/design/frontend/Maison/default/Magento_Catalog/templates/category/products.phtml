@@ -1,0 +1,16 @@
+<?php
+/**
+ * Category products template - Custom Design
+ * @var $block \Magento\Catalog\Block\Category\View
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php if (!$block->isContentMode() || $block->isMixedMode()) :?>
+    <div class="category-products-wrapper">
+        <?= $block->getProductListHtml() ?>
+    </div>
+<?php endif; ?>
+
+
+
+

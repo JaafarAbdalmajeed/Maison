@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Category Page Layout
+ * Custom layout to match luxury design with sidebar filters
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="page-with-filter"/>
+        
+        <!-- Category Header/Banner with Breadcrumbs -->
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Category\View" name="category.header" template="Magento_Catalog::category/header.phtml" before="-">
+                <block class="Magento\Theme\Block\Html\Breadcrumbs" name="category.breadcrumbs">
+                    <arguments>
+                        <argument name="cssClass" xsi:type="string">breadcrumbs</argument>
+                        <argument name="title" xsi:type="string" translate="true">Category Navigation</argument>
+                        <argument name="description" xsi:type="string" translate="true">Breadcrumbs listing</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+        
+        <!-- Filter Sidebar Overlay - Must be at root level to appear above header -->
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Template" name="category.filter.sidebar" template="Magento_Catalog::category/filter-sidebar.phtml">
+                <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="catalog.leftnav.overlay" template="Magento_LayeredNavigation::layer/view.phtml">
+                    <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state.overlay" as="state" />
+                    <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer.overlay" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                        <arguments>
+                            <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                        </arguments>
+                    </block>
+                    
+                    <!-- Custom Category Filter -->
+                    <block class="Maison\Catalog\Block\Category\Filter\Categories" name="category.filter.categories.overlay" template="Maison_Catalog::category/filter/categories.phtml" />
+                    
+                    <!-- Custom Brand Filter -->
+                    <block class="Maison\Catalog\Block\Category\Filter\Brands" name="category.filter.brands.overlay" template="Maison_Catalog::category/filter/brands.phtml" />
+                    
+                    <!-- Custom Size Filter -->
+                    <block class="Maison\Catalog\Block\Category\Filter\Size" name="category.filter.size.overlay" template="Maison_Catalog::category/filter/size.phtml" />
+                </block>
+            </block>
+        </referenceContainer>
+        
+        <!-- Category Content (Filters + Products) -->
+        <referenceContainer name="content">
+            <container name="category.content" htmlTag="section" htmlClass="category-content">
+                <container name="category.content.inner" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
+                    <!-- Category Products Block -->
+                    <block class="Magento\Catalog\Block\Category\View" name="category.products" template="Magento_Catalog::category/products.phtml">
+                        <block class="Magento\Catalog\Block\Product\ListProduct" name="category.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
+                            <container name="category.product.list.additional" as="additional" />
+                            <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                                <block class="Magento\Framework\View\Element\Template" name="category.product.type.details.renderers.default" as="default" template="Magento_Catalog::product/list/item/default.phtml"/>
+                            </block>
+                            <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="category.product.addto" as="addto">
+                                <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                                       name="category.product.addto.compare" as="compare"
+                                       template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                            </block>
+                            <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                                <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                            </block>
+                            <action method="setToolbarBlockName">
+                                <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                            </action>
+                        </block>
+                    </block>
+                    
+                    <!-- Cookie Requirement -->
+                    <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
+                        <arguments>
+                            <argument name="triggers" xsi:type="array">
+                                <item name="compareProductLink" xsi:type="string">.action.tocompare</item>
+                            </argument>
+                        </arguments>
+                    </block>
+                </container>
+            </container>
+        </referenceContainer>
+        
+        <!-- Page Title (Hidden, using custom header instead) -->
+        <referenceBlock name="page.main.title" remove="true"/>
+        
+        <!-- Remove Compare and Wishlist from Sidebar -->
+        <referenceContainer name="sidebar.additional">
+            <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+            <referenceBlock name="wishlist_sidebar" remove="true"/>
+        </referenceContainer>
+        
+        <!-- Hide sidebar.additional completely to prevent duplicate sidebar -->
+        <referenceContainer name="sidebar.additional" remove="true"/>
+        
+            <!-- Product Options Data -->
+            <referenceBlock name="category.products.list">
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
+                </arguments>
+            </referenceBlock>
+            
+            <!-- Initialize AJAX Filters -->
+            <referenceContainer name="before.body.end">
+                <block class="Magento\Framework\View\Element\Template" name="ajax.filters.init" template="Magento_Catalog::category/ajax-filters-init.phtml"/>
+            </referenceContainer>
+    </body>
+</page>
+
+

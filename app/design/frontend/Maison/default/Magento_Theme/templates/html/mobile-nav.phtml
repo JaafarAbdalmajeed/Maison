@@ -1,0 +1,72 @@
+<?php
+/**
+ * Maison de Pierre - Mobile Navigation
+ */
+?>
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    <div class="mobile-nav-panel">
+        <div class="mobile-nav-header">
+            <a href="<?= $block->getUrl('') ?>">
+                <img src="<?= $block->getViewFileUrl('images/maison-logo.png') ?>" alt="Maison de Pierre" style="height: 50px;">
+            </a>
+            <button class="mobile-nav-close" id="mobileNavClose">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="mobile-nav-content">
+            <ul class="mobile-nav-menu">
+                <li><a href="<?= $block->getUrl('') ?>"><?= __('HOME') ?></a></li>
+                <li class="mobile-has-submenu">
+                    <a href="<?= $block->getUrl('catalog') ?>" class="mobile-menu-toggle">
+                        <?= __('PRODUCTS') ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                    <ul class="mobile-submenu">
+                        <li><a href="#"><?= __('Living Room') ?></a></li>
+                        <li><a href="#"><?= __('Dining Room') ?></a></li>
+                        <li><a href="#"><?= __('Bedroom') ?></a></li>
+                        <li><a href="#"><?= __('Home Office') ?></a></li>
+                        <li><a href="#"><?= __('Outdoor') ?></a></li>
+                        <li><a href="#"><?= __('Lighting') ?></a></li>
+                    </ul>
+                </li>
+                <li class="mobile-has-submenu">
+                    <a href="#" class="mobile-menu-toggle">
+                        <?= __('BRANDS') ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                    <ul class="mobile-submenu">
+                        <li><a href="#">Dolce & Gabbana Casa</a></li>
+                        <li><a href="#">Vido</a></li>
+                        <li><a href="#">Bitossi</a></li>
+                        <li><a href="#">Baci Milano</a></li>
+                        <li><a href="#">Voluspa</a></li>
+                        <li><a href="#">Taschen</a></li>
+                    </ul>
+                </li>
+                <li class="mobile-has-submenu">
+                    <a href="#" class="mobile-menu-toggle">
+                        <?= __('COLLECTIONS') ?>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                    <ul class="mobile-submenu">
+                        <li><a href="#"><?= __('New Arrivals') ?></a></li>
+                        <li><a href="#"><?= __('Best Sellers') ?></a></li>
+                        <li><a href="#"><?= __('Limited Edition') ?></a></li>
+                        <li><a href="#"><?= __('Sale Items') ?></a></li>
+                    </ul>
+                </li>
+                <li><a href="<?= $block->getUrl('about') ?>"><?= __('ABOUT') ?></a></li>
+                <li><a href="<?= $block->getUrl('contact') ?>"><?= __('CONTACT') ?></a></li>
+            </ul>
+            <div class="mobile-nav-footer">
+                <a href="#" class="mobile-lang-switch" id="mobileLangSwitch">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span class="mobile-current-lang">EN</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - CSP Whitelist (Professional Way)
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <!-- Allow Feather Icons -->
+        <policy id="script-src">
+            <values>
+                <value id="unpkg_feather" type="host">unpkg.com</value>
+            </values>
+        </policy>
+        
+        <!-- Allow external images -->
+        <policy id="img-src">
+            <values>
+                <value id="unsplash_images" type="host">images.unsplash.com</value>
+                <value id="wikipedia_images" type="host">upload.wikimedia.org</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

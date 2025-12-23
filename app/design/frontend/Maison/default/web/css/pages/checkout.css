@@ -1,0 +1,266 @@
+/* ==================== CHECKOUT PAGE STYLES ==================== */
+
+/* Checkout Page Container */
+.checkout-index-index {
+    padding: 120px 0 80px;
+    background-color: var(--white);
+}
+
+/* Checkout Title */
+.checkout-index-index .page-title-wrapper .page-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Checkout Steps */
+.opc-wrapper .opc {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.opc-wrapper .opc .step-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 20px 0;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.opc-wrapper .opc .step-title:hover,
+.opc-wrapper .opc .step-title._active {
+    color: var(--primary-gold);
+}
+
+.opc-wrapper .opc .step-title._active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primary-gold);
+}
+
+/* Checkout Form Sections */
+.checkout-shipping-address,
+.checkout-shipping-method,
+.checkout-payment-method {
+    background-color: var(--soft-beige);
+    padding: 40px;
+    margin-bottom: 30px;
+    border: 1px solid var(--light-gray);
+}
+
+.checkout-shipping-address .step-title,
+.checkout-shipping-method .step-title,
+.checkout-payment-method .step-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Form Fields */
+.checkout-shipping-address .field,
+.checkout-payment-method .field {
+    margin-bottom: 20px;
+}
+
+.checkout-shipping-address .field .label,
+.checkout-payment-method .field .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.checkout-shipping-address .field input[type="text"],
+.checkout-shipping-address .field input[type="email"],
+.checkout-shipping-address .field input[type="tel"],
+.checkout-shipping-address .field select,
+.checkout-payment-method .field input[type="text"],
+.checkout-payment-method .field input[type="email"],
+.checkout-payment-method .field input[type="tel"],
+.checkout-payment-method .field select {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    border: 1px solid var(--light-gray);
+    background-color: var(--white);
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.checkout-shipping-address .field input:focus,
+.checkout-shipping-address .field select:focus,
+.checkout-payment-method .field input:focus,
+.checkout-payment-method .field select:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+}
+
+/* Shipping Methods */
+.checkout-shipping-method .table-checkout-shipping-method {
+    width: 100%;
+}
+
+.checkout-shipping-method .table-checkout-shipping-method tbody tr {
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.checkout-shipping-method .table-checkout-shipping-method tbody tr:last-child {
+    border-bottom: none;
+}
+
+.checkout-shipping-method .table-checkout-shipping-method tbody td {
+    padding: 15px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.checkout-shipping-method .table-checkout-shipping-method tbody .col-method {
+    font-weight: 500;
+}
+
+.checkout-shipping-method .table-checkout-shipping-method tbody .col-price {
+    text-align: right;
+    font-weight: 600;
+    color: var(--dark-brown);
+}
+
+/* Payment Methods */
+.checkout-payment-method .payment-method {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.checkout-payment-method .payment-method:last-child {
+    border-bottom: none;
+}
+
+.checkout-payment-method .payment-method .payment-method-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 10px;
+}
+
+.checkout-payment-method .payment-method .payment-method-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+/* Order Summary */
+.opc-sidebar {
+    background-color: var(--soft-beige);
+    padding: 40px;
+    border: 1px solid var(--light-gray);
+}
+
+.opc-sidebar .opc-block-summary {
+    margin-bottom: 30px;
+}
+
+.opc-sidebar .opc-block-summary .title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.opc-sidebar .opc-block-summary .table-totals {
+    margin-bottom: 30px;
+}
+
+.opc-sidebar .opc-block-summary .table-totals tbody tr {
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.opc-sidebar .opc-block-summary .table-totals tbody tr:last-child {
+    border-bottom: none;
+}
+
+.opc-sidebar .opc-block-summary .table-totals tbody td {
+    padding: 15px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--text-dark);
+}
+
+.opc-sidebar .opc-block-summary .table-totals tbody .mark {
+    font-weight: 500;
+}
+
+.opc-sidebar .opc-block-summary .table-totals tbody .amount {
+    text-align: right;
+    font-weight: 600;
+    color: var(--dark-brown);
+}
+
+.opc-sidebar .opc-block-summary .table-totals tbody .grand .mark,
+.opc-sidebar .opc-block-summary .table-totals tbody .grand .amount {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    padding-top: 20px;
+    border-top: 2px solid var(--light-gray);
+}
+
+/* Place Order Button */
+.checkout-index-index .action.primary.checkout {
+    width: 100%;
+    padding: 16px 32px;
+    background-color: var(--dark-brown);
+    color: var(--white);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.checkout-index-index .action.primary.checkout:hover {
+    background-color: var(--primary-gold);
+    color: var(--white);
+}
+
+
+
+
+

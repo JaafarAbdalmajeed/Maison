@@ -1,0 +1,85 @@
+<?php
+/**
+ * Maison de Pierre - Categories Section
+ * Dynamic categories from Magento catalog
+ */
+/** @var \Maison\Homepage\Block\Categories $block */
+$categories = $block->getHomepageCategories();
+?>
+<!-- Furniture Categories Section -->
+<section class="categories-section py-5" style="padding-top: 120px !important; padding-bottom: 120px !important;">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h2 class="section-title mb-3"><?= __('Shop by Category') ?></h2>
+            <p class="section-subtitle"><?= __('Explore Our Curated Furniture Collections') ?></p>
+        </div>
+        
+        <?php if ($categories && $categories->getSize() > 0): ?>
+            <div class="row g-4 mt-4">
+                <?php foreach ($categories as $category): ?>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="category-card">
+                            <div class="category-image">
+                                <img src="<?= $block->escapeUrl($block->getCategoryImageUrl($category)) ?>" 
+                                     alt="<?= $block->escapeHtmlAttr($category->getName()) ?>" 
+                                     class="img-fluid">
+                                <div class="category-overlay">
+                                    <h3><?= $block->escapeHtml($category->getName()) ?></h3>
+                                    <a href="<?= $block->escapeUrl($block->getCategoryUrl($category)) ?>" class="category-link"><?= __('EXPLORE') ?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <!-- Fallback: Show sample categories if no categories exist -->
+            <div class="row g-4 mt-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=700&fit=crop&q=80" alt="Seating" class="img-fluid">
+                            <div class="category-overlay">
+                                <h3><?= __('Seating') ?></h3>
+                                <a href="<?= $block->getUrl('catalog') ?>" class="category-link"><?= __('EXPLORE') ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&h=700&fit=crop&q=80" alt="Tables" class="img-fluid">
+                            <div class="category-overlay">
+                                <h3><?= __('Tables') ?></h3>
+                                <a href="<?= $block->getUrl('catalog') ?>" class="category-link"><?= __('EXPLORE') ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=600&h=700&fit=crop&q=80" alt="Lighting" class="img-fluid">
+                            <div class="category-overlay">
+                                <h3><?= __('Lighting') ?></h3>
+                                <a href="<?= $block->getUrl('catalog') ?>" class="category-link"><?= __('EXPLORE') ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=700&fit=crop&q=80" alt="Décor" class="img-fluid">
+                            <div class="category-overlay">
+                                <h3><?= __('Décor') ?></h3>
+                                <a href="<?= $block->getUrl('catalog') ?>" class="category-link"><?= __('EXPLORE') ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>

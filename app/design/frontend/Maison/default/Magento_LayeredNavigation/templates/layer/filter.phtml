@@ -1,0 +1,35 @@
+<?php
+/** @var \Magento\LayeredNavigation\Block\Navigation\FilterRenderer $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\Locale\LocaleFormatter $localeFormatter */
+/** @var \Magento\LayeredNavigation\ViewModel\Layer\Filter $viewModel */
+$viewModel = $block->getData('product_layer_view_model');
+?>
+
+<ol class="items filter-items">
+    <?php foreach ($filterItems as $filterItem): ?>
+        <li class="item filter-item">
+            <?php if ($filterItem->getCount() > 0): ?>
+                <a href="<?= $escaper->escapeUrl($filterItem->getUrl()) ?>"
+                   rel="nofollow"
+                   class="filter-link">
+                    <span class="filter-label"><?= /* @noEscape */ $filterItem->getLabel() ?></span>
+                    <?php if ($viewModel->shouldDisplayProductCountOnLayer()): ?>
+                        <span class="count">(<?= /* @noEscape */ $localeFormatter->formatNumber((int) $filterItem->getCount()) ?>)</span>
+                    <?php endif; ?>
+                </a>
+            <?php else: ?>
+                <span class="filter-link disabled">
+                    <span class="filter-label"><?= /* @noEscape */ $filterItem->getLabel() ?></span>
+                    <?php if ($viewModel->shouldDisplayProductCountOnLayer()): ?>
+                        <span class="count">(<?= /* @noEscape */ $localeFormatter->formatNumber((int) $filterItem->getCount()) ?>)</span>
+                    <?php endif; ?>
+                </span>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ol>
+
+
+
+

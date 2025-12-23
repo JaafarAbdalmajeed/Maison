@@ -1,0 +1,40 @@
+//
+// Maison de Pierre - Theme Extension (Professional Magento Way)
+//
+
+// Define required Magento Blank variables
+@modal-slide-header__padding-vertical: 2rem;
+@modal-popup__padding: 3rem;
+@primary__color: #C9A961;
+
+& when (@media-common = true) {
+    // Neutralize Magento default wrappers to match original template
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .page-wrapper,
+    .page-header,
+    .page-main,
+    .columns {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: none !important;
+    }
+    
+    .page-header {
+        background: transparent !important;
+    }
+    
+    .column.main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    
+    .breadcrumbs,
+    .page-title-wrapper {
+        display: none !important;
+    }
+}

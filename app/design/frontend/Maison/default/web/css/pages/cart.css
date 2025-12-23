@@ -1,0 +1,334 @@
+/* ==================== SHOPPING CART PAGE STYLES ==================== */
+
+/* Cart Page Container */
+.cart-container {
+    padding: 120px 0 80px;
+    background-color: var(--white);
+}
+
+/* Cart Title */
+.cart-container .page-title-wrapper .page-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Cart Table */
+.cart.table-wrapper {
+    margin-bottom: 40px;
+    overflow-x: auto;
+}
+
+.cart.table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+}
+
+.cart.table-wrapper thead th {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 20px;
+    border-bottom: 2px solid var(--light-gray);
+    text-align: left;
+}
+
+.cart.table-wrapper tbody td {
+    padding: 30px 20px;
+    border-bottom: 1px solid var(--light-gray);
+    vertical-align: middle;
+}
+
+/* Product Image */
+.cart.table-wrapper .product-image-container {
+    width: 120px;
+}
+
+.cart.table-wrapper .product-image-photo {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--light-gray);
+}
+
+/* Product Name */
+.cart.table-wrapper .product-item-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 8px;
+}
+
+.cart.table-wrapper .product-item-name a {
+    color: var(--dark-brown);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.cart.table-wrapper .product-item-name a:hover {
+    color: var(--primary-gold);
+}
+
+/* Product Brand */
+.cart.table-wrapper .product-brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+/* Product Price */
+.cart.table-wrapper .price {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--dark-brown);
+}
+
+/* Quantity Input */
+.cart.table-wrapper .qty {
+    width: 80px;
+    padding: 10px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    border: 1px solid var(--light-gray);
+    background-color: var(--white);
+    border-radius: 0;
+    text-align: center;
+}
+
+.cart.table-wrapper .qty:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+}
+
+/* Subtotal */
+.cart.table-wrapper .subtotal {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-brown);
+}
+
+/* Remove Item */
+.cart.table-wrapper .action-delete {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.cart.table-wrapper .action-delete:hover {
+    color: var(--primary-gold);
+}
+
+.cart.table-wrapper .action-delete::before {
+    content: '×';
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* Cart Actions */
+.cart-container .cart.main.actions {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.cart-container .cart.main.actions .action.continue {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    border: 1px solid var(--light-gray);
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.cart-container .cart.main.actions .action.continue:hover {
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+}
+
+.cart-container .cart.main.actions .action.update {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    border: none;
+    background-color: var(--dark-brown);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cart-container .cart.main.actions .action.update:hover {
+    background-color: var(--primary-gold);
+}
+
+.cart-container .cart.main.actions .action.clear {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    border: 1px solid var(--light-gray);
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.cart-container .cart.main.actions .action.clear:hover {
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+}
+
+/* Cart Summary */
+.cart-container .cart-summary {
+    background-color: var(--soft-beige);
+    padding: 40px;
+    border: 1px solid var(--light-gray);
+}
+
+.cart-container .cart-summary .title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cart-container .cart-summary .table.totals {
+    margin-bottom: 30px;
+}
+
+.cart-container .cart-summary .table.totals tbody tr {
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.cart-container .cart-summary .table.totals tbody tr:last-child {
+    border-bottom: none;
+}
+
+.cart-container .cart-summary .table.totals tbody td {
+    padding: 15px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--text-dark);
+}
+
+.cart-container .cart-summary .table.totals tbody .mark {
+    font-weight: 500;
+}
+
+.cart-container .cart-summary .table.totals tbody .amount {
+    text-align: right;
+    font-weight: 600;
+    color: var(--dark-brown);
+}
+
+.cart-container .cart-summary .table.totals tbody .grand .mark,
+.cart-container .cart-summary .table.totals tbody .grand .amount {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    padding-top: 20px;
+    border-top: 2px solid var(--light-gray);
+}
+
+/* Checkout Button */
+.cart-container .cart-summary .checkout {
+    width: 100%;
+    padding: 16px 32px;
+    background-color: var(--dark-brown);
+    color: var(--white);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.cart-container .cart-summary .checkout:hover {
+    background-color: var(--primary-gold);
+    color: var(--white);
+}
+
+/* Empty Cart */
+.cart-empty {
+    text-align: center;
+    padding: 100px 20px;
+    background-color: var(--soft-beige);
+}
+
+.cart-empty .page-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cart-empty p {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+}
+
+.cart-empty .action.primary {
+    display: inline-block;
+    padding: 16px 32px;
+    background-color: var(--dark-brown);
+    color: var(--white);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.cart-empty .action.primary:hover {
+    background-color: var(--primary-gold);
+    color: var(--white);
+}
+
+
+
+
+

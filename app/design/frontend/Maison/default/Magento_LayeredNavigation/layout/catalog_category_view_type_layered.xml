@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Layered Navigation Layout
+ * Custom layout for category filters sidebar
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="page-with-filter"/>
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="catalog.leftnav" before="-" template="Magento_LayeredNavigation::layer/view.phtml">
+                <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state" as="state" />
+                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                    <arguments>
+                        <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                    </arguments>
+                </block>
+                
+                <!-- Custom Category Filter -->
+                <block class="Maison\Catalog\Block\Category\Filter\Categories" name="category.filter.categories" template="Maison_Catalog::category/filter/categories.phtml" />
+                
+                <!-- Custom Brand Filter -->
+                <block class="Maison\Catalog\Block\Category\Filter\Brands" name="category.filter.brands" template="Maison_Catalog::category/filter/brands.phtml" />
+                
+                <!-- Custom Size Filter -->
+                <block class="Maison\Catalog\Block\Category\Filter\Size" name="category.filter.size" template="Maison_Catalog::category/filter/size.phtml" />
+            </block>
+        </referenceContainer>
+    </body>
+</page>
+
+
+

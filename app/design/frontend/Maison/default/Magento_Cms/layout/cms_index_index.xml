@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Homepage Layout (Magento Best Practice)
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Remove default CMS page content block -->
+        <referenceBlock name="cms_page" remove="true"/>
+        
+        <referenceContainer name="content">
+            <!-- Hero Section -->
+            <block class="Magento\Framework\View\Element\Template" name="maison.hero" template="Magento_Cms::homepage/hero.phtml" before="-"/>
+            
+            <!-- Best Sellers - Dynamic -->
+            <block class="Maison\Homepage\Block\Bestsellers" name="maison.bestsellers" template="Magento_Cms::homepage/bestsellers.phtml"/>
+            
+            <!-- Trust Badges -->
+            <block class="Magento\Framework\View\Element\Template" name="maison.trust" template="Magento_Cms::homepage/trust.phtml"/>
+            
+            <!-- Categories - Dynamic -->
+            <block class="Maison\Homepage\Block\Categories" name="maison.categories" template="Magento_Cms::homepage/categories.phtml"/>
+            
+            <!-- Brands -->
+            <block class="Magento\Framework\View\Element\Template" name="maison.brands" template="Magento_Cms::homepage/brands.phtml"/>
+            
+            <!-- Story -->
+            <block class="Magento\Framework\View\Element\Template" name="maison.story" template="Magento_Cms::homepage/story.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,40 @@
+<?php
+/**
+ * Maison de Pierre - Story Section
+ */
+?>
+<!-- Our Story Section -->
+<section class="story-section py-5" style="background-color: var(--white); padding-top: 120px !important; padding-bottom: 120px !important;">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row align-items-center g-5">
+            <!-- Left Image -->
+            <div class="col-lg-6">
+                <div class="story-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&h=1400&fit=crop" alt="Maison de Pierre Showroom" class="story-image">
+                    <div class="story-image-overlay">
+                        <div class="story-badge"><?= __('EST. 2024') ?></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Content -->
+            <div class="col-lg-6">
+                <div class="story-content">
+                    <div class="story-label"><?= __('OUR STORY') ?></div>
+                    <h2 class="story-title"><?= __('Curating Luxury, One Piece at a Time') ?></h2>
+                    <div class="story-divider"></div>
+                    <p class="story-text">
+                        <?= __('At Maison de Pierre, we believe that your home is more than just a space—it\'s a reflection of your taste, your journey, and your vision of beauty. For years, we have dedicated ourselves to sourcing the finest luxury furniture and home décor from the world\'s most prestigious brands.') ?>
+                    </p>
+                    <p class="story-text">
+                        <?= __('Our carefully curated collection brings together timeless elegance and contemporary design, featuring exclusive pieces from renowned houses like Dolce & Gabbana Casa, Vido, Bitossi, and more. Each item is selected with meticulous attention to craftsmanship, quality, and artistic merit.') ?>
+                    </p>
+                    <p class="story-text">
+                        <?= __('From our showroom to your sanctuary, we are committed to delivering not just furniture, but experiences that transform houses into homes filled with sophistication and soul.') ?>
+                    </p>
+                    <a href="<?= $block->getUrl('about') ?>" class="btn-story"><?= __('DISCOVER MORE') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

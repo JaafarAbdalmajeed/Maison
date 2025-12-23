@@ -1,0 +1,97 @@
+<?php
+/**
+ * Maison de Pierre - Search Overlay
+ */
+?>
+<!-- Search Overlay -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-container">
+        <button class="search-close" id="searchClose">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        
+        <div class="search-content">
+            <div class="search-header">
+                <h2 class="search-title"><?= __('What are you looking for?') ?></h2>
+                <p class="search-subtitle"><?= __('Discover our curated collection of luxury furniture and décor') ?></p>
+            </div>
+            
+            <form class="search-form" action="<?= $block->getUrl('catalogsearch/result') ?>" method="get" id="searchForm">
+                <div class="search-input-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" name="q" class="search-input" placeholder="<?= __('Search for products, brands, categories...') ?>" id="searchInput" autocomplete="off">
+                    <button type="button" class="search-clear" id="searchClear">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                    </button>
+                </div>
+            </form>
+            
+            <div class="search-suggestions">
+                <div class="search-section">
+                    <h3 class="search-section-title"><?= __('Popular Searches') ?></h3>
+                    <div class="search-tags">
+                        <a href="#" class="search-tag"><?= __('Luxury Sofas') ?></a>
+                        <a href="#" class="search-tag"><?= __('Dining Tables') ?></a>
+                        <a href="#" class="search-tag"><?= __('Lighting') ?></a>
+                        <a href="#" class="search-tag"><?= __('Bedroom Sets') ?></a>
+                        <a href="#" class="search-tag"><?= __('Outdoor Furniture') ?></a>
+                        <a href="#" class="search-tag"><?= __('Home Décor') ?></a>
+                    </div>
+                </div>
+                
+                <div class="search-section">
+                    <h3 class="search-section-title"><?= __('Trending Brands') ?></h3>
+                    <div class="search-brands">
+                        <a href="#" class="search-brand-item">
+                            <span class="brand-initial">D&G</span>
+                            <span class="brand-full-name">Dolce & Gabbana</span>
+                        </a>
+                        <a href="#" class="search-brand-item">
+                            <span class="brand-initial">V</span>
+                            <span class="brand-full-name">Vido</span>
+                        </a>
+                        <a href="#" class="search-brand-item">
+                            <span class="brand-initial">B</span>
+                            <span class="brand-full-name">Bitossi</span>
+                        </a>
+                        <a href="#" class="search-brand-item">
+                            <span class="brand-initial">BM</span>
+                            <span class="brand-full-name">Baci Milano</span>
+                        </a>
+                        <a href="#" class="search-brand-item">
+                            <span class="brand-initial">V</span>
+                            <span class="brand-full-name">Voluspa</span>
+                        </a>
+                        <a href="#" class="search-brand-item">
+                            <span class="brand-initial">T</span>
+                            <span class="brand-full-name">Taschen</span>
+                </a>
+            </div>
+        </div>
+                
+                <div class="search-section">
+                    <h3 class="search-section-title"><?= __('Quick Links') ?></h3>
+                    <div class="search-quick-links">
+                        <a href="#" class="search-quick-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                            <span><?= __('New Arrivals') ?></span>
+                        </a>
+                        <a href="#" class="search-quick-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span><?= __('Best Sellers') ?></span>
+                        </a>
+                        <a href="#" class="search-quick-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <span><?= __('Sale Items') ?></span>
+                        </a>
+                        <a href="#" class="search-quick-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+                            <span><?= __('Gift Ideas') ?></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
