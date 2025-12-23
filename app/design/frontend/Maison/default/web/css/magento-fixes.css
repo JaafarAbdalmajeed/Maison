@@ -61,19 +61,25 @@ body {
 }
 
 /* Fix product page content to start below header - Multiple selectors for maximum compatibility */
+/* IMPORTANT: This must come AFTER the general .page-main rule to override it */
+/* Using more specific selectors to ensure it overrides padding: 0 */
+body.catalog-product-view .page-wrapper .page-main,
 body.catalog-product-view .page-main,
+.catalog-product-view .page-wrapper .page-main,
 .catalog-product-view .page-main,
 body.catalog-product-view #maincontent,
 .catalog-product-view #maincontent {
     margin-top: 0 !important;
-    padding-top: 180px !important;
+    padding: 180px 0 0 0 !important; /* top right bottom left - override padding: 0 */
 }
 
+body.scrolled.catalog-product-view .page-wrapper .page-main,
 body.scrolled.catalog-product-view .page-main,
+body.scrolled .catalog-product-view .page-wrapper .page-main,
 body.scrolled .catalog-product-view .page-main,
 body.scrolled.catalog-product-view #maincontent,
 body.scrolled .catalog-product-view #maincontent {
-    padding-top: 120px !important;
+    padding: 120px 0 0 0 !important; /* top right bottom left */
 }
 
 body.catalog-product-view .column.main,

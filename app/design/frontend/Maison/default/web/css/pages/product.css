@@ -1,11 +1,13 @@
 /* ==================== PRODUCT DETAIL PAGE STYLES ==================== */
 
 /* Ensure page content starts below fixed header - CRITICAL FIX */
-/* Apply to all possible selectors to ensure it works */
+/* Apply to all possible selectors to ensure it works - MUST override magento-fixes.css */
 body.catalog-product-view .page-main,
 .catalog-product-view .page-main,
 body.catalog-product-view #maincontent,
 .catalog-product-view #maincontent,
+body.catalog-product-view .page-wrapper .page-main,
+.catalog-product-view .page-wrapper .page-main,
 body.catalog-product-view .columns,
 .catalog-product-view .columns,
 /* Also target by product-view class as fallback */
@@ -15,6 +17,9 @@ body:has(.product-view) #maincontent,
 .product-content-wrapper,
 body.catalog-product-view .product-content-wrapper {
     padding-top: 180px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
     margin-top: 0 !important;
     position: relative !important;
     z-index: 1 !important;
@@ -29,16 +34,25 @@ body.catalog-product-view #maincontent > *:first-child,
     padding-top: 0 !important;
 }
 
+/* Reset padding for nested elements - they get padding from parent */
 body.catalog-product-view .page-main .columns,
-.catalog-product-view .page-main .columns {
+.catalog-product-view .page-main .columns,
+body.catalog-product-view #maincontent .columns,
+.catalog-product-view #maincontent .columns {
     padding-top: 0 !important;
     margin-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 body.catalog-product-view .column.main,
-.catalog-product-view .column.main {
+.catalog-product-view .column.main,
+body.catalog-product-view #maincontent .column.main,
+.catalog-product-view #maincontent .column.main {
     padding-top: 0 !important;
     margin-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 /* When header is scrolled, reduce padding */
@@ -380,5 +394,30 @@ body.catalog-product-view .column.main .product-view,
 .breadcrumbs .items .item strong {
     color: var(--dark-brown);
     font-weight: 500;
+}
+
+/* ==================== FINAL OVERRIDE - MUST BE LAST ==================== */
+/* This ensures product page content starts below header - highest priority */
+body.catalog-product-view .page-wrapper .page-main,
+body.catalog-product-view .page-main,
+.catalog-product-view .page-wrapper .page-main,
+.catalog-product-view .page-main {
+    padding-top: 180px !important;
+}
+
+body.scrolled.catalog-product-view .page-wrapper .page-main,
+body.scrolled.catalog-product-view .page-main,
+body.scrolled .catalog-product-view .page-wrapper .page-main,
+body.scrolled .catalog-product-view .page-main {
+    padding-top: 120px !important;
+}
+
+/* Ensure product view elements are visible */
+body.catalog-product-view .product-view,
+.catalog-product-view .product-view {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
