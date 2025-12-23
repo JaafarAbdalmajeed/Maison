@@ -1,21 +1,36 @@
 /* ==================== PRODUCT DETAIL PAGE STYLES ==================== */
 
+/* ==================== ULTIMATE FIX - TARGET EXACT DOM ELEMENTS ==================== */
+/* These selectors target the exact elements shown in browser DevTools */
+/* Priority 1: Target main#maincontent.page-main directly */
+main#maincontent.page-main,
+#maincontent.page-main {
+    padding: 180px 0 0 0 !important; /* top right bottom left */
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* When header is scrolled */
+body.scrolled main#maincontent.page-main,
+body.scrolled #maincontent.page-main {
+    padding: 120px 0 0 0 !important;
+}
+
 /* Ensure page content starts below fixed header - CRITICAL FIX */
-/* Apply to all possible selectors to ensure it works - MUST override magento-fixes.css */
+/* Target main#maincontent.page-main directly - this is the actual element in DOM */
+main.page-main#maincontent,
+.page-main#maincontent,
+body.catalog-product-view main#maincontent.page-main,
+body.catalog-product-view #maincontent.page-main,
+.catalog-product-view main#maincontent.page-main,
+.catalog-product-view #maincontent.page-main,
 body.catalog-product-view .page-main,
 .catalog-product-view .page-main,
 body.catalog-product-view #maincontent,
 .catalog-product-view #maincontent,
 body.catalog-product-view .page-wrapper .page-main,
-.catalog-product-view .page-wrapper .page-main,
-body.catalog-product-view .columns,
-.catalog-product-view .columns,
-/* Also target by product-view class as fallback */
-body:has(.product-view) .page-main,
-body:has(.product-view) #maincontent,
-/* Target product content wrapper */
-.product-content-wrapper,
-body.catalog-product-view .product-content-wrapper {
+.catalog-product-view .page-wrapper .page-main {
     padding-top: 180px !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -35,20 +50,29 @@ body.catalog-product-view #maincontent > *:first-child,
 }
 
 /* Reset padding for nested elements - they get padding from parent */
+/* Target .columns directly */
+.columns,
 body.catalog-product-view .page-main .columns,
 .catalog-product-view .page-main .columns,
 body.catalog-product-view #maincontent .columns,
-.catalog-product-view #maincontent .columns {
+.catalog-product-view #maincontent .columns,
+main#maincontent.page-main .columns,
+#maincontent.page-main .columns {
     padding-top: 0 !important;
     margin-top: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
 
+/* Target .column.main directly - this is the highlighted element */
+.column.main,
 body.catalog-product-view .column.main,
 .catalog-product-view .column.main,
 body.catalog-product-view #maincontent .column.main,
-.catalog-product-view #maincontent .column.main {
+.catalog-product-view #maincontent .column.main,
+main#maincontent.page-main .column.main,
+#maincontent.page-main .column.main,
+.columns .column.main {
     padding-top: 0 !important;
     margin-top: 0 !important;
     padding-left: 0 !important;
@@ -56,6 +80,10 @@ body.catalog-product-view #maincontent .column.main,
 }
 
 /* When header is scrolled, reduce padding */
+body.scrolled #maincontent.page-main,
+body.scrolled main#maincontent.page-main,
+body.scrolled.catalog-product-view #maincontent.page-main,
+body.scrolled .catalog-product-view #maincontent.page-main,
 body.scrolled.catalog-product-view .page-main,
 body.scrolled .catalog-product-view .page-main,
 body.scrolled.catalog-product-view #maincontent,
@@ -398,18 +426,33 @@ body.catalog-product-view .column.main .product-view,
 
 /* ==================== FINAL OVERRIDE - MUST BE LAST ==================== */
 /* This ensures product page content starts below header - highest priority */
+/* Target #maincontent.page-main directly - this is the actual element */
+#maincontent.page-main.catalog-product-view,
+main#maincontent.page-main.catalog-product-view,
+body.catalog-product-view #maincontent.page-main,
+body.catalog-product-view main#maincontent.page-main,
 body.catalog-product-view .page-wrapper .page-main,
 body.catalog-product-view .page-main,
 .catalog-product-view .page-wrapper .page-main,
 .catalog-product-view .page-main {
     padding-top: 180px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
 }
 
+body.scrolled #maincontent.page-main.catalog-product-view,
+body.scrolled main#maincontent.page-main.catalog-product-view,
+body.scrolled.catalog-product-view #maincontent.page-main,
+body.scrolled.catalog-product-view main#maincontent.page-main,
 body.scrolled.catalog-product-view .page-wrapper .page-main,
 body.scrolled.catalog-product-view .page-main,
 body.scrolled .catalog-product-view .page-wrapper .page-main,
 body.scrolled .catalog-product-view .page-main {
     padding-top: 120px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 /* Ensure product view elements are visible */

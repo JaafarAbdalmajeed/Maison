@@ -63,6 +63,9 @@ body {
 /* Fix product page content to start below header - Multiple selectors for maximum compatibility */
 /* IMPORTANT: This must come AFTER the general .page-main rule to override it */
 /* Using more specific selectors to ensure it overrides padding: 0 */
+/* Target exact DOM elements */
+main#maincontent.page-main,
+#maincontent.page-main,
 body.catalog-product-view .page-wrapper .page-main,
 body.catalog-product-view .page-main,
 .catalog-product-view .page-wrapper .page-main,
@@ -73,6 +76,8 @@ body.catalog-product-view #maincontent,
     padding: 180px 0 0 0 !important; /* top right bottom left - override padding: 0 */
 }
 
+body.scrolled main#maincontent.page-main,
+body.scrolled #maincontent.page-main,
 body.scrolled.catalog-product-view .page-wrapper .page-main,
 body.scrolled.catalog-product-view .page-main,
 body.scrolled .catalog-product-view .page-wrapper .page-main,
