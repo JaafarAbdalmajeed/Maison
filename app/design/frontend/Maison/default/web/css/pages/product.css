@@ -1,9 +1,23 @@
 /* ==================== PRODUCT DETAIL PAGE STYLES ==================== */
 
+/* Ensure page content starts below fixed header */
+.catalog-product-view .page-main,
+.catalog-product-view .page-main .columns,
+.catalog-product-view .column.main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
 /* Product View Container */
 .product-view {
-    padding: 120px 0 80px;
+    padding: 180px 0 80px;
     background-color: var(--white);
+    margin-top: 0;
+}
+
+/* When header is scrolled, reduce padding */
+body.scrolled .product-view {
+    padding-top: 120px;
 }
 
 .product-view .product-info-main {

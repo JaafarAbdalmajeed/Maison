@@ -579,7 +579,11 @@
     
     /* Product Detail Page Responsive */
     .product-view {
-        padding: 100px 0 60px;
+        padding: 140px 0 60px;
+    }
+    
+    body.scrolled .product-view {
+        padding-top: 100px;
     }
     .product-view .page-title-wrapper .page-title {
         font-size: 32px;
