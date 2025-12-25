@@ -141,7 +141,40 @@ header#mainHeader {
 /* Ensure page wrapper and main content are below header */
 .page-wrapper {
     position: relative;
-    z-index: 1;
+    z-index: 1 !important;
+}
+
+/* Ensure all page content stays below header */
+.page-main,
+main#maincontent,
+#maincontent,
+main.page-main,
+.page-wrapper .page-main,
+.page-wrapper .page-main *,
+.page-main *,
+.column.main,
+.column.main * {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Ensure header is always on top */
+header,
+header#mainHeader,
+.page-header,
+.header-container,
+header *,
+header#mainHeader * {
+    z-index: 9999 !important;
+    position: relative;
+}
+
+/* Header itself should be fixed with highest z-index */
+header,
+header#mainHeader,
+.page-header,
+.header-container {
+    position: fixed !important;
 }
 
 /* Force product page content below header */

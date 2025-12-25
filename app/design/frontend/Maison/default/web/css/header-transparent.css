@@ -28,6 +28,7 @@ html body .header-container,
 html body header#mainHeader {
     margin: 0 !important;
     padding: 0 !important;
+    z-index: 9999 !important;
 }
 
 /* Keep cart badge gold */
