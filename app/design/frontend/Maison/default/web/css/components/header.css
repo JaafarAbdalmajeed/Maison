@@ -10,11 +10,14 @@ header#mainHeader,
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
+    max-width: 100vw !important;
     z-index: 1000 !important;
     background-color: transparent !important;
     background: none !important;
     box-shadow: none !important;
     transition: all 0.4s ease;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
 }
 
 /* Add subtle dark overlay for text visibility on transparent header */
@@ -55,17 +58,20 @@ header.scrolled::before {
     background: transparent !important;
     background-color: transparent !important;
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    box-sizing: border-box;
 }
 
 .header-wrapper .container-fluid {
     position: relative;
     background: transparent !important;
     background-color: transparent !important;
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
 }
 
 /* ==================== BEFORE SCROLL ==================== */
@@ -132,10 +138,10 @@ header.scrolled .header-top-row {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.4s ease;
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    overflow-y: visible;
-    box-sizing: border-box;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    box-sizing: border-box !important;
 }
 
 .header-nav .container-fluid {
@@ -143,6 +149,8 @@ header.scrolled .header-top-row {
     width: 100% !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }
 
 header.scrolled .header-nav {
@@ -482,6 +490,12 @@ header.scrolled .burger-menu span {
 
 .submenu-dropdown {
     position: static;
+    z-index: auto;
+}
+
+/* Prevent submenu from covering content when hovered */
+.submenu-dropdown:hover {
+    z-index: 1001;
 }
 
 .fullscreen-submenu {
@@ -489,7 +503,8 @@ header.scrolled .burger-menu span {
     top: 140px;
     left: 0;
     right: 0;
-    width: 100%;
+    width: 100vw !important;
+    max-width: 100vw !important;
     background: var(--white);
     border-top: 1px solid var(--light-gray);
     border-bottom: 1px solid var(--light-gray);
@@ -497,8 +512,10 @@ header.scrolled .burger-menu span {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 999;
+    z-index: 999 !important;
     padding: 0;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
 }
 
 .submenu-dropdown:hover .fullscreen-submenu {
@@ -512,14 +529,21 @@ header.scrolled .fullscreen-submenu {
 
 .submenu-container {
     width: 100%;
-    margin: 0;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .submenu-layout {
     display: flex;
     align-items: stretch;
     min-height: 400px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .submenu-featured-image {
