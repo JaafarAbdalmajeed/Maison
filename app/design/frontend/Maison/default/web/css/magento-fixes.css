@@ -158,22 +158,49 @@ main.page-main,
     z-index: 1 !important;
 }
 
-/* Ensure header is always on top */
-header,
-header#mainHeader,
-.page-header,
-.header-container,
-header *,
-header#mainHeader * {
-    z-index: 9999 !important;
-    position: relative;
+/* CRITICAL: Ensure maincontent is ALWAYS below header - HIGHEST PRIORITY */
+html body main#maincontent,
+html body #maincontent,
+html body main#maincontent.page-main,
+html body #maincontent.page-main,
+html body .page-main,
+html body main.page-main,
+html body main#maincontent.page-main *,
+html body #maincontent.page-main *,
+html body .page-main *,
+html body main.page-main * {
+    position: relative !important;
+    z-index: 1 !important;
 }
 
-/* Header itself should be fixed with highest z-index */
-header,
-header#mainHeader,
-.page-header,
-.header-container {
+/* Ensure header is always on top - HIGHEST PRIORITY */
+html body header,
+html body header#mainHeader,
+html body .page-header,
+html body .header-container {
+    position: fixed !important;
+    z-index: 9999 !important;
+}
+
+/* All header children should also have proper z-index */
+html body header *,
+html body header#mainHeader *,
+html body .page-header *,
+html body .header-container * {
+    position: relative;
+    z-index: inherit;
+}
+
+/* FINAL OVERRIDE: Ensure maincontent NEVER overlaps header */
+html body main#maincontent,
+html body #maincontent {
+    z-index: 0 !important;
+    position: relative !important;
+}
+
+html body header,
+html body header#mainHeader {
+    z-index: 9999 !important;
     position: fixed !important;
 }
 
@@ -263,5 +290,24 @@ button {
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
+}
+
+/* ==================== FINAL Z-INDEX FIX - MAINCONTENT BELOW HEADER ==================== */
+/* This ensures maincontent is ALWAYS below header on ALL pages */
+html body main#maincontent,
+html body #maincontent,
+html body main#maincontent.page-main,
+html body #maincontent.page-main {
+    z-index: 0 !important;
+    position: relative !important;
+}
+
+/* Header must ALWAYS be on top */
+html body header,
+html body header#mainHeader,
+html body .page-header,
+html body .header-container {
+    z-index: 9999 !important;
+    position: fixed !important;
 }
 

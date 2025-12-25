@@ -47,7 +47,7 @@ html body.catalog-product-view #maincontent.page-main {
     padding: 180px 0 0 0 !important; /* top right bottom left */
     margin-top: 0 !important;
     position: relative !important;
-    z-index: 1 !important;
+    z-index: 0 !important;
 }
 
 html body.scrolled main#maincontent.page-main,
