@@ -322,23 +322,27 @@ class UpgradeData implements UpgradeDataInterface
 
         foreach ($products as $productData) {
             try {
+                $product = null;
+                $isUpdate = false;
+                
                 // Check if product already exists
                 try {
-                    $existingProduct = $this->productRepository->get($productData['sku']);
-                    $this->logger->info("Product '{$productData['sku']}' already exists, skipping.");
-                    continue;
+                    $product = $this->productRepository->get($productData['sku']);
+                    $isUpdate = true;
+                    $this->logger->info("Product '{$productData['sku']}' already exists, updating...");
                 } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
-                    // Product doesn't exist, create it
+                    // Product doesn't exist, create new one
+                    $product = $this->productFactory->create();
+                    $product->setSku($productData['sku'])
+                        ->setAttributeSetId(4) // Default attribute set
+                        ->setTypeId('simple')
+                        ->setWebsiteIds([$this->storeManager->getWebsite()->getId()]);
                 }
 
-                $product = $this->productFactory->create();
-                $product->setSku($productData['sku'])
-                    ->setName($productData['name'])
-                    ->setUrlKey($productData['url_key'])
-                    ->setAttributeSetId(4) // Default attribute set
+                // Update/Create product data
+                $product->setName($productData['name'])
                     ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
                     ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-                    ->setTypeId('simple')
                     ->setPrice($productData['price'])
                     ->setStockData([
                         'use_config_manage_stock' => 0,
@@ -348,20 +352,30 @@ class UpgradeData implements UpgradeDataInterface
                     ])
                     ->setDescription($productData['description'])
                     ->setShortDescription($productData['description'])
-                    ->setStoreId($storeId)
-                    ->setWebsiteIds([$this->storeManager->getWebsite()->getId()]);
+                    ->setStoreId($storeId);
+
+                // Set URL key if provided
+                if (isset($productData['url_key'])) {
+                    $product->setUrlKey($productData['url_key']);
+                }
 
                 // Assign to category
-                try {
-                    $category = $this->categoryFactory->create()
-                        ->getCollection()
-                        ->addAttributeToFilter('url_key', $productData['category'])
-                        ->getFirstItem();
-                    if ($category->getId()) {
-                        $product->setCategoryIds([$category->getId()]);
+                if (isset($productData['category'])) {
+                    try {
+                        $category = $this->categoryFactory->create()
+                            ->getCollection()
+                            ->addAttributeToFilter('url_key', $productData['category'])
+                            ->getFirstItem();
+                        if ($category->getId()) {
+                            $currentCategoryIds = $product->getCategoryIds();
+                            if (!in_array($category->getId(), $currentCategoryIds)) {
+                                $currentCategoryIds[] = $category->getId();
+                                $product->setCategoryIds($currentCategoryIds);
+                            }
+                        }
+                    } catch (\Exception $e) {
+                        // Category might not exist, continue
                     }
-                } catch (\Exception $e) {
-                    // Category might not exist, continue
                 }
 
                 // Set brand if attribute exists
@@ -383,10 +397,15 @@ class UpgradeData implements UpgradeDataInterface
                 }
 
                 $this->productRepository->save($product);
-                $this->logger->info("Product '{$productData['sku']}' created successfully with URL key: {$productData['url_key']}");
+                
+                if ($isUpdate) {
+                    $this->logger->info("Product '{$productData['sku']}' updated successfully with URL key: {$productData['url_key']}");
+                } else {
+                    $this->logger->info("Product '{$productData['sku']}' created successfully with URL key: {$productData['url_key']}");
+                }
 
             } catch (\Exception $e) {
-                $this->logger->error("Error creating product '{$productData['sku']}': " . $e->getMessage());
+                $this->logger->error("Error creating/updating product '{$productData['sku']}': " . $e->getMessage());
             }
         }
     }

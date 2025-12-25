@@ -253,56 +253,68 @@ class InstallData implements InstallDataInterface
             [
                 'sku' => 'LUXOR-ARMCHAIR-001',
                 'name' => 'Luxor Velvet Armchair',
+                'url_key' => 'luxor-velvet-armchair',
                 'price' => 3450.00,
                 'brand' => 'D&G',
                 'description' => 'Elegant velvet armchair with luxurious comfort. Handcrafted with premium materials and timeless design. Perfect for modern living spaces.',
                 'image' => 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&h=1000&fit=crop&q=80',
-                'bestseller' => true
+                'bestseller' => true,
+                'category' => 'seating'
             ],
             [
                 'sku' => 'MARBLE-CONSOLE-001',
                 'name' => 'Marble Console Table',
+                'url_key' => 'marble-console-table',
                 'price' => 5200.00,
                 'brand' => 'VIDO',
                 'description' => 'Stunning marble console table with elegant design. Perfect centerpiece for any luxury home.',
                 'image' => 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=800&h=1000&fit=crop&q=80',
-                'bestseller' => true
+                'bestseller' => true,
+                'category' => 'tables'
             ],
             [
                 'sku' => 'CRYSTAL-CHANDELIER-001',
                 'name' => 'Crystal Chandelier',
+                'url_key' => 'crystal-chandelier',
                 'price' => 8900.00,
                 'brand' => 'BITOSSI',
                 'description' => 'Exquisite crystal chandelier that adds elegance and sophistication to any room.',
                 'image' => 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=1000&fit=crop&q=80',
-                'bestseller' => true
+                'bestseller' => true,
+                'category' => 'lighting'
             ],
             [
                 'sku' => 'VELVET-SOFA-001',
                 'name' => 'Velvet Sofa Set',
+                'url_key' => 'velvet-sofa-set',
                 'price' => 12500.00,
                 'brand' => 'BACI',
                 'description' => 'Luxurious velvet sofa set with premium comfort and timeless elegance.',
                 'image' => 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&h=1000&fit=crop&q=80',
-                'bestseller' => true
+                'bestseller' => true,
+                'category' => 'seating'
             ],
             [
                 'sku' => 'DESIGNER-LAMP-001',
                 'name' => 'Designer Floor Lamp',
+                'url_key' => 'designer-floor-lamp',
                 'price' => 1800.00,
                 'brand' => 'VOLUSPA',
                 'description' => 'Modern designer floor lamp that combines functionality with artistic design.',
                 'image' => 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&h=1000&fit=crop&q=80',
-                'bestseller' => true
+                'bestseller' => true,
+                'category' => 'lighting'
             ],
             [
                 'sku' => 'LUXURY-BOOKCASE-001',
                 'name' => 'Luxury Bookcase',
+                'url_key' => 'luxury-bookcase',
                 'price' => 4200.00,
                 'brand' => 'TASCHEN',
                 'description' => 'Elegant bookcase designed for the modern bibliophile. Perfect for displaying your collection.',
                 'image' => 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=1000&fit=crop&q=80',
-                'bestseller' => true
+                'bestseller' => true,
+                'category' => 'decor'
             ]
         ];
 
@@ -335,6 +347,26 @@ class InstallData implements InstallDataInterface
                     ->setShortDescription($productData['description'])
                     ->setStoreId($storeId)
                     ->setWebsiteIds([$this->storeManager->getWebsite()->getId()]);
+
+                // Set URL key if provided
+                if (isset($productData['url_key'])) {
+                    $product->setUrlKey($productData['url_key']);
+                }
+
+                // Assign to category if provided
+                if (isset($productData['category'])) {
+                    try {
+                        $category = $this->categoryFactory->create()
+                            ->getCollection()
+                            ->addAttributeToFilter('url_key', $productData['category'])
+                            ->getFirstItem();
+                        if ($category->getId()) {
+                            $product->setCategoryIds([$category->getId()]);
+                        }
+                    } catch (\Exception $e) {
+                        // Category might not exist, continue
+                    }
+                }
 
                 // Set brand if attribute exists
                 try {
