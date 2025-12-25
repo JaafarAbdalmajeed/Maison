@@ -54,12 +54,18 @@ header.scrolled::before {
 .header-wrapper {
     background: transparent !important;
     background-color: transparent !important;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .header-wrapper .container-fluid {
     position: relative;
     background: transparent !important;
     background-color: transparent !important;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* ==================== BEFORE SCROLL ==================== */
@@ -125,6 +131,18 @@ header.scrolled .header-top-row {
     padding: 12px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.4s ease;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    box-sizing: border-box;
+}
+
+.header-nav .container-fluid {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
 }
 
 header.scrolled .header-nav {
@@ -163,6 +181,9 @@ header.scrolled .header-nav .container-fluid {
     gap: 20px;
     padding-left: 1rem !important; /* Override px-lg-5 to px-4 */
     padding-right: 1rem !important; /* Override px-lg-5 to px-4 */
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 header.scrolled .nav-menu {
