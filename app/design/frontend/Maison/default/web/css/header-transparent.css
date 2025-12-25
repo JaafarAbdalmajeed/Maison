@@ -29,6 +29,10 @@ html body header#mainHeader {
     margin: 0 !important;
     padding: 0 !important;
     z-index: 1000 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
 }
 
 /* Keep cart badge gold */
