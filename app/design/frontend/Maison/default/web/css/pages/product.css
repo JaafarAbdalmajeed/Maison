@@ -8,7 +8,7 @@ main#maincontent.page-main,
     padding: 180px 0 0 0 !important; /* top right bottom left */
     margin-top: 0 !important;
     position: relative !important;
-    z-index: 0 !important;
+    z-index: 1 !important;
 }
 
 /* When header is scrolled */
@@ -37,7 +37,7 @@ body.catalog-product-view .page-wrapper .page-main,
     padding-bottom: 0 !important;
     margin-top: 0 !important;
     position: relative !important;
-    z-index: 0 !important;
+    z-index: 1 !important;
 }
 
 /* Ensure first element inside page-main doesn't have negative margin */
