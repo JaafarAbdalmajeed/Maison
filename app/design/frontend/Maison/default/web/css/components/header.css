@@ -501,8 +501,8 @@ header.scrolled .burger-menu span {
 .fullscreen-submenu {
     position: fixed;
     top: 140px;
-    left: 0;
-    right: 0;
+    left: 0 !important;
+    right: 0 !important;
     width: 100vw !important;
     max-width: 100vw !important;
     background: var(--white);
@@ -513,9 +513,11 @@ header.scrolled .burger-menu span {
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 999 !important;
-    padding: 0;
+    padding: 0 !important;
+    margin: 0 !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 
 .submenu-dropdown:hover .fullscreen-submenu {
@@ -528,31 +530,39 @@ header.scrolled .fullscreen-submenu {
 }
 
 .submenu-container {
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100vw !important;
     margin: 0 auto;
     padding: 0;
-    box-sizing: border-box;
-    overflow-x: hidden;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    position: relative;
 }
 
 .submenu-layout {
     display: flex;
     align-items: stretch;
     min-height: 400px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow-x: hidden;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
 }
 
 .submenu-featured-image {
     position: relative;
     width: 280px;
+    min-width: 280px;
+    max-width: 280px;
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .submenu-featured-image img {
@@ -615,11 +625,18 @@ header.scrolled .fullscreen-submenu {
     justify-content: center;
     padding: 40px 50px;
     flex: 1;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .submenu-column {
     flex: 1;
     min-width: 180px;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .submenu-title {

@@ -61,9 +61,13 @@
     }
     .submenu-layout {
         min-height: 350px;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
     }
     .submenu-featured-image {
         width: 220px;
+        min-width: 220px;
+        max-width: 220px;
     }
     .submenu-featured-image img {
         min-height: 350px;
