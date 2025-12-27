@@ -20,6 +20,9 @@ header#mainHeader,
     box-sizing: border-box !important;
     margin: 0 !important;
     padding: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Header overlay for text visibility */
@@ -69,6 +72,9 @@ header.scrolled::before {
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .header-wrapper .container-fluid {
@@ -85,7 +91,7 @@ header.scrolled::before {
 
 /* ==================== TOP ROW (Before Scroll) ==================== */
 .header-top-row {
-    display: grid;
+    display: grid !important;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 20px;
@@ -93,6 +99,8 @@ header.scrolled::before {
     width: 100%;
     box-sizing: border-box;
     background: transparent !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 header.scrolled .header-top-row {
@@ -148,6 +156,9 @@ header.scrolled .header-top-row {
     box-sizing: border-box !important;
     margin: 0 !important;
     overflow: visible !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .header-nav .container-fluid {
@@ -467,7 +478,7 @@ header.scrolled .burger-menu span {
     z-index: auto;
 }
 
-/* Fullscreen Submenu - HIDDEN BY DEFAULT */
+/* Fullscreen Submenu - HIDDEN BY DEFAULT - ALWAYS HIDDEN UNLESS HOVERING */
 .fullscreen-submenu {
     position: fixed !important;
     top: 140px !important;
@@ -742,6 +753,48 @@ html body .header-wrapper {
     height: auto !important;
     max-height: none !important;
     background: transparent !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* FORCE HEADER TO ALWAYS BE VISIBLE - HIGHEST PRIORITY */
+html body header#mainHeader,
+html body header,
+html body .page-header,
+html body .header-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    z-index: 1000 !important;
+}
+
+/* FORCE HEADER TOP ROW TO ALWAYS BE VISIBLE */
+html body header#mainHeader .header-top-row,
+html body header .header-top-row {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* FORCE HEADER NAV TO ALWAYS BE VISIBLE (on desktop) */
+html body header#mainHeader .header-nav,
+html body header .header-nav {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 991px) {
+    html body header#mainHeader .header-nav,
+    html body header .header-nav {
+        display: none !important; /* Hidden on mobile by default, shown via burger menu */
+    }
 }
 
 /* Force submenu to be hidden by default - override all other styles */
@@ -788,4 +841,107 @@ html body header .submenu-dropdown:hover .submenu-container {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+}
+
+/* ==================== ULTIMATE HEADER VISIBILITY FIX ==================== */
+/* These rules ensure header is ALWAYS visible - highest priority */
+html body header#mainHeader,
+html body header,
+html body .page-header,
+html body .header-container,
+html body header#mainHeader .header-wrapper,
+html body header .header-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Force header top row visibility */
+html body header#mainHeader:not(.scrolled) .header-top-row,
+html body header:not(.scrolled) .header-top-row {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Force header nav visibility on desktop */
+@media (min-width: 992px) {
+    html body header#mainHeader .header-nav,
+    html body header .header-nav {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* Force all header elements to be visible */
+html body header#mainHeader *,
+html body header * {
+    box-sizing: border-box;
+}
+
+/* Override any display:none on header elements */
+html body header#mainHeader .header-left-icons,
+html body header#mainHeader .header-right-icons,
+html body header#mainHeader .header-logo-container,
+html body header#mainHeader .nav-menu,
+html body header#mainHeader .nav-item {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+html body header#mainHeader .header-logo-container {
+    display: flex !important;
+}
+
+html body header#mainHeader .nav-menu {
+    display: flex !important;
+}
+
+html body header#mainHeader .nav-item {
+    display: list-item !important;
+}
+
+/* ==================== FORCE SUBMENU TO BE HIDDEN BY DEFAULT ==================== */
+/* These rules ensure submenu is ALWAYS hidden unless hovering - HIGHEST PRIORITY */
+html body header#mainHeader .fullscreen-submenu,
+html body header .fullscreen-submenu,
+html body .fullscreen-submenu,
+html body header#mainHeader .submenu-dropdown .fullscreen-submenu,
+html body header .submenu-dropdown .fullscreen-submenu,
+html body .submenu-dropdown .fullscreen-submenu,
+html body header#mainHeader .submenu-container,
+html body header .submenu-container,
+html body .submenu-container {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Show submenu ONLY when hovering over parent dropdown */
+html body header#mainHeader .submenu-dropdown:hover .fullscreen-submenu,
+html body header .submenu-dropdown:hover .fullscreen-submenu,
+html body .submenu-dropdown:hover .fullscreen-submenu,
+html body header#mainHeader .submenu-dropdown:hover .submenu-container,
+html body header .submenu-dropdown:hover .submenu-container,
+html body .submenu-dropdown:hover .submenu-container {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Force hide when NOT hovering - override everything */
+html body header#mainHeader .submenu-dropdown:not(:hover) .fullscreen-submenu,
+html body header .submenu-dropdown:not(:hover) .fullscreen-submenu,
+html body .submenu-dropdown:not(:hover) .fullscreen-submenu,
+html body header#mainHeader .submenu-dropdown:not(:hover) .submenu-container,
+html body header .submenu-dropdown:not(:hover) .submenu-container,
+html body .submenu-dropdown:not(:hover) .submenu-container {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }

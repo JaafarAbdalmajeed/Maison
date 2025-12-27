@@ -147,6 +147,9 @@ header#mainHeader {
     box-sizing: border-box !important;
     margin: 0 !important;
     padding: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Ensure page wrapper and main content are below header */

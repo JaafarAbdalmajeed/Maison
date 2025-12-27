@@ -48,7 +48,7 @@
         <!-- Override footer-container to remove page-footer class and wrapper -->
         <referenceContainer name="footer-container" htmlTag="div" htmlClass="">
             <referenceContainer name="footer" remove="true"/>
-            <block class="Magento\Framework\View\Element\Template" name="maison.footer" template="Magento_Theme::html/footer.phtml" before="-"/>
+            <block class="Maison\Homepage\Block\Footer" name="maison.footer" template="Magento_Theme::html/footer.phtml" before="-"/>
         </referenceContainer>
         
         <!-- Add sidebars and overlays -->
