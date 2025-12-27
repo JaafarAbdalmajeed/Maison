@@ -91,7 +91,7 @@ header.scrolled::before {
 
 /* ==================== TOP ROW (Before Scroll) ==================== */
 .header-top-row {
-    display: grid !important;
+    display: none !important; /* Hidden by default - show only one header */
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 20px;
@@ -99,8 +99,8 @@ header.scrolled::before {
     width: 100%;
     box-sizing: border-box;
     background: transparent !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 header.scrolled .header-top-row {
@@ -161,6 +161,12 @@ header.scrolled .header-top-row {
     opacity: 1 !important;
 }
 
+/* Hide border when not scrolled to merge with top row */
+header:not(.scrolled) .header-nav {
+    border-top: none !important;
+    padding-top: 0 !important;
+}
+
 .header-nav .container-fluid {
     max-width: 100% !important;
     width: 100% !important;
@@ -200,6 +206,14 @@ header .nav-menu .nav-item {
 }
 
 /* ==================== SCROLLED HEADER LAYOUT ==================== */
+/* Show header-nav as single row layout - always visible */
+header .header-nav .container-fluid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
 header.scrolled .header-nav .container-fluid {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -774,12 +788,12 @@ html body .header-container {
     z-index: 1000 !important;
 }
 
-/* FORCE HEADER TOP ROW TO ALWAYS BE VISIBLE */
+/* FORCE HEADER TOP ROW TO BE HIDDEN - Only show navigation */
 html body header#mainHeader .header-top-row,
 html body header .header-top-row {
-    display: grid !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 /* FORCE HEADER NAV TO ALWAYS BE VISIBLE (on desktop) */
@@ -856,12 +870,12 @@ html body header .header-wrapper {
     opacity: 1 !important;
 }
 
-/* Force header top row visibility */
+/* Force header top row to be hidden - only show navigation */
 html body header#mainHeader:not(.scrolled) .header-top-row,
 html body header:not(.scrolled) .header-top-row {
-    display: grid !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 /* Force header nav visibility on desktop */
