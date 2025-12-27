@@ -1,0 +1,181 @@
+<?php
+/**
+ * Product Details Tabs Template - Custom Design
+ * @var \Magento\Catalog\Block\Product\View\Description $block
+ */
+$_product = $block->getProduct();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$reviewHelper = $this->helper('Magento\Review\Helper\Data');
+?>
+
+<section class="product-tabs-section">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row g-4">
+            <!-- Left: Vertical Tabs + Content -->
+            <div class="col-lg-8">
+                <div class="product-tabs-vertical">
+                    <div class="tabs-nav-vertical">
+                        <button class="tab-btn-vertical active" data-tab="description"><?= __('DESCRIPTION') ?></button>
+                        <button class="tab-btn-vertical" data-tab="specifications"><?= __('SPECIFICATIONS') ?></button>
+                        <?php 
+                        $reviewCount = 0;
+                        if ($reviewHelper->getReviewSummary($_product)) {
+                            $ratingSummary = $reviewHelper->getReviewSummary($_product);
+                            $reviewCount = $ratingSummary->getReviewsCount();
+                        }
+                        ?>
+                        <button class="tab-btn-vertical" data-tab="reviews"><?= __('REVIEWS') ?> (<?= $reviewCount ?>)</button>
+                    </div>
+                    
+                    <div class="tabs-content-vertical">
+                        <!-- Description Tab -->
+                        <div class="tab-pane active" id="description">
+                            <div class="row g-5">
+                                <div class="col-lg-8">
+                                    <h3 class="tab-heading"><?= __('Product Description') ?></h3>
+                                    <?php if ($_product->getDescription()): ?>
+                                        <?= $_helper->productAttribute($_product, $_product->getDescription(), 'description') ?>
+                                    <?php else: ?>
+                                        <p><?= __('No description available.') ?></p>
+                                    <?php endif; ?>
+                                    
+                                    <?php 
+                                    // Get additional attributes for features
+                                    $features = [];
+                                    $attributes = ['features', 'key_features', 'highlights'];
+                                    foreach ($attributes as $attrCode) {
+                                        $attr = $_product->getResource()->getAttribute($attrCode);
+                                        if ($attr && $_product->getData($attrCode)) {
+                                            $features[] = $_product->getAttributeText($attrCode);
+                                        }
+                                    }
+                                    if (!empty($features)): ?>
+                                        <h4 class="sub-heading"><?= __('Key Features') ?>:</h4>
+                                        <ul class="features-list">
+                                            <?php foreach ($features as $feature): ?>
+                                                <li><?= $block->escapeHtml($feature) ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="info-box">
+                                        <h4 class="info-box-title"><?= __('Care Instructions') ?></h4>
+                                        <ul class="info-list">
+                                            <?php 
+                                            $careInstructions = $_product->getAttributeText('care_instructions');
+                                            if ($careInstructions):
+                                                if (is_array($careInstructions)):
+                                                    foreach ($careInstructions as $instruction): ?>
+                                                        <li><?= $block->escapeHtml($instruction) ?></li>
+                                                    <?php endforeach;
+                                                else: ?>
+                                                    <li><?= $block->escapeHtml($careInstructions) ?></li>
+                                                <?php endif;
+                                            else: ?>
+                                                <li><?= __('Vacuum regularly with soft brush') ?></li>
+                                                <li><?= __('Professional cleaning recommended') ?></li>
+                                                <li><?= __('Avoid direct sunlight') ?></li>
+                                                <li><?= __('Rotate cushions periodically') ?></li>
+                                            <?php endif; ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Specifications Tab -->
+                        <div class="tab-pane" id="specifications">
+                            <div class="specifications-grid">
+                                <?php 
+                                // Get product attributes for specifications
+                                $specAttributes = [
+                                    'dimensions' => __('Dimensions (W x D x H)'),
+                                    'weight' => __('Weight'),
+                                    'material' => __('Material'),
+                                    'color' => __('Color'),
+                                    'warranty' => __('Warranty'),
+                                    'country_of_manufacture' => __('Made In'),
+                                    'assembly_required' => __('Assembly Required'),
+                                ];
+                                
+                                foreach ($specAttributes as $attrCode => $label):
+                                    $attr = $_product->getResource()->getAttribute($attrCode);
+                                    if ($attr && $_product->getData($attrCode)):
+                                        $value = $_product->getAttributeText($attrCode);
+                                        if (!$value) {
+                                            $value = $_product->getData($attrCode);
+                                        }
+                                        if ($value): ?>
+                                            <div class="spec-row">
+                                                <div class="spec-label"><?= $block->escapeHtml($label) ?></div>
+                                                <div class="spec-value"><?= $block->escapeHtml($value) ?></div>
+                                            </div>
+                                        <?php endif;
+                                    endif;
+                                endforeach;
+                                
+                                // Additional attributes
+                                $additionalAttrs = $_product->getAttributes();
+                                foreach ($additionalAttrs as $attr):
+                                    if ($attr->getIsVisibleOnFront() && 
+                                        $attr->getIsUserDefined() && 
+                                        !in_array($attr->getAttributeCode(), array_keys($specAttributes)) &&
+                                        $_product->getData($attr->getAttributeCode())):
+                                        $value = $_product->getAttributeText($attr->getAttributeCode());
+                                        if (!$value) {
+                                            $value = $_product->getData($attr->getAttributeCode());
+                                        }
+                                        if ($value && $value != 'No' && $value != '0'): ?>
+                                            <div class="spec-row">
+                                                <div class="spec-label"><?= $block->escapeHtml($attr->getFrontendLabel()) ?></div>
+                                                <div class="spec-value"><?= $block->escapeHtml($value) ?></div>
+                                            </div>
+                                        <?php endif;
+                                    endif;
+                                endforeach;
+                                ?>
+                            </div>
+                        </div>
+                        
+                        <!-- Reviews Tab -->
+                        <div class="tab-pane" id="reviews">
+                            <?= $block->getChildHtml('product.info.review') ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right: Decorative Image -->
+            <div class="col-lg-4">
+                <div class="tabs-image-wrapper">
+                    <?php 
+                    $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+                    $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+                    ?>
+                    <img src="<?= $block->escapeUrl($decorativeImage) ?>" 
+                         alt="<?= $block->escapeHtmlAttr($_product->getName()) ?>" 
+                         class="tabs-decorative-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+require(['jquery'], function($) {
+    // Tab switching
+    $('.tab-btn-vertical').on('click', function() {
+        var tabId = $(this).data('tab');
+        
+        // Update buttons
+        $('.tab-btn-vertical').removeClass('active');
+        $(this).addClass('active');
+        
+        // Update panes
+        $('.tab-pane').removeClass('active');
+        $('#' + tabId).addClass('active');
+    });
+});
+</script>
+

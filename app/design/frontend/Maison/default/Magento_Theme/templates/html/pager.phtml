@@ -1,0 +1,65 @@
+<?php
+/**
+ * Pager Template - Custom Design matching category.html
+ * @var \Magento\Theme\Block\Html\Pager $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php if ($block->getCollection()->getSize()): ?>
+    <?php if ($block->getLastPageNum() > 1): ?>
+        <nav class="pagination-wrapper" aria-label="<?= $escaper->escapeHtmlAttr(__('Product pages')) ?>">
+            <ul class="pagination-list">
+                <?php if (!$block->isFirstPage()): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= $escaper->escapeUrl($block->getPreviousPageUrl()) ?>" aria-label="<?= $escaper->escapeHtmlAttr(__('Previous')) ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="<?= $escaper->escapeHtmlAttr(__('Previous')) ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                
+                <?php foreach ($block->getFramePages() as $_page): ?>
+                    <?php if ($block->isPageCurrent($_page)): ?>
+                        <li class="page-item active">
+                            <a class="page-link" href="#"><?= $escaper->escapeHtml($_page) ?></a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link" href="<?= $escaper->escapeUrl($block->getPageUrl($_page)) ?>">
+                                <?= $escaper->escapeHtml($_page) ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                
+                <?php if (!$block->isLastPage()): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?= $escaper->escapeUrl($block->getNextPageUrl()) ?>" aria-label="<?= $escaper->escapeHtmlAttr(__('Next')) ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="<?= $escaper->escapeHtmlAttr(__('Next')) ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    <?php endif; ?>
+<?php endif; ?>
+

@@ -1,0 +1,41 @@
+<?php
+/**
+ * Brand Header/Banner Template
+ * @var \Maison\Homepage\Block\Brands $block
+ */
+$brandName = __('All Brands');
+$brandDescription = __('Discover our curated collection of luxury furniture for sophisticated living spaces');
+
+// Try to get brand name from URL parameter
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$request = $objectManager->get(\Magento\Framework\App\RequestInterface::class);
+$brandParam = $request->getParam('brand');
+
+if ($brandParam) {
+    try {
+        $eavConfig = $objectManager->get(\Magento\Eav\Model\Config::class);
+        $attribute = $eavConfig->getAttribute('catalog_product', 'brand');
+        if ($attribute && $attribute->getId()) {
+            $brandName = $attribute->getSource()->getOptionText($brandParam);
+            if (!$brandName) {
+                $brandName = __('Brand Products');
+            }
+        }
+    } catch (\Exception $e) {
+        // Ignore errors
+    }
+}
+?>
+<!-- Brand Header -->
+<section class="category-header">
+    <div class="category-banner">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1920&h=500&fit=crop&q=80" alt="<?= $block->escapeHtmlAttr($brandName) ?>" class="category-banner-image">
+        <div class="category-banner-overlay">
+            <div class="container-fluid px-4 px-lg-5">
+                <h1 class="category-title"><?= $block->escapeHtml($brandName) ?></h1>
+                <p class="category-description"><?= $block->escapeHtml($brandDescription) ?></p>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -9,6 +9,10 @@
     <div class="category-products-wrapper">
         <?= $block->getProductListHtml() ?>
     </div>
+<?php else: ?>
+    <div class="message info empty">
+        <div><?= $escaper->escapeHtml(__('There are no products matching the selection.')) ?></div>
+    </div>
 <?php endif; ?>
 
 

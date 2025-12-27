@@ -3,15 +3,77 @@
  * Category Breadcrumbs Template
  * @var \Magento\Theme\Block\Html\Breadcrumbs $block
  */
+$crumbs = [];
+try {
+    if (method_exists($block, 'getCrumbs')) {
+        $crumbs = $block->getCrumbs() ?: [];
+    }
+    
+    // If no crumbs from block, try to get from main breadcrumbs block
+    if (empty($crumbs)) {
+        $mainBreadcrumbsBlock = $block->getLayout()->getBlock('breadcrumbs');
+        if ($mainBreadcrumbsBlock && method_exists($mainBreadcrumbsBlock, 'getCrumbs')) {
+            $crumbs = $mainBreadcrumbsBlock->getCrumbs() ?: [];
+        }
+    }
+    
+    // Fallback: use catalog helper directly
+    if (empty($crumbs)) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $catalogHelper = $objectManager->get(\Magento\Catalog\Helper\Data::class);
+        $breadcrumbPath = $catalogHelper->getBreadcrumbPath();
+        if ($breadcrumbPath && is_array($breadcrumbPath)) {
+            // Add home breadcrumb
+            $storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+            $homeUrl = $storeManager->getStore()->getBaseUrl();
+            $crumbs['home'] = [
+                'label' => __('Home'),
+                'title' => __('Go to Home Page'),
+                'link' => $homeUrl
+            ];
+            // Add category breadcrumbs
+            foreach ($breadcrumbPath as $name => $breadcrumb) {
+                $crumbs[$name] = $breadcrumb;
+            }
+        }
+    }
+} catch (\Exception $e) {
+    // If breadcrumbs fail, just show empty array
+    $crumbs = [];
+}
 ?>
 <!-- Breadcrumbs -->
 <section class="breadcrumbs-section">
     <div class="container-fluid px-4 px-lg-5">
-        <?= $block->getChildHtml() ?>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <?php if ($crumbs && is_array($crumbs)): ?>
+                    <?php foreach ($crumbs as $crumbName => $crumbInfo): ?>
+                        <?php if (isset($crumbInfo['last']) && $crumbInfo['last']): ?>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <?= $block->escapeHtml($crumbInfo['label']) ?>
+                            </li>
+                        <?php elseif (isset($crumbInfo['link']) && $crumbInfo['link']): ?>
+                            <li class="breadcrumb-item">
+                                <a href="<?= $block->escapeUrl($crumbInfo['link']) ?>">
+                                    <?= $block->escapeHtml($crumbInfo['label']) ?>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="breadcrumb-item">
+                                <?= $block->escapeHtml($crumbInfo['label']) ?>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li class="breadcrumb-item">
+                        <a href="<?= $block->getUrl('') ?>"><?= __('Home') ?></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <?= __('Category') ?>
+                    </li>
+                <?php endif; ?>
+            </ol>
+        </nav>
     </div>
 </section>
-
-
-
-
-

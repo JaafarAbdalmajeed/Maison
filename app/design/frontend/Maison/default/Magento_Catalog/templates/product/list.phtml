@@ -55,8 +55,6 @@ $_helper = $block->getData('outputHelper');
         ?>
     </div>
 <?php else: ?>
-    <?= $block->getToolbarHtml() ?>
-    <?= $block->getAdditionalHtml() ?>
     <?php
     // Force grid view only
     $viewMode = 'grid';
@@ -65,6 +63,8 @@ $_helper = $block->getData('outputHelper');
     $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     $pos = $block->getPositioned();
     ?>
+    <?= $block->getToolbarHtml() ?>
+    <?= $block->getAdditionalHtml() ?>
     <div class="products wrapper grid products-grid">
         <div class="products-grid" id="productsGrid">
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
@@ -230,6 +230,18 @@ $_helper = $block->getData('outputHelper');
             <?php endforeach; ?>
         </div>
     </div>
-    <?= $block->getChildBlock('toolbar')->setIsBottom(true)->toHtml() ?>
+    <?php
+    // Get toolbar block - try multiple names
+    $toolbarBlock = $block->getChildBlock('toolbar');
+    if (!$toolbarBlock) {
+        $toolbarBlock = $block->getLayout()->getBlock('product_list_toolbar');
+    }
+    if (!$toolbarBlock) {
+        $toolbarBlock = $block->getLayout()->getBlock('brand_product_list_toolbar');
+    }
+    if ($toolbarBlock) {
+        echo $toolbarBlock->setIsBottom(true)->toHtml();
+    }
+    ?>
 <?php endif; ?>
 

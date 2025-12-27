@@ -1,298 +1,204 @@
 <?php
 /**
  * Maison de Pierre - Contact Page Template
- * Beautiful and comprehensive contact page
+ * Dynamic Contact page matching the design from contact.html
  */
 /** @var \Magento\Framework\View\Element\Template $block */
 ?>
-<div class="contact-page">
-    <!-- Hero Section -->
-    <section class="contact-hero-section">
-        <div class="contact-hero-overlay">
-            <div class="container-fluid px-4 px-lg-5">
-                <div class="contact-hero-content">
-                    <h1 class="contact-hero-title"><?= __('Get In Touch') ?></h1>
-                    <p class="contact-hero-subtitle"><?= __('We'd love to hear from you. Send us a message and we'll respond as soon as possible.') ?></p>
-                </div>
-            </div>
+
+<!-- Breadcrumbs -->
+<section class="breadcrumbs-section">
+    <div class="container-fluid px-4 px-lg-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?= $block->escapeUrl($block->getUrl('')) ?>"><?= __('Home') ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?= __('Contact Us') ?></li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h1 class="page-title-contact">Get in Touch</h1>
+            <p class="page-subtitle-contact">We're here to help with any questions or concerns</p>
         </div>
-    </section>
 
-    <!-- Contact Information Section -->
-    <section class="contact-info-section">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="contact-info-grid">
-                <!-- Phone -->
-                <div class="contact-info-card">
-                    <div class="contact-info-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="contact-info-title"><?= __('Phone') ?></h3>
-                    <p class="contact-info-text">
-                        <a href="tel:+1234567890">+1 (234) 567-890</a>
-                    </p>
-                    <p class="contact-info-text">
-                        <a href="tel:+1234567891">+1 (234) 567-891</a>
-                    </p>
-                </div>
-
-                <!-- Email -->
-                <div class="contact-info-card">
-                    <div class="contact-info-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="contact-info-title"><?= __('Email') ?></h3>
-                    <p class="contact-info-text">
-                        <a href="mailto:info@maisondepierre.com">info@maisondepierre.com</a>
-                    </p>
-                    <p class="contact-info-text">
-                        <a href="mailto:support@maisondepierre.com">support@maisondepierre.com</a>
-                    </p>
-                </div>
-
-                <!-- Address -->
-                <div class="contact-info-card">
-                    <div class="contact-info-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                    </div>
-                    <h3 class="contact-info-title"><?= __('Address') ?></h3>
-                    <p class="contact-info-text">
-                        123 Luxury Avenue<br>
-                        Design District<br>
-                        New York, NY 10001<br>
-                        United States
-                    </p>
-                </div>
-
-                <!-- Hours -->
-                <div class="contact-info-card">
-                    <div class="contact-info-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="contact-info-title"><?= __('Opening Hours') ?></h3>
-                    <p class="contact-info-text">
-                        <strong><?= __('Mon - Fri') ?>:</strong> 9:00 AM - 8:00 PM<br>
-                        <strong><?= __('Saturday') ?>:</strong> 10:00 AM - 6:00 PM<br>
-                        <strong><?= __('Sunday') ?>:</strong> <?= __('Closed') ?>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Form & Map Section -->
-    <section class="contact-form-map-section">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="contact-form-map-grid">
-                <!-- Contact Form -->
-                <div class="contact-form-wrapper">
-                    <div class="contact-form-header">
-                        <h2 class="contact-form-title"><?= __('Send Us a Message') ?></h2>
-                        <p class="contact-form-subtitle"><?= __('Fill out the form below and we'll get back to you within 24 hours.') ?></p>
-                    </div>
-                    
-                    <form class="contact-form" action="<?= $block->escapeUrl($block->getUrl('contact/index/post')) ?>" method="post" id="contact-form" data-mage-init='{"validation":{}}'>
+        <div class="row g-4">
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+                <div class="contact-form-box">
+                    <h3 class="contact-box-title">Send Us a Message</h3>
+                    <form class="contact-form" 
+                          action="<?= $block->escapeUrl($block->getUrl('contact/index/post')) ?>" 
+                          method="post" 
+                          id="contact-form"
+                          data-mage-init='{"validation":{}}'>
                         <?= $block->getBlockHtml('formkey') ?>
-                        
-                        <div class="contact-form-fields">
-                            <div class="contact-form-row">
-                                <div class="contact-form-field">
-                                    <label for="name" class="contact-form-label">
-                                        <span><?= __('Name') ?></span>
-                                        <span class="required">*</span>
-                                    </label>
-                                    <input type="text" 
-                                           name="name" 
-                                           id="name" 
-                                           class="contact-form-input" 
-                                           placeholder="<?= __('Your full name') ?>"
-                                           required
-                                           data-validate="{required:true}">
-                                </div>
-                                
-                                <div class="contact-form-field">
-                                    <label for="email" class="contact-form-label">
-                                        <span><?= __('Email') ?></span>
-                                        <span class="required">*</span>
-                                    </label>
-                                    <input type="email" 
-                                           name="email" 
-                                           id="email" 
-                                           class="contact-form-input" 
-                                           placeholder="<?= __('your.email@example.com') ?>"
-                                           required
-                                           data-validate="{required:true, 'validate-email':true}">
-                                </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-contact">First Name *</label>
+                                <input type="text" 
+                                       name="name" 
+                                       class="form-control-contact" 
+                                       required
+                                       data-validate="{required:true}">
                             </div>
-                            
-                            <div class="contact-form-row">
-                                <div class="contact-form-field">
-                                    <label for="telephone" class="contact-form-label">
-                                        <span><?= __('Phone') ?></span>
-                                    </label>
-                                    <input type="tel" 
-                                           name="telephone" 
-                                           id="telephone" 
-                                           class="contact-form-input" 
-                                           placeholder="<?= __('+1 (234) 567-890') ?>">
-                                </div>
-                                
-                                <div class="contact-form-field">
-                                    <label for="subject" class="contact-form-label">
-                                        <span><?= __('Subject') ?></span>
-                                        <span class="required">*</span>
-                                    </label>
-                                    <select name="subject" 
-                                            id="subject" 
-                                            class="contact-form-select" 
-                                            required
-                                            data-validate="{required:true}">
-                                        <option value=""><?= __('Select a subject') ?></option>
-                                        <option value="general"><?= __('General Inquiry') ?></option>
-                                        <option value="product"><?= __('Product Question') ?></option>
-                                        <option value="order"><?= __('Order Inquiry') ?></option>
-                                        <option value="support"><?= __('Customer Support') ?></option>
-                                        <option value="partnership"><?= __('Partnership') ?></option>
-                                        <option value="other"><?= __('Other') ?></option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6">
+                                <label class="form-label-contact">Last Name *</label>
+                                <input type="text" 
+                                       name="lastname" 
+                                       class="form-control-contact" 
+                                       required
+                                       data-validate="{required:true}">
                             </div>
-                            
-                            <div class="contact-form-field">
-                                <label for="comment" class="contact-form-label">
-                                    <span><?= __('Message') ?></span>
-                                    <span class="required">*</span>
-                                </label>
+                            <div class="col-md-6">
+                                <label class="form-label-contact">Email *</label>
+                                <input type="email" 
+                                       name="email" 
+                                       class="form-control-contact" 
+                                       required
+                                       data-validate="{required:true, 'validate-email':true}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-contact">Phone</label>
+                                <input type="tel" 
+                                       name="telephone" 
+                                       class="form-control-contact">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-contact">Subject *</label>
+                                <select name="subject" 
+                                        class="form-control-contact" 
+                                        required
+                                        data-validate="{required:true}">
+                                    <option value="">Select a subject</option>
+                                    <option>General Inquiry</option>
+                                    <option>Order Status</option>
+                                    <option>Product Information</option>
+                                    <option>Returns & Exchanges</option>
+                                    <option>Partnership Opportunities</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label-contact">Message *</label>
                                 <textarea name="comment" 
-                                          id="comment" 
-                                          class="contact-form-textarea" 
+                                          class="form-control-contact" 
                                           rows="6" 
-                                          placeholder="<?= __('Tell us how we can help you...') ?>"
+                                          placeholder="How can we help you?" 
                                           required
                                           data-validate="{required:true}"></textarea>
                             </div>
                         </div>
-                        
-                        <div class="contact-form-actions">
-                            <button type="submit" class="contact-form-submit">
-                                <span><?= __('Send Message') ?></span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                </svg>
-                            </button>
-                        </div>
+                        <button type="submit" class="btn-contact-submit">
+                            <i data-feather="send"></i>
+                            SEND MESSAGE
+                        </button>
                     </form>
                 </div>
-                
-                <!-- Map -->
-                <div class="contact-map-wrapper">
-                    <div class="contact-map-header">
-                        <h2 class="contact-map-title"><?= __('Visit Our Showroom') ?></h2>
-                        <p class="contact-map-subtitle"><?= __('Come and experience luxury furniture in person.') ?></p>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-lg-5">
+                <div class="contact-info-box">
+                    <h3 class="contact-box-title">Contact Information</h3>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i data-feather="map-pin"></i>
+                        </div>
+                        <div class="contact-info-details">
+                            <div class="contact-info-label">Visit Our Showroom</div>
+                            <div class="contact-info-value">123 Luxury Avenue<br>New York, NY 10001<br>United States</div>
+                        </div>
                     </div>
-                    <div class="contact-map-container">
-                        <div class="contact-map-placeholder">
-                            <div class="contact-map-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                            </div>
-                            <p class="contact-map-text"><?= __('Map Integration') ?></p>
-                            <p class="contact-map-address">123 Luxury Avenue, New York, NY 10001</p>
-                            <!-- You can integrate Google Maps here -->
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1841325763257!2d-73.98784468459382!3d40.75889597932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1234567890"
-                                width="100%" 
-                                height="100%" 
-                                style="border:0; min-height: 400px;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i data-feather="phone"></i>
+                        </div>
+                        <div class="contact-info-details">
+                            <div class="contact-info-label">Call Us</div>
+                            <div class="contact-info-value">+1 (555) 123-4567<br>Mon-Fri: 9AM - 6PM EST</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i data-feather="mail"></i>
+                        </div>
+                        <div class="contact-info-details">
+                            <div class="contact-info-label">Email Us</div>
+                            <div class="contact-info-value">info@maisondepierre.com<br>support@maisondepierre.com</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i data-feather="clock"></i>
+                        </div>
+                        <div class="contact-info-details">
+                            <div class="contact-info-label">Business Hours</div>
+                            <div class="contact-info-value">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-social">
+                        <h4 class="contact-social-title">Follow Us</h4>
+                        <div class="contact-social-links">
+                            <a href="https://www.instagram.com/maison.de.pierre/" 
+                               target="_blank" 
+                               class="contact-social-icon">
+                                <i data-feather="instagram"></i>
+                            </a>
+                            <a href="#" class="contact-social-icon">
+                                <i data-feather="facebook"></i>
+                            </a>
+                            <a href="#" class="contact-social-icon">
+                                <i data-feather="twitter"></i>
+                            </a>
+                            <a href="#" class="contact-social-icon">
+                                <i data-feather="linkedin"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- FAQ Section -->
-    <section class="contact-faq-section">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="contact-faq-header">
-                <h2 class="contact-faq-title"><?= __('Frequently Asked Questions') ?></h2>
-                <p class="contact-faq-subtitle"><?= __('Find answers to common questions before contacting us.') ?></p>
-            </div>
-            
-            <div class="contact-faq-grid">
-                <div class="contact-faq-item">
-                    <h3 class="contact-faq-question"><?= __('How can I track my order?') ?></h3>
-                    <p class="contact-faq-answer"><?= __('Once your order has shipped, you will receive an email with a tracking number. You can use this number to track your package on our website or the carrier\'s website.') ?></p>
-                </div>
-                
-                <div class="contact-faq-item">
-                    <h3 class="contact-faq-question"><?= __('What is your return policy?') ?></h3>
-                    <p class="contact-faq-answer"><?= __('We offer a 30-day return policy for all items in original condition. Please contact us to initiate a return and we\'ll provide you with a return shipping label.') ?></p>
-                </div>
-                
-                <div class="contact-faq-item">
-                    <h3 class="contact-faq-question"><?= __('Do you offer international shipping?') ?></h3>
-                    <p class="contact-faq-answer"><?= __('Yes, we ship internationally to most countries. Shipping costs and delivery times vary by location. Please contact us for specific rates to your country.') ?></p>
-                </div>
-                
-                <div class="contact-faq-item">
-                    <h3 class="contact-faq-question"><?= __('Can I customize furniture?') ?></h3>
-                    <p class="contact-faq-answer"><?= __('Yes! We offer customization options for many of our pieces. Please contact us with your requirements and we\'ll be happy to discuss available options.') ?></p>
-                </div>
+        <!-- Map Section -->
+        <div class="contact-map-section">
+            <h3 class="map-title">Find Us</h3>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1!2d-73.98!3d40.75!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ1JzAwLjAiTiA3M8KwNTgnNDguMCJX!5e0!3m2!1sen!2sus!4v1234567890"
+                    width="100%"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
-    </section>
 
-    <!-- Social Media Section -->
-    <section class="contact-social-section">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="contact-social-content">
-                <h2 class="contact-social-title"><?= __('Follow Us') ?></h2>
-                <p class="contact-social-subtitle"><?= __('Stay connected with us on social media for the latest updates, new arrivals, and exclusive offers.') ?></p>
-                <div class="contact-social-links">
-                    <a href="#" class="contact-social-link" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
-                    </a>
-                    <a href="#" class="contact-social-link" aria-label="Instagram">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
-                    </a>
-                    <a href="#" class="contact-social-link" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                        </svg>
-                    </a>
-                    <a href="#" class="contact-social-link" aria-label="Pinterest">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2C6.48 2 2 6.48 2 12c0 4.84 3.01 8.97 7.25 10.62-.1-.89-.19-2.26.04-3.23.21-.87 1.38-5.79 1.38-5.79s-.35-.7-.35-1.74c0-1.63.95-2.85 2.13-2.85 1 0 1.49.75 1.49 1.65 0 1.01-.64 2.52-.97 3.92-.28 1.17.59 2.13 1.75 2.13 2.1 0 3.71-2.21 3.71-5.41 0-2.83-2.04-4.81-4.95-4.81-3.37 0-5.35 2.53-5.35 5.14 0 1.02.39 2.12.88 2.72a.35.35 0 0 1 .04.4l-.34 1.36c-.04.18-.14.22-.33.13-1.23-.57-2-2.37-2-3.81 0-3.11 2.26-5.97 6.52-5.97 3.42 0 6.08 2.44 6.08 5.7 0 3.4-2.14 6.13-5.12 6.13-1 0-1.94-.52-2.26-1.21l-.61 2.33c-.22.86-.82 1.94-1.22 2.6 0 0 .93.28 2.86.34 2.06.06 4.85.31 7.32-1.98C19.64 19.65 20 16.42 20 13.39c0-5.18-3.72-9.93-9.93-9.93C4.82 3.46 1 8.19 1 13.71c0 4.27 2.72 8.05 6.85 9.45.5.1.69-.21.69-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.61.07-.61 1.01.07 1.54 1.03 1.54 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48C19.28 21.76 22 17.98 22 13.71c0-5.52-3.82-10.25-9.07-10.93z"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+    </div>
+</section>
 
+<script>
+require(['jquery', 'domReady!'], function($) {
+    // Initialize Feather Icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+    
+    // Form submission handling
+    $('#contact-form').on('submit', function(e) {
+        // Magento will handle the form submission
+        // This is just for any additional custom handling if needed
+    });
+});
+</script>

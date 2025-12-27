@@ -63,29 +63,7 @@ try {
                 <?php if ($categoryDescription): ?>
                     <p class="category-description"><?= $block->escapeHtml($categoryDescription) ?></p>
                 <?php else: ?>
-                    <p class="category-description"><?= __('Discover our curated collection of luxury furniture') ?></p>
-                <?php endif; ?>
-                
-                <!-- Breadcrumbs -->
-                <?php if ($crumbs && is_array($crumbs)): ?>
-                <nav class="category-breadcrumbs">
-                    <ul class="items">
-                        <?php foreach ($crumbs as $crumbName => $crumbInfo): ?>
-                            <li class="item <?= $block->escapeHtmlAttr($crumbName) ?>">
-                            <?php if ($crumbInfo['link']): ?>
-                                <a href="<?= $block->escapeUrl($crumbInfo['link']) ?>"
-                                   title="<?= $block->escapeHtml($crumbInfo['title'] ?? '') ?>">
-                                    <?= $block->escapeHtml($crumbInfo['label']) ?>
-                                </a>
-                            <?php elseif ($crumbInfo['last'] ?? false): ?>
-                                <strong><?= $block->escapeHtml($crumbInfo['label']) ?></strong>
-                            <?php else: ?>
-                                <?= $block->escapeHtml($crumbInfo['label']) ?>
-                            <?php endif; ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </nav>
+                    <p class="category-description"><?= __('Discover our curated collection of luxury furniture for sophisticated living spaces') ?></p>
                 <?php endif; ?>
             </div>
         </div>

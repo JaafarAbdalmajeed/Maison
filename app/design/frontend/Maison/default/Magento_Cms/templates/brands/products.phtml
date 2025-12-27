@@ -1,0 +1,35 @@
+<?php
+/**
+ * Brand Products Template
+ * @var \Maison\Homepage\Block\Brands $block
+ */
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$request = $objectManager->get(\Magento\Framework\App\RequestInterface::class);
+$brandParam = $request->getParam('brand');
+
+if ($brandParam) {
+    // Get products filtered by brand
+    $productCollectionFactory = $objectManager->get(\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class);
+    $collection = $productCollectionFactory->create();
+    $collection->addAttributeToSelect('*')
+        ->addAttributeToFilter('brand', $brandParam)
+        ->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+        ->addAttributeToFilter('visibility', [
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH,
+            \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG
+        ])
+        ->setOrder('created_at', 'DESC');
+    
+    // Set collection to product list block
+    $productListBlock = $block->getChildBlock('brand.products.list');
+    if ($productListBlock && method_exists($productListBlock, 'setCollection')) {
+        $productListBlock->setCollection($collection);
+    }
+}
+?>
+<div class="brand-products-wrapper">
+    <?= $block->getChildHtml('brand.products.list') ?>
+</div>
+

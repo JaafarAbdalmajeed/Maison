@@ -3,17 +3,116 @@
 /**
  * Maison de Pierre - Brands Page Layout
  * This layout is specifically for the CMS page with identifier "brands"
+ * Matches category.html design
  */
 -->
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <attribute name="class" value="page-with-filter"/>
+        
         <!-- Remove default CMS page content -->
         <referenceBlock name="cms_page" remove="true"/>
         
-        <!-- Add custom Brands page block -->
+        <!-- Brand Header/Banner -->
         <referenceContainer name="content">
-            <block class="Maison\Homepage\Block\Brands" name="maison.brands.page" template="Magento_Cms::brands/brands.phtml"/>
+            <block class="Maison\Homepage\Block\Brands" name="brand.header" template="Magento_Cms::brands/header.phtml" before="-"/>
         </referenceContainer>
+        
+        <!-- Breadcrumbs Section (Separate) -->
+        <referenceContainer name="content">
+            <block class="Magento\Theme\Block\Html\Breadcrumbs" name="brand.breadcrumbs" template="Magento_Catalog::category/breadcrumbs.phtml" after="brand.header">
+                <arguments>
+                    <argument name="cssClass" xsi:type="string">breadcrumbs</argument>
+                    <argument name="title" xsi:type="string" translate="true">Brand Navigation</argument>
+                    <argument name="description" xsi:type="string" translate="true">Breadcrumbs listing</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        
+        <!-- Brand Content (Filters + Products) -->
+        <referenceContainer name="content">
+            <container name="brand.content" htmlTag="section" htmlClass="category-content">
+                <container name="brand.content.inner" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
+                    <!-- Mobile Filter Drawer -->
+                    <block class="Magento\Framework\View\Element\Template" name="brand.mobile.filters" template="Magento_Catalog::category/mobile-filters.phtml" before="-">
+                        <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="brand.leftnav.overlay" template="Magento_LayeredNavigation::layer/view.phtml">
+                            <block class="Magento\LayeredNavigation\Block\Navigation\State" name="brand.navigation.state.overlay" as="state" />
+                            <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="brand.navigation.renderer.overlay" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                                <arguments>
+                                    <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                                </arguments>
+                            </block>
+                            
+                            <!-- Custom Brand Filter -->
+                            <block class="Maison\Catalog\Block\Category\Filter\Brands" name="brand.filter.brands.overlay" template="Maison_Catalog::category/filter/brands.phtml" />
+                            
+                            <!-- Custom Size Filter -->
+                            <block class="Maison\Catalog\Block\Category\Filter\Size" name="brand.filter.size.overlay" template="Maison_Catalog::category/filter/size.phtml" />
+                        </block>
+                    </block>
+                    
+                    <!-- Row for Sidebar + Products -->
+                    <container name="brand.content.row" htmlTag="div" htmlClass="row">
+                        <!-- Desktop Filters Sidebar -->
+                        <container name="brand.sidebar" htmlTag="aside" htmlClass="col-lg-3 mb-5 mb-lg-0">
+                            <block class="Magento\Framework\View\Element\Template" name="brand.desktop.filters" template="Magento_Catalog::category/desktop-filters.phtml">
+                                <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="brand.leftnav" before="-" template="Magento_LayeredNavigation::layer/view.phtml">
+                                    <block class="Magento\LayeredNavigation\Block\Navigation\State" name="brand.navigation.state" as="state" />
+                                    <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="brand.navigation.renderer" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                                        <arguments>
+                                            <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                                        </arguments>
+                                    </block>
+                                    
+                                    <!-- Custom Brand Filter -->
+                                    <block class="Maison\Catalog\Block\Category\Filter\Brands" name="brand.filter.brands" template="Maison_Catalog::category/filter/brands.phtml" />
+                                    
+                                    <!-- Custom Size Filter -->
+                                    <block class="Maison\Catalog\Block\Category\Filter\Size" name="brand.filter.size" template="Maison_Catalog::category/filter/size.phtml" />
+                                </block>
+                            </block>
+                        </container>
+                        
+                        <!-- Products Grid -->
+                        <container name="brand.products.main" htmlTag="main" htmlClass="col-lg-9">
+                            <!-- Brand Products Block -->
+                            <block class="Maison\Homepage\Block\Brands" name="brand.products" template="Magento_Cms::brands/products.phtml">
+                                <block class="Magento\Catalog\Block\Product\ListProduct" name="brand.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
+                                    <container name="brand.product.list.additional" as="additional" />
+                                    <block class="Magento\Framework\View\Element\RendererList" name="brand.product.type.details.renderers" as="details.renderers">
+                                        <block class="Magento\Framework\View\Element\Template" name="brand.product.type.details.renderers.default" as="default" template="Magento_Catalog::product/list/item/default.phtml"/>
+                                    </block>
+                                    <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="brand.product.addto" as="addto">
+                                        <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                                               name="brand.product.addto.compare" as="compare"
+                                               template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                                    </block>
+                                    <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="brand_product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                                        <block class="Magento\Theme\Block\Html\Pager" name="brand_product_list_toolbar_pager"/>
+                                    </block>
+                                    <action method="setToolbarBlockName">
+                                        <argument name="name" xsi:type="string">brand_product_list_toolbar</argument>
+                                    </action>
+                                </block>
+                            </block>
+                        </container>
+                    </container>
+                </container>
+            </container>
+        </referenceContainer>
+        
+        <!-- Page Title (Hidden, using custom header instead) -->
+        <referenceBlock name="page.main.title" remove="true"/>
+        
+        <!-- Hide sidebar.additional completely to prevent duplicate sidebar -->
+        <referenceContainer name="sidebar.additional" remove="true"/>
+        
+        <!-- Product Options Data -->
+        <referenceBlock name="brand.products.list">
+            <arguments>
+                <argument name="viewModel" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
+            </arguments>
+        </referenceBlock>
     </body>
 </page>
 

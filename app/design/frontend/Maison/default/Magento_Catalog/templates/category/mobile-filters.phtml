@@ -1,0 +1,95 @@
+<?php
+/**
+ * Mobile Filters Drawer Template
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+<!-- Mobile Filter Drawer -->
+<div class="filters-container" id="filtersContainer">
+    <div class="filters-header d-lg-none">
+        <h3><?= __('Filters') ?></h3>
+        <button class="filters-close" id="filtersClose">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Product Count & Sort (Mobile) -->
+    <div class="filter-group d-lg-none">
+        <div class="products-toolbar-mobile">
+            <div class="product-count">
+                <?php
+                $collection = $block->getLayout()->getBlock('category.products.list');
+                $total = 0;
+                if ($collection && method_exists($collection, 'getLoadedProductCollection')) {
+                    $productCollection = $collection->getLoadedProductCollection();
+                    if ($productCollection) {
+                        $total = $productCollection->getSize();
+                    }
+                }
+                ?>
+                <span class="count-number"><?= $total ?></span> <?= __('Products Found') ?>
+            </div>
+            <select class="sort-select-mobile" id="sortSelectMobile">
+                <option value=""><?= __('Sort By') ?></option>
+                <option value="price-asc"><?= __('Price: Low to High') ?></option>
+                <option value="price-desc"><?= __('Price: High to Low') ?></option>
+                <option value="name-asc"><?= __('Name: A to Z') ?></option>
+                <option value="name-desc"><?= __('Name: Z to A') ?></option>
+                <option value="newest"><?= __('Newest First') ?></option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Render Layered Navigation Filters -->
+    <?php
+    $layerBlock = $block->getLayout()->getBlock('catalog.leftnav.overlay');
+    if (!$layerBlock) {
+        $layerBlock = $block->getLayout()->getBlock('brand.leftnav.overlay');
+    }
+    if ($layerBlock) {
+        echo $layerBlock->toHtml();
+    }
+    ?>
+    
+    <!-- Clear Filters -->
+    <div class="filter-actions">
+        <button class="btn-clear-filters" id="clearFiltersMobile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <?= __('CLEAR ALL FILTERS') ?>
+        </button>
+    </div>
+</div>
+
+<script>
+require(['jquery'], function($) {
+    $(document).ready(function() {
+        // Mobile filter toggle
+        $('#filterToggle').on('click', function() {
+            $('#filtersContainer').addClass('active');
+            $('body').css('overflow', 'hidden');
+        });
+        
+        // Close mobile filters
+        $('#filtersClose').on('click', function() {
+            $('#filtersContainer').removeClass('active');
+            $('body').css('overflow', '');
+        });
+        
+        // Close on overlay click
+        $('#filtersContainer').on('click', function(e) {
+            if ($(e.target).is('#filtersContainer')) {
+                $('#filtersContainer').removeClass('active');
+                $('body').css('overflow', '');
+            }
+        });
+    });
+});
+</script>
+

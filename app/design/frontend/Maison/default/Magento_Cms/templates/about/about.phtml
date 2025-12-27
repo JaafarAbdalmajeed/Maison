@@ -1,201 +1,175 @@
 <?php
 /**
  * Maison de Pierre - About Page Template
- * Dynamic About page with backend integration
+ * Dynamic About page matching the design from about.html
  */
-$hero = $block->getHeroSection();
-$mission = $block->getMissionSection();
-$story = $block->getStorySection();
-$teamMembers = $block->getTeamMembers();
-$values = $block->getValues();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$mediaUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 ?>
-<!-- About Page -->
-<div class="about-page">
-    <!-- Hero Section -->
-    <?php if ($hero && $hero->getId()): ?>
-    <section class="about-hero-section" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?= $block->escapeUrl($hero->getImageUrl()) ?>') center center/cover no-repeat;">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="about-hero-content">
-                <h1 class="about-hero-title"><?= $block->escapeHtml($hero->getTitle()) ?></h1>
-                <?php if ($hero->getContent()): ?>
-                    <p class="about-hero-subtitle"><?= $block->escapeHtml($hero->getContent()) ?></p>
-                <?php endif; ?>
+
+<!-- Breadcrumbs -->
+<section class="breadcrumbs-section">
+    <div class="container-fluid px-4 px-lg-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?= $block->escapeUrl($block->getUrl('')) ?>"><?= __('Home') ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?= __('About Us') ?></li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="about-hero-image">
+        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&h=600&fit=crop&q=80" alt="Maison de Pierre Showroom">
+        <div class="about-hero-overlay">
+            <div class="container-fluid px-4 px-lg-5">
+                <h1 class="about-hero-title"><?= __('Our Story') ?></h1>
+                <p class="about-hero-subtitle"><?= __('Curating luxury for discerning tastes since 2010') ?></p>
             </div>
         </div>
-    </section>
-    <?php endif; ?>
+    </div>
+</section>
 
-    <!-- Mission Section -->
-    <?php if ($mission && $mission->getId()): ?>
-    <section class="about-mission-section py-5" style="padding-top: 120px !important; padding-bottom: 120px !important;">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="row align-items-center g-5">
+<!-- About Content -->
+<section class="about-content-section">
+    <div class="container-fluid px-4 px-lg-5">
+        
+        <!-- Our Story -->
+        <div class="about-story">
+            <div class="row g-5 align-items-center">
                 <div class="col-lg-6">
-                    <?php if ($mission->getImageUrl()): ?>
-                        <div class="about-mission-image">
-                            <img src="<?= $block->escapeUrl($mission->getImageUrl()) ?>" 
-                                 alt="<?= $block->escapeHtmlAttr($mission->getImageAlt() ?: $mission->getTitle()) ?>" 
-                                 class="img-fluid">
-                        </div>
-                    <?php endif; ?>
+                    <img src="https://images.unsplash.com/photo-1560185127-6a8e5d2a4b0c?w=800&h=900&fit=crop&q=80" alt="Luxury Showroom" class="about-image">
                 </div>
                 <div class="col-lg-6">
-                    <div class="about-mission-content">
-                        <div class="about-section-label"><?= __('OUR MISSION') ?></div>
-                        <h2 class="about-section-title"><?= $block->escapeHtml($mission->getTitle()) ?></h2>
-                        <div class="about-divider"></div>
-                        <?php if ($mission->getContent()): ?>
-                            <div class="about-content-text">
-                                <?= /* @noEscape */ nl2br($block->escapeHtml($mission->getContent())) ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+                    <h2 class="about-section-title"><?= __('Who We Are') ?></h2>
+                    <p class="about-text"><?= __('Maison de Pierre was founded with a singular vision: to bring the world\'s most prestigious luxury furniture and home décor brands to discerning customers who appreciate exceptional craftsmanship and timeless design.') ?></p>
+                    <p class="about-text"><?= __('For over a decade, we have curated an exclusive collection of pieces from renowned brands including FRATO, Vido, Bitossi, Baci Milano, Voluspa, and Taschen. Each item in our collection is carefully selected for its quality, design excellence, and ability to transform living spaces into works of art.') ?></p>
+                    <p class="about-text"><?= __('Our commitment extends beyond simply selling furniture. We provide a comprehensive luxury experience, offering personalized design consultation, white glove delivery service, and ongoing support to ensure complete satisfaction.') ?></p>
                 </div>
             </div>
         </div>
-    </section>
-    <?php endif; ?>
 
-    <!-- Values Section -->
-    <?php if ($values && $values->getSize() > 0): ?>
-    <section class="about-values-section py-5" style="background-color: var(--soft-beige); padding-top: 120px !important; padding-bottom: 120px !important;">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="about-values-header text-center mb-5">
-                <div class="about-section-label"><?= __('OUR VALUES') ?></div>
-                <h2 class="about-section-title"><?= __('What We Stand For') ?></h2>
-                <div class="about-divider mx-auto"></div>
-            </div>
+        <!-- Our Values -->
+        <div class="about-values">
+            <h2 class="about-section-title text-center mb-5"><?= __('Our Values') ?></h2>
             <div class="row g-4">
-                <?php foreach ($values as $value): ?>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="about-value-card">
-                            <?php if ($value->getIcon()): ?>
-                                <div class="about-value-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                    </svg>
-                                </div>
-                            <?php endif; ?>
-                            <h3 class="about-value-title"><?= $block->escapeHtml($value->getTitle()) ?></h3>
-                            <?php if ($value->getDescription()): ?>
-                                <p class="about-value-description"><?= $block->escapeHtml($value->getDescription()) ?></p>
-                            <?php endif; ?>
+                <div class="col-md-4">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i data-feather="award"></i>
                         </div>
+                        <h3 class="value-title"><?= __('Excellence') ?></h3>
+                        <p class="value-text"><?= __('We partner only with brands that meet our exacting standards for quality, craftsmanship, and design innovation.') ?></p>
                     </div>
-                <?php endforeach; ?>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i data-feather="shield"></i>
+                        </div>
+                        <h3 class="value-title"><?= __('Authenticity') ?></h3>
+                        <p class="value-text"><?= __('Every piece we offer is 100% authentic, sourced directly from authorized manufacturers and distributors.') ?></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i data-feather="heart"></i>
+                        </div>
+                        <h3 class="value-title"><?= __('Service') ?></h3>
+                        <p class="value-text"><?= __('Our dedicated team provides personalized attention to ensure your complete satisfaction from selection to delivery.') ?></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-    <?php endif; ?>
 
-    <!-- Story Section -->
-    <?php if ($story && $story->getId()): ?>
-    <section class="about-story-section py-5" style="padding-top: 120px !important; padding-bottom: 120px !important;">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="row align-items-center g-5 flex-row-reverse">
-                <div class="col-lg-6">
-                    <?php if ($story->getImageUrl()): ?>
-                        <div class="about-story-image">
-                            <img src="<?= $block->escapeUrl($story->getImageUrl()) ?>" 
-                                 alt="<?= $block->escapeHtmlAttr($story->getImageAlt() ?: $story->getTitle()) ?>" 
-                                 class="img-fluid">
-                        </div>
-                    <?php endif; ?>
+        <!-- Why Choose Us -->
+        <div class="about-why">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 order-lg-2">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=900&fit=crop&q=80" alt="Luxury Interior" class="about-image">
                 </div>
-                <div class="col-lg-6">
-                    <div class="about-story-content">
-                        <div class="about-section-label"><?= __('OUR STORY') ?></div>
-                        <h2 class="about-section-title"><?= $block->escapeHtml($story->getTitle()) ?></h2>
-                        <div class="about-divider"></div>
-                        <?php if ($story->getContent()): ?>
-                            <div class="about-content-text">
-                                <?= /* @noEscape */ nl2br($block->escapeHtml($story->getContent())) ?>
+                <div class="col-lg-6 order-lg-1">
+                    <h2 class="about-section-title"><?= __('Why Choose Maison de Pierre') ?></h2>
+                    <div class="about-features">
+                        <div class="about-feature-item">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <h4><?= __('Curated Selection') ?></h4>
+                                <p><?= __('Access to exclusive pieces from the world\'s finest luxury brands') ?></p>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
-
-    <!-- Team Section -->
-    <?php if ($teamMembers && $teamMembers->getSize() > 0): ?>
-    <section class="about-team-section py-5" style="background-color: var(--white); padding-top: 120px !important; padding-bottom: 120px !important;">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="about-team-header text-center mb-5">
-                <div class="about-section-label"><?= __('OUR TEAM') ?></div>
-                <h2 class="about-section-title"><?= __('Meet the People Behind Maison de Pierre') ?></h2>
-                <div class="about-divider mx-auto"></div>
-            </div>
-            <div class="row g-4 justify-content-center">
-                <?php foreach ($teamMembers as $member): ?>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="about-team-card">
-                            <?php if ($member->getImageUrl()): ?>
-                                <div class="about-team-image">
-                                    <img src="<?= $block->escapeUrl($member->getImageUrl()) ?>" 
-                                         alt="<?= $block->escapeHtmlAttr($member->getName()) ?>" 
-                                         class="img-fluid">
-                                    <div class="about-team-overlay">
-                                        <?php if ($member->getLinkedin()): ?>
-                                            <a href="<?= $block->escapeUrl($member->getLinkedin()) ?>" 
-                                               target="_blank" 
-                                               rel="noopener noreferrer" 
-                                               class="about-team-social">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                                    <circle cx="4" cy="4" r="2"></circle>
-                                                </svg>
-                                            </a>
-                                        <?php endif; ?>
-                                        <?php if ($member->getEmail()): ?>
-                                            <a href="mailto:<?= $block->escapeUrl($member->getEmail()) ?>" 
-                                               class="about-team-social">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                                </svg>
-                                            </a>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            <div class="about-team-info">
-                                <h3 class="about-team-name"><?= $block->escapeHtml($member->getName()) ?></h3>
-                                <?php if ($member->getPosition()): ?>
-                                    <p class="about-team-position"><?= $block->escapeHtml($member->getPosition()) ?></p>
-                                <?php endif; ?>
-                                <?php if ($member->getBio()): ?>
-                                    <p class="about-team-bio"><?= $block->escapeHtml($member->getBio()) ?></p>
-                                <?php endif; ?>
+                        </div>
+                        <div class="about-feature-item">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <h4><?= __('Expert Consultation') ?></h4>
+                                <p><?= __('Complimentary design advice from our experienced team') ?></p>
+                            </div>
+                        </div>
+                        <div class="about-feature-item">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <h4><?= __('White Glove Service') ?></h4>
+                                <p><?= __('Professional delivery, assembly, and placement in your home') ?></p>
+                            </div>
+                        </div>
+                        <div class="about-feature-item">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <h4><?= __('Quality Guarantee') ?></h4>
+                                <p><?= __('Manufacturer warranties and our commitment to your satisfaction') ?></p>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
-
-    <!-- CTA Section -->
-    <section class="about-cta-section py-5" style="background-color: var(--dark-brown); padding-top: 100px !important; padding-bottom: 100px !important;">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="about-cta-content text-center">
-                <h2 class="about-cta-title"><?= __('Experience Luxury, Redefined') ?></h2>
-                <p class="about-cta-text"><?= __('Visit our showroom or browse our curated collection online') ?></p>
-                <div class="about-cta-buttons mt-4">
-                    <a href="<?= $block->escapeUrl($block->getUrl('contact')) ?>" class="btn-about-cta btn-about-cta-primary">
-                        <?= __('Contact Us') ?>
-                    </a>
-                    <a href="<?= $block->escapeUrl($block->getUrl('catalog')) ?>" class="btn-about-cta btn-about-cta-secondary">
-                        <?= __('Shop Collection') ?>
-                    </a>
                 </div>
             </div>
         </div>
-    </section>
-</div>
 
+        <!-- Team Section -->
+        <div class="about-team">
+            <h2 class="about-section-title text-center mb-5"><?= __('Meet Our Team') ?></h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&q=80" alt="Team Member">
+                        </div>
+                        <h4 class="team-name"><?= __('Michael Anderson') ?></h4>
+                        <div class="team-role"><?= __('Founder & CEO') ?></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop&q=80" alt="Team Member">
+                        </div>
+                        <h4 class="team-name"><?= __('Sarah Mitchell') ?></h4>
+                        <div class="team-role"><?= __('Design Director') ?></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop&q=80" alt="Team Member">
+                        </div>
+                        <h4 class="team-name"><?= __('David Chen') ?></h4>
+                        <div class="team-role"><?= __('Customer Experience Manager') ?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+require(['jquery', 'domReady!'], function($) {
+    // Initialize Feather Icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>

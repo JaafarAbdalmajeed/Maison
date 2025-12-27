@@ -1,0 +1,86 @@
+<?php
+/**
+ * Product Gallery Template - Custom Design
+ * @var \Magento\Catalog\Block\Product\View\Gallery $block
+ */
+$_product = $block->getProduct();
+$images = $block->getGalleryImages();
+$mainImage = $block->getImage($_product, 'product_page_image_large');
+$imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+?>
+<div class="product-images-gallery">
+    <!-- Main Image -->
+    <div class="main-image-container">
+        <img src="<?= $block->escapeUrl($mainImage->getImageUrl()) ?>" 
+             alt="<?= $block->escapeHtmlAttr($mainImage->getLabel() ?: $_product->getName()) ?>" 
+             id="mainImage" 
+             class="main-product-image">
+        
+        <?php
+        // Product Badge (Bestseller or New)
+        $isBestseller = $_product->getAttributeText('bestseller');
+        $isNew = $_product->getAttributeText('new');
+        if ($isBestseller): ?>
+            <div class="product-badge-detail"><?= __('BEST SELLER') ?></div>
+        <?php elseif ($isNew): ?>
+            <div class="product-badge-detail" style="background-color: var(--primary-gold);"><?= __('NEW') ?></div>
+        <?php endif; ?>
+        
+        <button class="zoom-button" id="zoomBtn">
+            <i data-feather="maximize-2"></i>
+        </button>
+    </div>
+    
+    <!-- Thumbnail Gallery -->
+    <?php if (count($images) > 1): ?>
+    <div class="thumbnails-gallery">
+        <button class="thumbnail-nav prev" onclick="scrollThumbnails(-1)">
+            <i data-feather="chevron-left"></i>
+        </button>
+        <div class="thumbnails-container" id="thumbnailsContainer">
+            <?php 
+            $first = true;
+            foreach ($images as $image): 
+                $thumbnailUrl = $imageHelper->init($_product, 'product_page_image_small')
+                    ->setImageFile($image->getFile())
+                    ->getUrl();
+                $largeUrl = $imageHelper->init($_product, 'product_page_image_large')
+                    ->setImageFile($image->getFile())
+                    ->getUrl();
+            ?>
+                <img src="<?= $block->escapeUrl($thumbnailUrl) ?>" 
+                     alt="<?= $block->escapeHtmlAttr($image->getLabel() ?: $_product->getName()) ?>" 
+                     class="thumbnail <?= $first ? 'active' : '' ?>" 
+                     data-image="<?= $block->escapeUrl($largeUrl) ?>"
+                     onclick="changeMainImage('<?= $block->escapeJs($largeUrl) ?>', this)">
+            <?php 
+                $first = false;
+            endforeach; 
+            ?>
+        </div>
+        <button class="thumbnail-nav next" onclick="scrollThumbnails(1)">
+            <i data-feather="chevron-right"></i>
+        </button>
+    </div>
+    <?php endif; ?>
+</div>
+
+<script>
+function changeMainImage(imageUrl, thumbnail) {
+    document.getElementById('mainImage').src = imageUrl;
+    document.querySelectorAll('.thumbnail').forEach(function(thumb) {
+        thumb.classList.remove('active');
+    });
+    thumbnail.classList.add('active');
+}
+
+function scrollThumbnails(direction) {
+    const container = document.getElementById('thumbnailsContainer');
+    const scrollAmount = 200;
+    container.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+</script>
+

@@ -47,6 +47,8 @@
         <css src="css/pages/product-detail-modern.css"/>
         <css src="css/components/nav-links-enhanced.css"/>
         <css src="css/pages/product-detail-final.css"/>
+        <!-- Product Detail Custom CSS (from product-detail.css) -->
+        <css src="css/pages/product-detail.css"/>
         
         <!-- Cart Page Styles (Load new redesign LAST to override old styles) -->
         <css src="css/pages/cart.css"/>

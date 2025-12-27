@@ -10,9 +10,11 @@
         <!-- Remove default CMS page content -->
         <referenceBlock name="cms_page" remove="true"/>
         
-        <!-- Add custom About page block -->
+        <!-- Add custom About page template -->
         <referenceContainer name="content">
-            <block class="Maison\About\Block\About" name="maison.about" template="Magento_Cms::about/about.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" 
+                   name="maison.about" 
+                   template="Magento_Cms::about/about.phtml"/>
         </referenceContainer>
     </body>
 </page>

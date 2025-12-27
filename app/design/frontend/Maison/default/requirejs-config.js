@@ -6,7 +6,8 @@ var config = {
         '*': {
             'maisonInit': 'js/maison-init',
             'filterSidebar': 'js/filter-sidebar',
-            'ajaxFilters': 'js/ajax-filters'
+            'ajaxFilters': 'js/ajax-filters',
+            'productDetail': 'js/product-detail'
         }
     },
     deps: [
@@ -14,5 +15,12 @@ var config = {
         'mage/common',
         'mage/dataPost',
         'mage/bootstrap'
-    ]
+    ],
+    config: {
+        mixins: {
+            'Magento_Catalog/js/catalog-add-to-cart': {
+                'js/product-detail': true
+            }
+        }
+    }
 };

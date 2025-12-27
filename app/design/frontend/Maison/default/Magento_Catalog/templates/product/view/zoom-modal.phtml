@@ -1,0 +1,22 @@
+<?php
+/**
+ * Product Zoom Modal Template
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+<!-- Image Zoom Modal -->
+<div class="zoom-modal" id="zoomModal">
+    <button class="zoom-close" id="zoomClose">
+        <i data-feather="x"></i>
+    </button>
+    <img src="" alt="" id="zoomImage" class="zoom-image">
+</div>
+
+<script>
+require(['jquery', 'domReady!'], function($) {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
+

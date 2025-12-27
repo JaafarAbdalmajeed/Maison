@@ -10,26 +10,24 @@
     <?php if ($block->getLastPageNum() > 1):?>
         <?= $escaper->escapeHtml(
             __(
-                'Showing %1-%2 of %3 products',
-                '<span class="count-number">' . $localeFormatter->formatNumber($block->getFirstNum()) . '</span>',
-                '<span class="count-number">' . $localeFormatter->formatNumber($block->getLastNum()) . '</span>',
-                '<span class="count-number">' . $localeFormatter->formatNumber($block->getTotalNum()) . '</span>'
+                'Showing <span class="count-number">%1</span> products',
+                $localeFormatter->formatNumber($block->getTotalNum())
             ),
             ['span']
         ) ?>
     <?php elseif ($block->getTotalNum() == 1):?>
         <?= $escaper->escapeHtml(
             __(
-                'Showing %1 product',
-                '<span class="count-number">' . $localeFormatter->formatNumber($block->getTotalNum()) . '</span>'
+                'Showing <span class="count-number">%1</span> product',
+                $localeFormatter->formatNumber($block->getTotalNum())
             ),
             ['span']
         ) ?>
     <?php else:?>
         <?= $escaper->escapeHtml(
             __(
-                'Showing %1 products',
-                '<span class="count-number">' . $localeFormatter->formatNumber($block->getTotalNum()) . '</span>'
+                'Showing <span class="count-number">%1</span> products',
+                $localeFormatter->formatNumber($block->getTotalNum())
             ),
             ['span']
         ) ?>

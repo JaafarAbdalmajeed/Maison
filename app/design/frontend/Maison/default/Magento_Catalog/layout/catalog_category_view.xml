@@ -9,16 +9,19 @@
     <body>
         <attribute name="class" value="page-with-filter"/>
         
-        <!-- Category Header/Banner with Breadcrumbs -->
+        <!-- Category Header/Banner -->
         <referenceContainer name="content">
-            <block class="Magento\Catalog\Block\Category\View" name="category.header" template="Magento_Catalog::category/header.phtml" before="-">
-                <block class="Magento\Theme\Block\Html\Breadcrumbs" name="category.breadcrumbs">
-                    <arguments>
-                        <argument name="cssClass" xsi:type="string">breadcrumbs</argument>
-                        <argument name="title" xsi:type="string" translate="true">Category Navigation</argument>
-                        <argument name="description" xsi:type="string" translate="true">Breadcrumbs listing</argument>
-                    </arguments>
-                </block>
+            <block class="Magento\Catalog\Block\Category\View" name="category.header" template="Magento_Catalog::category/header.phtml" before="-"/>
+        </referenceContainer>
+        
+        <!-- Breadcrumbs Section (Separate) -->
+        <referenceContainer name="content">
+            <block class="Magento\Theme\Block\Html\Breadcrumbs" name="category.breadcrumbs" template="Magento_Catalog::category/breadcrumbs.phtml" after="category.header">
+                <arguments>
+                    <argument name="cssClass" xsi:type="string">breadcrumbs</argument>
+                    <argument name="title" xsi:type="string" translate="true">Category Navigation</argument>
+                    <argument name="description" xsi:type="string" translate="true">Breadcrumbs listing</argument>
+                </arguments>
             </block>
         </referenceContainer>
         
@@ -49,26 +52,56 @@
         <referenceContainer name="content">
             <container name="category.content" htmlTag="section" htmlClass="category-content">
                 <container name="category.content.inner" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
-                    <!-- Category Products Block -->
-                    <block class="Magento\Catalog\Block\Category\View" name="category.products" template="Magento_Catalog::category/products.phtml">
-                        <block class="Magento\Catalog\Block\Product\ListProduct" name="category.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
-                            <container name="category.product.list.additional" as="additional" />
-                            <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
-                                <block class="Magento\Framework\View\Element\Template" name="category.product.type.details.renderers.default" as="default" template="Magento_Catalog::product/list/item/default.phtml"/>
+                    <!-- Mobile Filter Drawer -->
+                    <block class="Magento\Framework\View\Element\Template" name="category.mobile.filters" template="Magento_Catalog::category/mobile-filters.phtml" before="-"/>
+                    
+                    <!-- Row for Sidebar + Products -->
+                    <container name="category.content.row" htmlTag="div" htmlClass="row">
+                        <!-- Desktop Filters Sidebar -->
+                        <container name="category.sidebar" htmlTag="aside" htmlClass="col-lg-3 mb-5 mb-lg-0">
+                            <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="catalog.leftnav" before="-" template="Magento_LayeredNavigation::layer/view.phtml">
+                                <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state" as="state" />
+                                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                                    <arguments>
+                                        <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                                    </arguments>
+                                </block>
+                                
+                                <!-- Custom Category Filter -->
+                                <block class="Maison\Catalog\Block\Category\Filter\Categories" name="category.filter.categories" template="Maison_Catalog::category/filter/categories.phtml" />
+                                
+                                <!-- Custom Brand Filter -->
+                                <block class="Maison\Catalog\Block\Category\Filter\Brands" name="category.filter.brands" template="Maison_Catalog::category/filter/brands.phtml" />
+                                
+                                <!-- Custom Size Filter -->
+                                <block class="Maison\Catalog\Block\Category\Filter\Size" name="category.filter.size" template="Maison_Catalog::category/filter/size.phtml" />
                             </block>
-                            <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="category.product.addto" as="addto">
-                                <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
-                                       name="category.product.addto.compare" as="compare"
-                                       template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                        </container>
+                        
+                        <!-- Products Grid -->
+                        <container name="category.products.main" htmlTag="main" htmlClass="col-lg-9">
+                            <!-- Category Products Block -->
+                            <block class="Magento\Catalog\Block\Category\View" name="category.products" template="Magento_Catalog::category/products.phtml">
+                                <block class="Magento\Catalog\Block\Product\ListProduct" name="category.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
+                                    <container name="category.product.list.additional" as="additional" />
+                                    <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                                        <block class="Magento\Framework\View\Element\Template" name="category.product.type.details.renderers.default" as="default" template="Magento_Catalog::product/list/item/default.phtml"/>
+                                    </block>
+                                    <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="category.product.addto" as="addto">
+                                        <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                                               name="category.product.addto.compare" as="compare"
+                                               template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                                    </block>
+                                    <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                                        <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                                    </block>
+                                    <action method="setToolbarBlockName">
+                                        <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                                    </action>
+                                </block>
                             </block>
-                            <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
-                                <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
-                            </block>
-                            <action method="setToolbarBlockName">
-                                <argument name="name" xsi:type="string">product_list_toolbar</argument>
-                            </action>
-                        </block>
-                    </block>
+                        </container>
+                    </container>
                     
                     <!-- Cookie Requirement -->
                     <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
