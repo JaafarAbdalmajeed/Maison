@@ -90,21 +90,34 @@ header.scrolled::before {
 }
 
 /* ==================== TOP ROW (Before Scroll) ==================== */
-.header-top-row {
-    display: none !important; /* Hidden by default - show only one header */
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 20px;
-    padding: 15px 0;
-    width: 100%;
-    box-sizing: border-box;
-    background: transparent !important;
+/* COMPLETELY HIDE HEADER TOP ROW - ALWAYS HIDDEN */
+.header-top-row,
+header .header-top-row,
+header#mainHeader .header-top-row,
+html body .header-top-row,
+html body header .header-top-row,
+html body header#mainHeader .header-top-row {
+    display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
 }
 
-header.scrolled .header-top-row {
+header.scrolled .header-top-row,
+header:not(.scrolled) .header-top-row,
+header .header-top-row {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Logo */
@@ -788,12 +801,27 @@ html body .header-container {
     z-index: 1000 !important;
 }
 
-/* FORCE HEADER TOP ROW TO BE HIDDEN - Only show navigation */
+/* FORCE HEADER TOP ROW TO BE HIDDEN - Only show navigation - HIGHEST PRIORITY */
 html body header#mainHeader .header-top-row,
-html body header .header-top-row {
+html body header .header-top-row,
+html body .header-top-row,
+html body header#mainHeader:not(.scrolled) .header-top-row,
+html body header:not(.scrolled) .header-top-row,
+html body header#mainHeader.scrolled .header-top-row,
+html body header.scrolled .header-top-row {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
 }
 
 /* FORCE HEADER NAV TO ALWAYS BE VISIBLE (on desktop) */
@@ -870,12 +898,28 @@ html body header .header-wrapper {
     opacity: 1 !important;
 }
 
-/* Force header top row to be hidden - only show navigation */
+/* Force header top row to be hidden - only show navigation - ULTIMATE OVERRIDE */
 html body header#mainHeader:not(.scrolled) .header-top-row,
-html body header:not(.scrolled) .header-top-row {
+html body header:not(.scrolled) .header-top-row,
+html body header#mainHeader.scrolled .header-top-row,
+html body header.scrolled .header-top-row,
+html body header#mainHeader .header-top-row,
+html body header .header-top-row {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 0 !important;
+    max-width: 0 !important;
 }
 
 /* Force header nav visibility on desktop */

@@ -6,11 +6,25 @@ html body header#mainHeader:not(.scrolled),
 html body .page-header:not(.scrolled),
 html body .header-container:not(.scrolled),
 html body header#mainHeader:not(.scrolled) .header-wrapper,
-html body header#mainHeader:not(.scrolled) .header-top-row,
 html body header#mainHeader:not(.scrolled) .header-nav {
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
+}
+
+/* Hide header-top-row completely */
+html body header#mainHeader:not(.scrolled) .header-top-row,
+html body header#mainHeader.scrolled .header-top-row,
+html body header#mainHeader .header-top-row,
+html body .header-top-row {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
 }
 
 /* Force header solid white - after scroll */
