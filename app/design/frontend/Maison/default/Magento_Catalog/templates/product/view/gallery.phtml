@@ -4,15 +4,61 @@
  * @var \Magento\Catalog\Block\Product\View\Gallery $block
  */
 $_product = $block->getProduct();
-$images = $block->getGalleryImages();
-$mainImage = $block->getImage($_product, 'product_page_image_large');
+if (!$_product) {
+    return;
+}
+
+$images = $block->getGalleryImages() ?: [];
 $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+if (!$imageHelper) {
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $imageHelper = $objectManager->get(\Magento\Catalog\Helper\Image::class);
+}
+
+// Get main image - use image helper directly (more reliable)
+$mainImageUrl = '';
+$mainImageLabel = $_product->getName();
+
+try {
+    if ($imageHelper) {
+        $mainImageUrl = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+        $mainImageLabel = $_product->getName();
+    } else {
+        throw new \Exception('Image helper not available');
+    }
+} catch (\Exception $e) {
+    // Fallback: try to get placeholder
+    try {
+        if ($imageHelper) {
+            $mainImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
+        } else {
+            // Last resort: use a default placeholder path
+            $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+        }
+    } catch (\Exception $e2) {
+        // Absolute last resort
+        $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+    }
+}
+
+// Ensure we have a valid URL
+if (empty($mainImageUrl)) {
+    try {
+        if ($imageHelper) {
+            $mainImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
+        } else {
+            $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+        }
+    } catch (\Exception $e) {
+        $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+    }
+}
 ?>
 <div class="product-images-gallery">
     <!-- Main Image -->
     <div class="main-image-container">
-        <img src="<?= $block->escapeUrl($mainImage->getImageUrl()) ?>" 
-             alt="<?= $block->escapeHtmlAttr($mainImage->getLabel() ?: $_product->getName()) ?>" 
+        <img src="<?= $block->escapeUrl($mainImageUrl) ?>" 
+             alt="<?= $block->escapeHtmlAttr($mainImageLabel) ?>" 
              id="mainImage" 
              class="main-product-image">
         
@@ -41,12 +87,29 @@ $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
             <?php 
             $first = true;
             foreach ($images as $image): 
-                $thumbnailUrl = $imageHelper->init($_product, 'product_page_image_small')
-                    ->setImageFile($image->getFile())
-                    ->getUrl();
-                $largeUrl = $imageHelper->init($_product, 'product_page_image_large')
-                    ->setImageFile($image->getFile())
-                    ->getUrl();
+                $thumbnailUrl = '';
+                $largeUrl = '';
+                try {
+                    if (!$imageHelper) {
+                        continue; // Skip if no image helper
+                    }
+                    $imageFile = $image->getFile();
+                    if ($imageFile && $imageHelper) {
+                        $thumbnailUrl = $imageHelper->init($_product, 'product_page_image_small')
+                            ->setImageFile($imageFile)
+                            ->getUrl();
+                        $largeUrl = $imageHelper->init($_product, 'product_page_image_large')
+                            ->setImageFile($imageFile)
+                            ->getUrl();
+                    } else {
+                        continue; // Skip if no file
+                    }
+                } catch (\Exception $e) {
+                    continue; // Skip on error
+                }
+                
+                // Only render if we have valid URLs
+                if (!empty($thumbnailUrl) && !empty($largeUrl)):
             ?>
                 <img src="<?= $block->escapeUrl($thumbnailUrl) ?>" 
                      alt="<?= $block->escapeHtmlAttr($image->getLabel() ?: $_product->getName()) ?>" 
@@ -54,7 +117,8 @@ $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
                      data-image="<?= $block->escapeUrl($largeUrl) ?>"
                      onclick="changeMainImage('<?= $block->escapeJs($largeUrl) ?>', this)">
             <?php 
-                $first = false;
+                    $first = false;
+                endif;
             endforeach; 
             ?>
         </div>
