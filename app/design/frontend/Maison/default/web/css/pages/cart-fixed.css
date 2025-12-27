@@ -1,0 +1,277 @@
+/* ==================== CART PAGE FIXES ==================== */
+/* Fixed layout and design issues for cart page */
+
+/* Fix page-main padding for cart page */
+body.checkout-cart-index .page-main,
+.checkout-cart-index .page-main,
+body.checkout-cart-index main#maincontent.page-main,
+.checkout-cart-index main#maincontent.page-main,
+body.checkout-cart-index #maincontent.page-main,
+.checkout-cart-index #maincontent.page-main {
+    padding-top: 120px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Fix cart container layout */
+.checkout-cart-index .cart-container,
+.cart-container {
+    padding: 40px 0 80px !important;
+    background-color: var(--white);
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.checkout-cart-index .cart-container .container-fluid,
+.cart-container .container-fluid,
+.checkout-cart-index .cart-container .cart.container.inner,
+.cart-container .cart.container.inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+/* Fix cart content row */
+.checkout-cart-index .cart.content,
+.cart.content {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+    width: 100%;
+}
+
+.checkout-cart-index .cart.items.column,
+.cart-items-column {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+}
+
+.checkout-cart-index .cart.summary.column,
+.cart-summary-column {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+}
+
+/* Fix cart table wrapper */
+.checkout-cart-index .cart.table-wrapper,
+.cart.table-wrapper {
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: var(--white);
+    border: 1px solid var(--light-gray);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.checkout-cart-index .cart.table-wrapper table,
+.cart.table-wrapper table {
+    width: 100% !important;
+    border-collapse: collapse;
+    margin: 0;
+    table-layout: auto;
+    min-width: 800px;
+}
+
+/* Fix cart table headers */
+.checkout-cart-index .cart.table-wrapper thead,
+.cart.table-wrapper thead {
+    display: table-header-group;
+}
+
+.checkout-cart-index .cart.table-wrapper thead th,
+.cart.table-wrapper thead th {
+    padding: 20px 15px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* Fix cart table body */
+.checkout-cart-index .cart.table-wrapper tbody,
+.cart.table-wrapper tbody {
+    display: table-row-group;
+}
+
+.checkout-cart-index .cart.table-wrapper tbody tr,
+.cart.table-wrapper tbody tr {
+    display: table-row;
+}
+
+.checkout-cart-index .cart.table-wrapper tbody td,
+.cart.table-wrapper tbody td {
+    display: table-cell;
+    padding: 25px 15px;
+    vertical-align: middle;
+}
+
+/* Fix product image column */
+.checkout-cart-index .cart.table-wrapper .col.item,
+.cart.table-wrapper .col.item {
+    width: auto;
+    min-width: 200px;
+}
+
+/* Fix cart summary */
+.checkout-cart-index .cart.summary,
+.cart-summary {
+    width: 100%;
+    background-color: var(--soft-beige);
+    padding: 40px;
+    border: 2px solid var(--light-gray);
+    box-sizing: border-box;
+}
+
+/* Fix cart actions */
+.checkout-cart-index .cart.main.actions,
+.cart.main.actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+.checkout-cart-index .cart.main.actions .action,
+.cart.main.actions .action {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Fix checkout button */
+.checkout-cart-index .checkout,
+.checkout-cart-index .action.primary.checkout,
+.checkout,
+.action.primary.checkout {
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box;
+}
+
+/* Responsive fixes */
+@media (max-width: 1199px) {
+    .checkout-cart-index .cart.items.column,
+    .cart-items-column {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .checkout-cart-index .cart.summary.column,
+    .cart-summary-column {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 991px) {
+    body.checkout-cart-index .page-main,
+    .checkout-cart-index .page-main {
+        padding-top: 100px !important;
+    }
+    
+    .checkout-cart-index .cart-container,
+    .cart-container {
+        padding: 30px 0 60px !important;
+    }
+    
+    .checkout-cart-index .cart-container .container-fluid,
+    .cart-container .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .checkout-cart-index .cart.table-wrapper table,
+    .cart.table-wrapper table {
+        min-width: 700px;
+    }
+    
+    .checkout-cart-index .cart.summary,
+    .cart-summary {
+        padding: 30px 25px;
+    }
+}
+
+@media (max-width: 767px) {
+    .checkout-cart-index .cart.content,
+    .cart.content {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+    
+    .checkout-cart-index .cart.items.column,
+    .cart-items-column,
+    .checkout-cart-index .cart.summary.column,
+    .cart-summary-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .checkout-cart-index .cart.table-wrapper table,
+    .cart.table-wrapper table {
+        min-width: 600px;
+        font-size: 13px;
+    }
+    
+    .checkout-cart-index .cart.table-wrapper thead th,
+    .cart.table-wrapper thead th,
+    .checkout-cart-index .cart.table-wrapper tbody td,
+    .cart.table-wrapper tbody td {
+        padding: 15px 10px;
+    }
+    
+    .checkout-cart-index .cart.summary,
+    .cart-summary {
+        padding: 25px 20px;
+    }
+}
+
+/* Fix any overlapping or z-index issues */
+.checkout-cart-index .cart-container * {
+    box-sizing: border-box;
+}
+
+/* Fix totals table */
+.checkout-cart-index .cart.summary .table.totals,
+.cart-summary .table.totals {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.checkout-cart-index .cart.summary .table.totals tbody,
+.cart-summary .table.totals tbody {
+    display: table-row-group;
+}
+
+.checkout-cart-index .cart.summary .table.totals tr,
+.cart-summary .table.totals tr {
+    display: table-row;
+}
+
+.checkout-cart-index .cart.summary .table.totals td,
+.cart-summary .table.totals td {
+    display: table-cell;
+}
+
+/* Ensure all cart elements are visible */
+.checkout-cart-index .cart-container * {
+    visibility: visible !important;
+}
+
+.checkout-cart-index .cart-container * {
+    opacity: 1 !important;
+}
+

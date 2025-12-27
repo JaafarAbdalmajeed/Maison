@@ -49,6 +49,12 @@
         <css src="css/pages/category-enhanced.css"/>
         <css src="css/pages/contact.css"/>
         <css src="css/pages/brands-enhanced.css"/>
+        <css src="css/pages/product-detail-modern.css"/>
+        <css src="css/components/nav-links-enhanced.css"/>
+        <css src="css/pages/cart-fixed.css"/>
+        <css src="css/pages/cart-redesign.css"/>
+        <css src="css/pages/checkout-redesign.css"/>
+        <css src="css/pages/product-detail-final.css"/>
         
         <!-- Responsive -->
         <css src="css/main.css"/>
