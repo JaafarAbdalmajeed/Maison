@@ -14,7 +14,7 @@
             <container name="product.view.container" htmlTag="div" htmlClass="product-view">
                 <container name="product.view.wrapper" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
                     <!-- Breadcrumbs -->
-                    <block class="Magento\Theme\Block\Html\Breadcrumbs" name="product.breadcrumbs" before="product.info.main">
+                    <block class="Magento\Theme\Block\Html\Breadcrumbs" name="product.breadcrumbs" template="Magento_Theme::html/breadcrumbs.phtml">
                         <arguments>
                             <argument name="cssClass" xsi:type="string">product-breadcrumbs</argument>
                         </arguments>
@@ -30,7 +30,7 @@
                         <!-- Product Info Column -->
                         <container name="product.info.column" htmlTag="div" htmlClass="col-lg-6 product-info-column">
                             <!-- Product Info Header (Social Icons) -->
-                            <container name="product.info.header" htmlTag="div" htmlClass="product-info-header" before="product.info.main">
+                            <container name="product.info.header" htmlTag="div" htmlClass="product-info-header">
                                 <container name="product.social.actions" htmlTag="div" htmlClass="product-social-actions">
                                     <block class="Magento\Catalog\Block\Product\View\AddTo\Compare" name="product.addto.compare.header" template="Magento_Catalog::product/view/addto/compare.phtml"/>
                                     <block class="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist" name="product.wishlist.link.header" template="Magento_Wishlist::catalog/product/view/addto/wishlist.phtml"/>
@@ -51,14 +51,6 @@
                                 </container>
                                 
                                 <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart" as="addtocart" template="Magento_Catalog::product/view/addtocart.phtml"/>
-                                
-                                <!-- Product Social Share -->
-                                <block class="Magento\Catalog\Block\Product\View\AddTo\Compare" name="product.addto.compare" after="product.info.addtocart" template="Magento_Catalog::product/view/addto/compare.phtml"/>
-                                
-                                <!-- Wishlist -->
-                                <container name="product.info.social" label="Product social links" after="product.addto.compare">
-                                    <block class="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist" name="product.wishlist.link" template="Magento_Wishlist::catalog/product/view/addto/wishlist.phtml"/>
-                                </container>
                             </block>
                         </container>
                     </container>
@@ -124,4 +116,3 @@
         </referenceBlock>
     </body>
 </page>
-

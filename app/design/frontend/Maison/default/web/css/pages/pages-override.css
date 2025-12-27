@@ -1,0 +1,132 @@
+/* ==================== PAGES OVERRIDE - Force New Designs ==================== */
+/* This file ensures the new designs override any conflicting styles */
+
+/* ==================== CART PAGE OVERRIDES ==================== */
+.checkout-cart-index .page-main,
+body.checkout-cart-index .page-main,
+body.checkout-cart-index #maincontent,
+.checkout-cart-index #maincontent {
+    padding-top: 140px !important;
+    padding-bottom: 60px !important;
+    background-color: #ffffff !important;
+}
+
+.checkout-cart-index .cart-container,
+.cart-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 40px 20px 80px !important;
+    background-color: #ffffff !important;
+}
+
+.checkout-cart-index .cart.content,
+.cart.content {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 40px !important;
+    margin: 0 !important;
+}
+
+.checkout-cart-index .cart-items-column,
+.cart-items-column {
+    flex: 1 !important;
+    min-width: 0 !important;
+    max-width: calc(66.666667% - 20px) !important;
+}
+
+.checkout-cart-index .cart-summary-column,
+.cart-summary-column {
+    flex: 0 0 360px !important;
+    max-width: 360px !important;
+    position: sticky !important;
+    top: 160px !important;
+    align-self: flex-start !important;
+}
+
+/* ==================== CHECKOUT PAGE OVERRIDES ==================== */
+.checkout-index-index .page-main,
+body.checkout-index-index .page-main,
+body.checkout-index-index #maincontent,
+.checkout-index-index #maincontent {
+    padding-top: 140px !important;
+    padding-bottom: 60px !important;
+    background-color: #f5f5f5 !important;
+}
+
+.checkout-index-index {
+    background-color: #f5f5f5 !important;
+}
+
+.opc-wrapper {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.opc-wrapper .opc {
+    display: none !important;
+}
+
+.opc-sidebar {
+    flex: 0 0 400px !important;
+    max-width: 400px !important;
+    position: sticky !important;
+    top: 160px !important;
+    align-self: flex-start !important;
+}
+
+/* ==================== ABOUT PAGE OVERRIDES ==================== */
+.about-page {
+    padding-top: 0 !important;
+}
+
+body.cms-page-view .page-main,
+body.cms-page-view-about .page-main,
+body.cms-page-view #maincontent,
+body.cms-page-view-about #maincontent {
+    padding-top: 0 !important;
+}
+
+.about-hero-section {
+    padding: 140px 0 100px !important;
+    margin-top: 0 !important;
+}
+
+/* ==================== CONTACT PAGE OVERRIDES ==================== */
+.contact-page {
+    padding-top: 0 !important;
+}
+
+body.cms-page-view-contact .page-main,
+body.cms-page-view-contact #maincontent {
+    padding-top: 0 !important;
+}
+
+.contact-hero-section {
+    margin-top: 0 !important;
+    padding-top: 140px !important;
+}
+
+/* ==================== RESPONSIVE OVERRIDES ==================== */
+@media (max-width: 991px) {
+    .checkout-cart-index .cart-items-column,
+    .cart-items-column {
+        max-width: 100% !important;
+    }
+    
+    .checkout-cart-index .cart-summary-column,
+    .cart-summary-column {
+        flex: 1 !important;
+        max-width: 100% !important;
+        position: relative !important;
+        top: auto !important;
+    }
+    
+    .opc-sidebar {
+        flex: 1 !important;
+        max-width: 100% !important;
+        position: relative !important;
+        top: auto !important;
+    }
+}
+
