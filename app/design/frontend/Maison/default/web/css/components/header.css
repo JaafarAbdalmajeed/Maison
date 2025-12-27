@@ -515,11 +515,21 @@ header.scrolled .burger-menu span {
     z-index: 1001;
 }
 
+/* Force hide submenu when scrolling - prevent any accidental display */
+body.scrolling .fullscreen-submenu,
+header.scrolling .fullscreen-submenu {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    display: none !important;
+}
+
 /* Ensure submenu is completely hidden by default - override any conflicting styles */
 .submenu-dropdown:not(:hover) .fullscreen-submenu {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+    display: none !important;
 }
 
 .fullscreen-submenu {
@@ -536,6 +546,7 @@ header.scrolled .burger-menu span {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+    display: none !important;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 999 !important;
     padding: 0 !important;
@@ -543,17 +554,39 @@ header.scrolled .burger-menu span {
     box-sizing: border-box !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    display: block !important;
 }
 
+/* Show submenu only on hover */
 .submenu-dropdown:hover .fullscreen-submenu {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+    display: block !important;
+}
+
+/* Ensure submenu is hidden when header is scrolled and not hovering */
+header.scrolled .submenu-dropdown:not(:hover) .fullscreen-submenu {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    display: none !important;
+}
+
+/* When scrolled, show submenu only on direct hover */
+header.scrolled .submenu-dropdown:hover .fullscreen-submenu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    display: block !important;
 }
 
 header.scrolled .fullscreen-submenu {
     top: 85px !important;
+}
+
+/* Additional safety: Hide submenu when mouse leaves the dropdown area */
+.submenu-dropdown .fullscreen-submenu {
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .submenu-container {
