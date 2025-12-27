@@ -10,7 +10,12 @@
         <referenceBlock name="cms_page" remove="true"/>
         
         <referenceContainer name="content">
-            <!-- Hero Section -->
+            <!-- Hero Section - Dynamic from CMS Block -->
+            <block class="Magento\Cms\Block\Block" name="maison.hero.block">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">homepage-hero</argument>
+                </arguments>
+            </block>
             <block class="Magento\Framework\View\Element\Template" name="maison.hero" template="Magento_Cms::homepage/hero.phtml" before="-"/>
             
             <!-- Best Sellers - Dynamic -->
@@ -22,10 +27,15 @@
             <!-- Categories - Dynamic -->
             <block class="Maison\Homepage\Block\Categories" name="maison.categories" template="Magento_Cms::homepage/categories.phtml"/>
             
-            <!-- Brands -->
-            <block class="Magento\Framework\View\Element\Template" name="maison.brands" template="Magento_Cms::homepage/brands.phtml"/>
+            <!-- Brands - Dynamic -->
+            <block class="Maison\Homepage\Block\Brands" name="maison.brands" template="Magento_Cms::homepage/brands.phtml"/>
             
-            <!-- Story -->
+            <!-- Story - Dynamic from CMS Block -->
+            <block class="Magento\Cms\Block\Block" name="maison.story.block">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">homepage-story</argument>
+                </arguments>
+            </block>
             <block class="Magento\Framework\View\Element\Template" name="maison.story" template="Magento_Cms::homepage/story.phtml"/>
         </referenceContainer>
     </body>

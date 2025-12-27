@@ -86,4 +86,25 @@ return [
     'install' => [
         'date' => 'Mon, 03 Nov 2025 15:44:15 +0000'
     ]
+    // Search Engine Configuration:
+    // For MySQL Search: No configuration needed - just set in Admin Panel
+    // For Elasticsearch: Uncomment and configure the 'system' array below
+    /*
+    ,
+    'system' => [
+        'default' => [
+            'catalog' => [
+                'search' => [
+                    'engine' => 'elasticsearch8',
+                    'elasticsearch8_server_hostname' => 'localhost',
+                    'elasticsearch8_server_port' => '9200',
+                    'elasticsearch8_index_prefix' => 'magento2',
+                    'elasticsearch8_enable_auth' => '0',
+                    'elasticsearch8_server_timeout' => '15',
+                    'elasticsearch8_min_search_length' => '3'
+                ]
+            ]
+        ]
+    ]
+    */
 ];

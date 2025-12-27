@@ -83,69 +83,81 @@ $itemsCount = $cart->getQuote()->getItemsCount();
                             <div class="fullscreen-submenu">
                                 <div class="submenu-container">
                                     <div class="submenu-layout">
+                                        <?php
+                                        /** @var \Maison\Homepage\Block\Navigation $block */
+                                        $featuredCategories = $block->getFeaturedCategories(6);
+                                        $firstCategory = !empty($featuredCategories) ? $featuredCategories[0] : null;
+                                        $secondCategory = !empty($featuredCategories) && count($featuredCategories) > 1 ? $featuredCategories[1] : null;
+                                        $categories = $block->getNavigationCategories();
+                                        ?>
                                         <!-- Left Featured Image -->
                                         <div class="submenu-featured-image left">
-                                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop" alt="Premium Seating">
-                                            <div class="featured-overlay">
-                                                <h3><?= __('Premium Seating') ?></h3>
-                                                <a href="<?= $block->getUrl('catalog/category/view', ['id' => 3]) ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
-                                            </div>
+                                            <?php if ($firstCategory): ?>
+                                                <img src="<?= $block->escapeUrl($block->getCategoryImageUrl($firstCategory)) ?>" alt="<?= $block->escapeHtmlAttr($firstCategory['name']) ?>">
+                                                <div class="featured-overlay">
+                                                    <h3><?= $block->escapeHtml($firstCategory['name']) ?></h3>
+                                                    <a href="<?= $block->escapeUrl($block->getCategoryUrl($firstCategory)) ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
+                                                </div>
+                                            <?php else: ?>
+                                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=800&fit=crop" alt="Products">
+                                                <div class="featured-overlay">
+                                                    <h3><?= __('PRODUCTS') ?></h3>
+                                                    <a href="<?= $block->getUrl('catalog') ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                         
                                         <!-- Center Text Columns -->
                                         <div class="submenu-grid">
-                                            <div class="submenu-column">
-                                                <h4 class="submenu-title"><?= __('By Room') ?></h4>
-                                                <ul class="submenu-list">
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 3]) ?>"><?= __('Living Room') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 4]) ?>"><?= __('Dining Room') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 5]) ?>"><?= __('Bedroom') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 6]) ?>"><?= __('Home Office') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 7]) ?>"><?= __('Outdoor') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 8]) ?>"><?= __('Entryway') ?></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="submenu-column">
-                                                <h4 class="submenu-title"><?= __('By Category') ?></h4>
-                                                <ul class="submenu-list">
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 9]) ?>"><?= __('Sofas & Seating') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 10]) ?>"><?= __('Tables & Desks') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 11]) ?>"><?= __('Beds & Mattresses') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 12]) ?>"><?= __('Storage & Cabinets') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 13]) ?>"><?= __('Lighting') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 14]) ?>"><?= __('Rugs & Textiles') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalog/category/view', ['id' => 15]) ?>"><?= __('Accessories') ?></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="submenu-column">
-                                                <h4 class="submenu-title"><?= __('By Style') ?></h4>
-                                                <ul class="submenu-list">
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'modern']) ?>"><?= __('Modern') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'contemporary']) ?>"><?= __('Contemporary') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'classic']) ?>"><?= __('Classic') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'minimalist']) ?>"><?= __('Minimalist') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'art deco']) ?>"><?= __('Art Deco') ?></a></li>
-                                                </ul>
-                                            </div>
+                                            <?php if (!empty($categories)): ?>
+                                                <?php 
+                                                $categoriesPerColumn = ceil(count($categories) / 3);
+                                                $categoryChunks = array_chunk($categories, $categoriesPerColumn);
+                                                ?>
+                                                <?php foreach ($categoryChunks as $index => $chunk): ?>
+                                                    <div class="submenu-column">
+                                                        <h4 class="submenu-title"><?= __('Categories') ?></h4>
+                                                        <ul class="submenu-list">
+                                                            <?php foreach ($chunk as $category): ?>
+                                                                <li><a href="<?= $block->escapeUrl($block->getCategoryUrl($category)) ?>"><?= $block->escapeHtml($category['name']) ?></a></li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <div class="submenu-column">
+                                                    <h4 class="submenu-title"><?= __('Categories') ?></h4>
+                                                    <ul class="submenu-list">
+                                                        <li><a href="<?= $block->getUrl('catalog') ?>"><?= __('All Products') ?></a></li>
+                                                    </ul>
+                                                </div>
+                                            <?php endif; ?>
+                                            
                                             <div class="submenu-column">
                                                 <h4 class="submenu-title"><?= __('More Selection') ?></h4>
                                                 <ul class="submenu-list">
                                                     <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'new']) ?>"><?= __('New Arrivals') ?></a></li>
                                                     <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'bestseller']) ?>"><?= __('Best Sellers') ?></a></li>
                                                     <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'sale']) ?>"><?= __('Sale Items') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('custom-orders') ?>"><?= __('Custom Orders') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('designer-picks') ?>"><?= __('Designer Picks') ?></a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                         
                                         <!-- Right Featured Image -->
                                         <div class="submenu-featured-image right">
-                                            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&h=800&fit=crop" alt="Designer Lighting">
-                                            <div class="featured-overlay">
-                                                <h3><?= __('Designer Lighting') ?></h3>
-                                                <a href="<?= $block->getUrl('catalog/category/view', ['id' => 13]) ?>" class="featured-link"><?= __('EXPLORE') ?></a>
-                                            </div>
+                                            <?php if ($secondCategory): ?>
+                                                <img src="<?= $block->escapeUrl($block->getCategoryImageUrl($secondCategory)) ?>" alt="<?= $block->escapeHtmlAttr($secondCategory['name']) ?>">
+                                                <div class="featured-overlay">
+                                                    <h3><?= $block->escapeHtml($secondCategory['name']) ?></h3>
+                                                    <a href="<?= $block->escapeUrl($block->getCategoryUrl($secondCategory)) ?>" class="featured-link"><?= __('EXPLORE') ?></a>
+                                                </div>
+                                            <?php else: ?>
+                                                <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&h=800&fit=crop" alt="Products">
+                                                <div class="featured-overlay">
+                                                    <h3><?= __('PRODUCTS') ?></h3>
+                                                    <a href="<?= $block->getUrl('catalog') ?>" class="featured-link"><?= __('EXPLORE') ?></a>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -156,13 +168,28 @@ $itemsCount = $cart->getQuote()->getItemsCount();
                             <div class="fullscreen-submenu">
                                 <div class="submenu-container">
                                     <div class="submenu-layout">
+                                        <?php
+                                        // Get brands dynamically
+                                        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                                        $brandsBlock = $objectManager->create(\Maison\Homepage\Block\Brands::class);
+                                        $brands = $brandsBlock->getBrands(20); // Get up to 20 brands
+                                        $firstBrand = !empty($brands) ? $brands[0] : null;
+                                        ?>
                                         <!-- Left Featured Image -->
                                         <div class="submenu-featured-image left">
-                                            <img src="https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?w=600&h=800&fit=crop" alt="D&G Casa">
-                                            <div class="featured-overlay">
-                                                <h3><?= __('D&G CASA') ?></h3>
-                                                <a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'dolce gabbana']) ?>" class="featured-link"><?= __('EXPLORE') ?></a>
-                                            </div>
+                                            <?php if ($firstBrand): ?>
+                                                <img src="https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?w=600&h=800&fit=crop" alt="<?= $block->escapeHtmlAttr($firstBrand['label']) ?>">
+                                                <div class="featured-overlay">
+                                                    <h3><?= $block->escapeHtml($brandsBlock->getBrandLogoText($firstBrand['label'])) ?></h3>
+                                                    <a href="<?= $block->escapeUrl($firstBrand['url']) ?>" class="featured-link"><?= __('EXPLORE') ?></a>
+                                                </div>
+                                            <?php else: ?>
+                                                <img src="https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?w=600&h=800&fit=crop" alt="Brands">
+                                                <div class="featured-overlay">
+                                                    <h3><?= __('BRANDS') ?></h3>
+                                                    <a href="<?= $block->getUrl('catalog') ?>" class="featured-link"><?= __('EXPLORE') ?></a>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                         
                                         <!-- Center Text Columns -->
@@ -170,12 +197,13 @@ $itemsCount = $cart->getQuote()->getItemsCount();
                                             <div class="submenu-column">
                                                 <h4 class="submenu-title"><?= __('Luxury Brands') ?></h4>
                                                 <ul class="submenu-list">
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'dolce gabbana']) ?>"><?= __('Dolce & Gabbana Casa') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'vido']) ?>"><?= __('Vido') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'bitossi']) ?>"><?= __('Bitossi') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'baci milano']) ?>"><?= __('Baci Milano') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'voluspa']) ?>"><?= __('Voluspa') ?></a></li>
-                                                    <li><a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'taschen']) ?>"><?= __('Taschen') ?></a></li>
+                                                    <?php if (!empty($brands)): ?>
+                                                        <?php foreach (array_slice($brands, 0, 10) as $brand): ?>
+                                                            <li><a href="<?= $block->escapeUrl($brand['url']) ?>"><?= $block->escapeHtml($brand['label']) ?></a></li>
+                                                        <?php endforeach; ?>
+                                                    <?php else: ?>
+                                                        <li><a href="<?= $block->getUrl('catalog') ?>"><?= __('No brands available') ?></a></li>
+                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                             <div class="submenu-column">
@@ -201,11 +229,22 @@ $itemsCount = $cart->getQuote()->getItemsCount();
                                         
                                         <!-- Right Featured Image -->
                                         <div class="submenu-featured-image right">
-                                            <img src="https://images.unsplash.com/photo-1602872030219-ad2b9a54315c?w=600&h=800&fit=crop" alt="Voluspa">
-                                            <div class="featured-overlay">
-                                                <h3><?= __('VOLUSPA') ?></h3>
-                                                <a href="<?= $block->getUrl('catalogsearch/result', ['q' => 'voluspa']) ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
-                                            </div>
+                                            <?php 
+                                            $secondBrand = !empty($brands) && count($brands) > 1 ? $brands[1] : null;
+                                            if ($secondBrand): 
+                                            ?>
+                                                <img src="https://images.unsplash.com/photo-1602872030219-ad2b9a54315c?w=600&h=800&fit=crop" alt="<?= $block->escapeHtmlAttr($secondBrand['label']) ?>">
+                                                <div class="featured-overlay">
+                                                    <h3><?= $block->escapeHtml($brandsBlock->getBrandLogoText($secondBrand['label'])) ?></h3>
+                                                    <a href="<?= $block->escapeUrl($secondBrand['url']) ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
+                                                </div>
+                                            <?php else: ?>
+                                                <img src="https://images.unsplash.com/photo-1602872030219-ad2b9a54315c?w=600&h=800&fit=crop" alt="Brands">
+                                                <div class="featured-overlay">
+                                                    <h3><?= __('BRANDS') ?></h3>
+                                                    <a href="<?= $block->getUrl('catalog') ?>" class="featured-link"><?= __('SHOP NOW') ?></a>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>

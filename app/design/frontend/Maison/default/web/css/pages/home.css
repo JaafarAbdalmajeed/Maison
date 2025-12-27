@@ -776,6 +776,31 @@ section {
     border-left-color: var(--primary-gold);
 }
 
+/* Brand Link */
+.brand-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.brand-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Brand Count */
+.brand-count {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dark);
+    opacity: 0.6;
+    margin-top: 8px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
 /* Brand Logo Text (Main Brand Name) */
 .brand-logo-text {
     font-family: 'Cormorant Garamond', serif;

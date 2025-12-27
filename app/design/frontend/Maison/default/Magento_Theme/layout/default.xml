@@ -32,7 +32,7 @@
         
         <!-- COMPLETELY REPLACE header.container with our custom header -->
         <referenceContainer name="header.container" htmlTag="div" htmlClass="">
-            <block class="Magento\Framework\View\Element\Template" name="maison.header" template="Magento_Theme::html/header.phtml"/>
+            <block class="Maison\Homepage\Block\Navigation" name="maison.header" template="Magento_Theme::html/header.phtml"/>
         </referenceContainer>
         
         <!-- Remove ALL default Magento footer blocks -->

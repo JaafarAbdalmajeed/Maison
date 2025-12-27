@@ -1,7 +1,10 @@
 <?php
 /**
  * Maison de Pierre - Luxury Brands Section
+ * Dynamic brands from Magento brand attribute
  */
+/** @var \Maison\Homepage\Block\Brands $block */
+$brands = $block->getBrands(12); // Get up to 12 brands
 ?>
 <!-- Luxury Brands Section -->
 <section class="brands-section py-5" style="background-color: var(--soft-beige); padding-top: 120px !important; padding-bottom: 120px !important;">
@@ -11,53 +14,31 @@
             <p class="section-subtitle"><?= __('World-Renowned Designers & Manufacturers') ?></p>
         </div>
         
-        <div class="position-relative">
-            <div class="carousel-nav carousel-prev brands-prev" onclick="scrollBrandsCarousel(-1)">‹</div>
-            <div class="carousel-nav carousel-next brands-next" onclick="scrollBrandsCarousel(1)">›</div>
-            
-            <div class="brands-carousel" id="brandsCarousel">
-                <!-- Brand 1: Dolce & Gabbana -->
-                <div class="brand-item">
-                    <div class="brand-logo-text">D&G</div>
-                    <div class="brand-divider"></div>
-                    <p class="brand-name">Dolce & Gabbana</p>
-                </div>
+        <?php if (!empty($brands)): ?>
+            <div class="position-relative">
+                <div class="carousel-nav carousel-prev brands-prev" onclick="scrollBrandsCarousel(-1)">‹</div>
+                <div class="carousel-nav carousel-next brands-next" onclick="scrollBrandsCarousel(1)">›</div>
                 
-                <!-- Brand 2: Vido -->
-                <div class="brand-item">
-                    <div class="brand-logo-text">VIDO</div>
-                    <div class="brand-divider"></div>
-                    <p class="brand-name">Vido</p>
-                </div>
-                
-                <!-- Brand 3: Bitossi -->
-                <div class="brand-item">
-                    <div class="brand-logo-text">BITOSSI</div>
-                    <div class="brand-divider"></div>
-                    <p class="brand-name">Bitossi</p>
-                </div>
-                
-                <!-- Brand 4: Baci Milano -->
-                <div class="brand-item">
-                    <div class="brand-logo-text">BACI</div>
-                    <div class="brand-divider"></div>
-                    <p class="brand-name">Baci Milano</p>
-                </div>
-                
-                <!-- Brand 5: Voluspa -->
-                <div class="brand-item">
-                    <div class="brand-logo-text">VOLUSPA</div>
-                    <div class="brand-divider"></div>
-                    <p class="brand-name">Voluspa</p>
-                </div>
-                
-                <!-- Brand 6: Taschen -->
-                <div class="brand-item">
-                    <div class="brand-logo-text">TASCHEN</div>
-                    <div class="brand-divider"></div>
-                    <p class="brand-name">Taschen</p>
+                <div class="brands-carousel" id="brandsCarousel">
+                    <?php foreach ($brands as $brand): ?>
+                        <div class="brand-item">
+                            <a href="<?= $block->escapeUrl($brand['url']) ?>" class="brand-link" title="<?= $block->escapeHtmlAttr($brand['label']) ?>">
+                                <div class="brand-logo-text"><?= $block->escapeHtml($block->getBrandLogoText($brand['label'])) ?></div>
+                                <div class="brand-divider"></div>
+                                <p class="brand-name"><?= $block->escapeHtml($brand['label']) ?></p>
+                                <?php if ($brand['count'] > 0): ?>
+                                    <span class="brand-count"><?= $block->escapeHtml($brand['count']) ?> <?= __('products') ?></span>
+                                <?php endif; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </div>
+        <?php else: ?>
+            <!-- Fallback: Show message if no brands found -->
+            <div class="text-center">
+                <p><?= __('No brands available at the moment.') ?></p>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

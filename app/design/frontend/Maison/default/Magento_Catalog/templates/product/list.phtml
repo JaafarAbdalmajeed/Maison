@@ -6,14 +6,53 @@
  * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 use Magento\Framework\App\Action\Action;
+use Magento\Catalog\Model\Product\Visibility;
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
 
+// Try to get loaded product collection
 $_productCollection = $block->getLoadedProductCollection();
+
+// Fallback: If collection is empty or null, try to get it from the block
+if (!$_productCollection || !$_productCollection->count()) {
+    try {
+        // Try alternative method
+        if (method_exists($block, 'getProductCollection')) {
+            $_productCollection = $block->getProductCollection();
+        }
+        
+        // If still empty, try to get from category
+        if ((!$_productCollection || !$_productCollection->count()) && $block->getLayer()) {
+            $_productCollection = $block->getLayer()->getProductCollection();
+        }
+    } catch (\Exception $e) {
+        // Log error but continue silently in production
+        // In development, you can uncomment the following line to see errors:
+        // $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        // $logger = $objectManager->get(\Psr\Log\LoggerInterface::class);
+        // $logger->error('Error loading product collection: ' . $e->getMessage());
+    }
+}
+
+// Ensure we have a collection object
+if (!$_productCollection) {
+    $_productCollection = new \Magento\Framework\Data\Collection();
+}
+
 /** @var \Magento\Catalog\Helper\Output $_helper */
 $_helper = $block->getData('outputHelper');
 ?>
-<?php if (!$_productCollection->count()): ?>
+<?php if (!$_productCollection || !$_productCollection->count()): ?>
     <div class="message info empty">
         <div><?= $escaper->escapeHtml(__('We can\'t find products matching the selection.')) ?></div>
+        <?php
+        // Debug information (remove in production)
+        if ($block->getLayer() && $block->getLayer()->getCurrentCategory()) {
+            $category = $block->getLayer()->getCurrentCategory();
+            echo '<div style="margin-top: 10px; font-size: 12px; color: #666;">';
+            echo 'Category: ' . $escaper->escapeHtml($category->getName()) . ' (ID: ' . $category->getId() . ')';
+            echo '</div>';
+        }
+        ?>
     </div>
 <?php else: ?>
     <?= $block->getToolbarHtml() ?>
@@ -141,8 +180,7 @@ $_helper = $block->getData('outputHelper');
                                 <?= $block->getBlockHtml('formkey') ?>
                                 <button type="submit"
                                         title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
-                                        class="product-add-to-cart action tocart primary"
-                                        disabled>
+                                        class="product-add-to-cart action tocart primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                                         <line x1="3" y1="6" x2="21" y2="6"></line>
