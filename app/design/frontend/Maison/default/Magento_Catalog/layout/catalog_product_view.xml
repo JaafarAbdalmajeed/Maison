@@ -29,14 +29,6 @@
                         
                         <!-- Product Info Column -->
                         <container name="product.info.column" htmlTag="div" htmlClass="col-lg-6 product-info-column">
-                            <!-- Product Info Header (Social Icons) -->
-                            <container name="product.info.header" htmlTag="div" htmlClass="product-info-header">
-                                <container name="product.social.actions" htmlTag="div" htmlClass="product-social-actions">
-                                    <block class="Magento\Catalog\Block\Product\View\AddTo\Compare" name="product.addto.compare.header" template="Magento_Catalog::product/view/addto/compare.phtml"/>
-                                    <block class="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist" name="product.wishlist.link.header" template="Magento_Wishlist::catalog/product/view/addto/wishlist.phtml"/>
-                                </container>
-                            </container>
-                            
                             <block class="Magento\Catalog\Block\Product\View" name="product.info.main" template="Magento_Catalog::product/view/form.phtml">
                                 <container name="product.info.form.options" as="options" label="Product Options" before="product.info.addtocart">
                                     <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper" as="product_options_wrapper" template="Magento_Catalog::product/view/options/wrapper.phtml">
