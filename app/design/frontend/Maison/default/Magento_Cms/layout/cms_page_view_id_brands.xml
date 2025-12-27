@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Brands Page Layout
+ * This layout is specifically for the CMS page with identifier "brands"
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Remove default CMS page content -->
+        <referenceBlock name="cms_page" remove="true"/>
+        
+        <!-- Add custom Brands page block -->
+        <referenceContainer name="content">
+            <block class="Maison\Homepage\Block\Brands" name="maison.brands.page" template="Magento_Cms::brands/brands.phtml"/>
+        </referenceContainer>
+    </body>
+</page>
+

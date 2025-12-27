@@ -42,6 +42,13 @@
         <css src="css/pages/wishlist.css"/>
         <css src="css/pages/account.css"/>
         <css src="css/pages/cms.css"/>
+        <css src="css/pages/about.css"/>
+        <css src="css/pages/brands.css"/>
+        <css src="css/pages/product-enhanced.css"/>
+        <css src="css/pages/cart-enhanced.css"/>
+        <css src="css/pages/category-enhanced.css"/>
+        <css src="css/pages/contact.css"/>
+        <css src="css/pages/brands-enhanced.css"/>
         
         <!-- Responsive -->
         <css src="css/main.css"/>

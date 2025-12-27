@@ -2,7 +2,7 @@
 <!--
 /**
  * Maison de Pierre - Product Detail Page Layout
- * Custom layout for product view page - ensures proper structure
+ * Beautiful and dynamic product page with enhanced content
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -13,29 +13,105 @@
         <referenceContainer name="content">
             <container name="product.view.container" htmlTag="div" htmlClass="product-view">
                 <container name="product.view.wrapper" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
-                    <!-- Magento will render default product blocks here -->
+                    <!-- Breadcrumbs -->
+                    <block class="Magento\Theme\Block\Html\Breadcrumbs" name="product.breadcrumbs" before="product.info.main">
+                        <arguments>
+                            <argument name="cssClass" xsi:type="string">product-breadcrumbs</argument>
+                        </arguments>
+                    </block>
+                    
+                    <!-- Product Main Info Row -->
+                    <container name="product.main.row" htmlTag="div" htmlClass="row g-4 product-main-row">
+                        <!-- Product Media Column -->
+                        <container name="product.media.column" htmlTag="div" htmlClass="col-lg-6 product-media-column">
+                            <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media" as="media" template="Magento_Catalog::product/view/gallery.phtml"/>
+                        </container>
+                        
+                        <!-- Product Info Column -->
+                        <container name="product.info.column" htmlTag="div" htmlClass="col-lg-6 product-info-column">
+                            <block class="Magento\Catalog\Block\Product\View" name="product.info.main" template="Magento_Catalog::product/view/form.phtml">
+                                <container name="product.info.form.options" as="options" label="Product Options" before="product.info.addtocart">
+                                    <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper" as="product_options_wrapper" template="Magento_Catalog::product/view/options/wrapper.phtml">
+                                        <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="Magento_Catalog::product/view/options.phtml">
+                                            <block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" name="product.info.options.default" as="default" template="Magento_Catalog::product/view/options/type/default.phtml"/>
+                                            <block class="Magento\Catalog\Block\Product\View\Options\Type\Text" name="product.info.options.text" as="text" template="Magento_Catalog::product/view/options/type/text.phtml"/>
+                                            <block class="Magento\Catalog\Block\Product\View\Options\Type\File" name="product.info.options.file" as="file" template="Magento_Catalog::product/view/options/type/file.phtml"/>
+                                            <block class="Magento\Catalog\Block\Product\View\Options\Type\Select" name="product.info.options.select" as="select" template="Magento_Catalog::product/view/options/type/select.phtml"/>
+                                            <block class="Magento\Catalog\Block\Product\View\Options\Type\Date" name="product.info.options.date" as="date" template="Magento_Catalog::product/view/options/type/date.phtml"/>
+                                        </block>
+                                    </block>
+                                </container>
+                                
+                                <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart" as="addtocart" template="Magento_Catalog::product/view/addtocart.phtml"/>
+                                
+                                <!-- Product Social Share -->
+                                <block class="Magento\Catalog\Block\Product\View\AddTo\Compare" name="product.addto.compare" after="product.info.addtocart" template="Magento_Catalog::product/view/addto/compare.phtml"/>
+                                
+                                <!-- Wishlist -->
+                                <container name="product.info.social" label="Product social links" after="product.addto.compare">
+                                    <block class="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist" name="product.wishlist.link" template="Magento_Wishlist::catalog/product/view/addto/wishlist.phtml"/>
+                                </container>
+                            </block>
+                        </container>
+                    </container>
+                    
+                    <!-- Product Detailed Info Tabs -->
+                    <block class="Magento\Catalog\Block\Product\View\Details" name="product.info.details" template="Magento_Catalog::product/view/details.phtml" after="product.main.row">
+                        <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="Magento_Catalog::product/view/attribute.phtml" group="detailed_info">
+                            <arguments>
+                                <argument name="at_call" xsi:type="string">getDescription</argument>
+                                <argument name="at_code" xsi:type="string">description</argument>
+                                <argument name="css_class" xsi:type="string">description</argument>
+                                <argument name="at_label" xsi:type="string">none</argument>
+                                <argument name="title" translate="true" xsi:type="string">Description</argument>
+                            </arguments>
+                        </block>
+                        
+                        <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.attributes" template="Magento_Catalog::product/view/attributes.phtml" group="detailed_info">
+                            <arguments>
+                                <argument name="title" translate="true" xsi:type="string">Specifications</argument>
+                                <argument name="css_class" xsi:type="string">attributes</argument>
+                            </arguments>
+                        </block>
+                    </block>
+                    
+                    <!-- Related Products -->
+                    <block class="Magento\Catalog\Block\Product\ProductList\Related" name="catalog.product.related" template="Magento_Catalog::product/list/items.phtml" after="product.info.details">
+                        <arguments>
+                            <argument name="type" xsi:type="string">related</argument>
+                            <argument name="title" translate="true" xsi:type="string">Related Products</argument>
+                        </arguments>
+                        <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="related.product.addto" as="addto">
+                            <block class="Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist" name="related.product.addto.wishlist" as="addto_wishlist" template="Magento_Wishlist::catalog/product/product-list/item/addto/wishlist.phtml"/>
+                        </block>
+                    </block>
+                    
+                    <!-- Upsell Products -->
+                    <block class="Magento\Catalog\Block\Product\ProductList\Upsell" name="product.info.upsell" template="Magento_Catalog::product/list/items.phtml" after="catalog.product.related">
+                        <arguments>
+                            <argument name="type" xsi:type="string">upsell</argument>
+                            <argument name="title" translate="true" xsi:type="string">You May Also Like</argument>
+                            <argument name="show_pager" xsi:type="boolean">false</argument>
+                        </arguments>
+                        <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="upsell.product.addto" as="addto">
+                            <block class="Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist" name="upsell.product.addto.wishlist" as="addto_wishlist" template="Magento_Wishlist::catalog/product/product-list/item/addto/wishlist.phtml"/>
+                        </block>
+                    </block>
+                    
+                    <!-- Reviews -->
+                    <block class="Magento\Review\Block\Product\View\ListView" name="reviews.tab" as="reviews" template="Magento_Review::product/view/list.phtml" after="product.info.upsell" group="detailed_info">
+                        <block class="Magento\Review\Block\Form" name="product.review.form" as="review_form">
+                            <container name="product.review.form.fields.before" as="form_fields_before" label="Review Form Fields Before"/>
+                        </block>
+                    </block>
                 </container>
             </container>
         </referenceContainer>
         
-        <!-- Ensure product media block is visible and properly configured -->
+        <!-- Ensure product media gallery is properly configured -->
         <referenceBlock name="product.info.media">
             <arguments>
                 <argument name="gallery_options" xsi:type="object">Magento\Catalog\Block\Product\View\GalleryOptions</argument>
-            </arguments>
-        </referenceBlock>
-        
-        <!-- Ensure add to cart block is visible -->
-        <referenceBlock name="product.info.addtocart">
-            <arguments>
-                <argument name="view_model" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
-            </arguments>
-        </referenceBlock>
-        
-        <!-- Ensure product info main is visible -->
-        <referenceBlock name="product.info.main">
-            <arguments>
-                <argument name="view_model" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
             </arguments>
         </referenceBlock>
     </body>

@@ -1,0 +1,201 @@
+<?php
+/**
+ * Maison de Pierre - About Page Template
+ * Dynamic About page with backend integration
+ */
+$hero = $block->getHeroSection();
+$mission = $block->getMissionSection();
+$story = $block->getStorySection();
+$teamMembers = $block->getTeamMembers();
+$values = $block->getValues();
+?>
+<!-- About Page -->
+<div class="about-page">
+    <!-- Hero Section -->
+    <?php if ($hero && $hero->getId()): ?>
+    <section class="about-hero-section" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?= $block->escapeUrl($hero->getImageUrl()) ?>') center center/cover no-repeat;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="about-hero-content">
+                <h1 class="about-hero-title"><?= $block->escapeHtml($hero->getTitle()) ?></h1>
+                <?php if ($hero->getContent()): ?>
+                    <p class="about-hero-subtitle"><?= $block->escapeHtml($hero->getContent()) ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- Mission Section -->
+    <?php if ($mission && $mission->getId()): ?>
+    <section class="about-mission-section py-5" style="padding-top: 120px !important; padding-bottom: 120px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <?php if ($mission->getImageUrl()): ?>
+                        <div class="about-mission-image">
+                            <img src="<?= $block->escapeUrl($mission->getImageUrl()) ?>" 
+                                 alt="<?= $block->escapeHtmlAttr($mission->getImageAlt() ?: $mission->getTitle()) ?>" 
+                                 class="img-fluid">
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-mission-content">
+                        <div class="about-section-label"><?= __('OUR MISSION') ?></div>
+                        <h2 class="about-section-title"><?= $block->escapeHtml($mission->getTitle()) ?></h2>
+                        <div class="about-divider"></div>
+                        <?php if ($mission->getContent()): ?>
+                            <div class="about-content-text">
+                                <?= /* @noEscape */ nl2br($block->escapeHtml($mission->getContent())) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- Values Section -->
+    <?php if ($values && $values->getSize() > 0): ?>
+    <section class="about-values-section py-5" style="background-color: var(--soft-beige); padding-top: 120px !important; padding-bottom: 120px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="about-values-header text-center mb-5">
+                <div class="about-section-label"><?= __('OUR VALUES') ?></div>
+                <h2 class="about-section-title"><?= __('What We Stand For') ?></h2>
+                <div class="about-divider mx-auto"></div>
+            </div>
+            <div class="row g-4">
+                <?php foreach ($values as $value): ?>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="about-value-card">
+                            <?php if ($value->getIcon()): ?>
+                                <div class="about-value-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                            <?php endif; ?>
+                            <h3 class="about-value-title"><?= $block->escapeHtml($value->getTitle()) ?></h3>
+                            <?php if ($value->getDescription()): ?>
+                                <p class="about-value-description"><?= $block->escapeHtml($value->getDescription()) ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- Story Section -->
+    <?php if ($story && $story->getId()): ?>
+    <section class="about-story-section py-5" style="padding-top: 120px !important; padding-bottom: 120px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row align-items-center g-5 flex-row-reverse">
+                <div class="col-lg-6">
+                    <?php if ($story->getImageUrl()): ?>
+                        <div class="about-story-image">
+                            <img src="<?= $block->escapeUrl($story->getImageUrl()) ?>" 
+                                 alt="<?= $block->escapeHtmlAttr($story->getImageAlt() ?: $story->getTitle()) ?>" 
+                                 class="img-fluid">
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-story-content">
+                        <div class="about-section-label"><?= __('OUR STORY') ?></div>
+                        <h2 class="about-section-title"><?= $block->escapeHtml($story->getTitle()) ?></h2>
+                        <div class="about-divider"></div>
+                        <?php if ($story->getContent()): ?>
+                            <div class="about-content-text">
+                                <?= /* @noEscape */ nl2br($block->escapeHtml($story->getContent())) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- Team Section -->
+    <?php if ($teamMembers && $teamMembers->getSize() > 0): ?>
+    <section class="about-team-section py-5" style="background-color: var(--white); padding-top: 120px !important; padding-bottom: 120px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="about-team-header text-center mb-5">
+                <div class="about-section-label"><?= __('OUR TEAM') ?></div>
+                <h2 class="about-section-title"><?= __('Meet the People Behind Maison de Pierre') ?></h2>
+                <div class="about-divider mx-auto"></div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <?php foreach ($teamMembers as $member): ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="about-team-card">
+                            <?php if ($member->getImageUrl()): ?>
+                                <div class="about-team-image">
+                                    <img src="<?= $block->escapeUrl($member->getImageUrl()) ?>" 
+                                         alt="<?= $block->escapeHtmlAttr($member->getName()) ?>" 
+                                         class="img-fluid">
+                                    <div class="about-team-overlay">
+                                        <?php if ($member->getLinkedin()): ?>
+                                            <a href="<?= $block->escapeUrl($member->getLinkedin()) ?>" 
+                                               target="_blank" 
+                                               rel="noopener noreferrer" 
+                                               class="about-team-social">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                                    <circle cx="4" cy="4" r="2"></circle>
+                                                </svg>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if ($member->getEmail()): ?>
+                                            <a href="mailto:<?= $block->escapeUrl($member->getEmail()) ?>" 
+                                               class="about-team-social">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                                </svg>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="about-team-info">
+                                <h3 class="about-team-name"><?= $block->escapeHtml($member->getName()) ?></h3>
+                                <?php if ($member->getPosition()): ?>
+                                    <p class="about-team-position"><?= $block->escapeHtml($member->getPosition()) ?></p>
+                                <?php endif; ?>
+                                <?php if ($member->getBio()): ?>
+                                    <p class="about-team-bio"><?= $block->escapeHtml($member->getBio()) ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- CTA Section -->
+    <section class="about-cta-section py-5" style="background-color: var(--dark-brown); padding-top: 100px !important; padding-bottom: 100px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="about-cta-content text-center">
+                <h2 class="about-cta-title"><?= __('Experience Luxury, Redefined') ?></h2>
+                <p class="about-cta-text"><?= __('Visit our showroom or browse our curated collection online') ?></p>
+                <div class="about-cta-buttons mt-4">
+                    <a href="<?= $block->escapeUrl($block->getUrl('contact')) ?>" class="btn-about-cta btn-about-cta-primary">
+                        <?= __('Contact Us') ?>
+                    </a>
+                    <a href="<?= $block->escapeUrl($block->getUrl('catalog')) ?>" class="btn-about-cta btn-about-cta-secondary">
+                        <?= __('Shop Collection') ?>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

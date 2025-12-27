@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Contact Page Layout
+ * Beautiful and dynamic contact page
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Remove default CMS page content -->
+        <referenceBlock name="cms_page" remove="true"/>
+        
+        <!-- Add custom Contact page block -->
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="maison.contact" template="Magento_Cms::contact/contact.phtml"/>
+        </referenceContainer>
+    </body>
+</page>
+

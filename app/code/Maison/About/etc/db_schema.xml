@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - About Page Database Schema
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="maison_about_sections" resource="default" engine="innodb" comment="About Page Sections">
+        <column xsi:type="int" name="section_id" unsigned="true" nullable="false" identity="true" comment="Section ID"/>
+        <column xsi:type="varchar" name="section_type" length="50" nullable="false" comment="Section Type (hero, mission, values, team, etc.)"/>
+        <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Section Title"/>
+        <column xsi:type="text" name="content" nullable="true" comment="Section Content"/>
+        <column xsi:type="varchar" name="image_url" nullable="true" length="500" comment="Image URL"/>
+        <column xsi:type="varchar" name="image_alt" nullable="true" length="255" comment="Image Alt Text"/>
+        <column xsi:type="int" name="sort_order" nullable="false" default="0" comment="Sort Order"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="section_id"/>
+        </constraint>
+        <index referenceId="IDX_MAISON_ABOUT_SECTIONS_TYPE" indexType="btree">
+            <column name="section_type"/>
+        </index>
+        <index referenceId="IDX_MAISON_ABOUT_SECTIONS_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+    </table>
+    
+    <table name="maison_about_team" resource="default" engine="innodb" comment="About Page Team Members">
+        <column xsi:type="int" name="team_id" unsigned="true" nullable="false" identity="true" comment="Team Member ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Team Member Name"/>
+        <column xsi:type="varchar" name="position" nullable="true" length="255" comment="Position/Title"/>
+        <column xsi:type="text" name="bio" nullable="true" comment="Biography"/>
+        <column xsi:type="varchar" name="image_url" nullable="true" length="500" comment="Image URL"/>
+        <column xsi:type="varchar" name="email" nullable="true" length="255" comment="Email"/>
+        <column xsi:type="varchar" name="linkedin" nullable="true" length="255" comment="LinkedIn URL"/>
+        <column xsi:type="int" name="sort_order" nullable="false" default="0" comment="Sort Order"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="team_id"/>
+        </constraint>
+        <index referenceId="IDX_MAISON_ABOUT_TEAM_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+    </table>
+    
+    <table name="maison_about_values" resource="default" engine="innodb" comment="About Page Values">
+        <column xsi:type="int" name="value_id" unsigned="true" nullable="false" identity="true" comment="Value ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Value Title"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Value Description"/>
+        <column xsi:type="varchar" name="icon" nullable="true" length="100" comment="Icon Class or Name"/>
+        <column xsi:type="int" name="sort_order" nullable="false" default="0" comment="Sort Order"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id"/>
+        </constraint>
+        <index referenceId="IDX_MAISON_ABOUT_VALUES_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+    </table>
+</schema>
+

@@ -27,12 +27,12 @@ html body .header-top-row {
     pointer-events: none !important;
 }
 
-/* Force header solid white - after scroll */
+/* Keep header transparent always - same design */
 html body header#mainHeader.scrolled,
 html body .page-header.scrolled,
 html body .header-container.scrolled {
-    background: var(--white) !important;
-    background-color: var(--white) !important;
+    background: transparent !important;
+    background-color: transparent !important;
     background-image: none !important;
 }
 

@@ -1,0 +1,852 @@
+/* ==================== BRANDS PAGE ENHANCED STYLES ==================== */
+/* Beautiful and comprehensive brands page design */
+
+/* Brands Page Container */
+.brands-page {
+    padding-top: 0;
+    overflow-x: hidden;
+}
+
+/* ==================== HERO SECTION ENHANCED ==================== */
+.brands-hero-section {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 160px 0 120px;
+    overflow: hidden;
+}
+
+.brands-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(44, 36, 32, 0.85), rgba(44, 36, 32, 0.65));
+    z-index: 1;
+}
+
+.brands-hero-content {
+    position: relative;
+    text-align: center;
+    color: var(--white);
+    max-width: 900px;
+    margin: 0 auto;
+    z-index: 2;
+    animation: fadeInUp 1s ease-out;
+}
+
+.brands-hero-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 35px;
+    color: var(--white);
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+    line-height: 1.2;
+}
+
+.brands-hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    color: var(--white);
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+    opacity: 0.95;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== SECTION HEADER ENHANCED ==================== */
+.brands-section-header {
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+.brands-section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--primary-gold);
+    margin-bottom: 20px;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.brands-section-label::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: var(--primary-gold);
+}
+
+.brands-section-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    line-height: 1.2;
+}
+
+.brands-divider {
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary-gold), transparent);
+    margin: 0 auto 35px;
+}
+
+.brands-section-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 1.9;
+    color: var(--text-dark);
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.85;
+}
+
+/* ==================== BRANDS GRID ENHANCED ==================== */
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 50px;
+    margin-bottom: 80px;
+}
+
+.brand-card {
+    background-color: var(--white);
+    border: 2px solid var(--light-gray);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.brand-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-gold), var(--dark-brown));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+}
+
+.brand-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.brand-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-gold);
+}
+
+.brand-card:hover::before {
+    transform: scaleX(1);
+}
+
+.brand-card:hover::after {
+    opacity: 1;
+}
+
+.brand-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+.brand-card-content {
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    min-height: 320px;
+}
+
+.brand-logo-wrapper {
+    margin-bottom: 35px;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--soft-beige), var(--white));
+    border: 3px solid var(--light-gray);
+    border-radius: 50%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-logo-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, var(--primary-gold), var(--dark-brown));
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.brand-card:hover .brand-logo-wrapper {
+    border-color: var(--primary-gold);
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 15px 40px rgba(201, 169, 97, 0.4);
+}
+
+.brand-card:hover .brand-logo-wrapper::before {
+    opacity: 1;
+}
+
+.brand-logo-text {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    letter-spacing: 3px;
+    transition: all 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.brand-card:hover .brand-logo-text {
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+.brand-info {
+    flex: 1;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.brand-name {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 20px;
+    letter-spacing: 1.5px;
+    transition: all 0.4s ease;
+    line-height: 1.3;
+}
+
+.brand-card:hover .brand-name {
+    color: var(--primary-gold);
+    transform: translateY(-3px);
+}
+
+.brand-count {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    transition: all 0.4s ease;
+}
+
+.brand-count-number {
+    font-weight: 700;
+    color: var(--primary-gold);
+    font-size: 20px;
+    background: linear-gradient(135deg, var(--primary-gold), var(--dark-brown));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-count-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+.brand-arrow {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--soft-beige), var(--white));
+    color: var(--dark-brown);
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateX(-20px) scale(0.8);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid var(--light-gray);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.brand-card:hover .brand-arrow {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    background: linear-gradient(135deg, var(--primary-gold), var(--dark-brown));
+    color: var(--white);
+    border-color: var(--primary-gold);
+}
+
+.brand-arrow svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.brand-card:hover .brand-arrow svg {
+    transform: translateX(5px);
+}
+
+/* ==================== STATS SECTION ENHANCED ==================== */
+.brands-stats-section {
+    margin-top: 100px;
+    padding-top: 80px;
+    border-top: 2px solid var(--light-gray);
+    background: linear-gradient(to bottom, var(--white), var(--soft-beige));
+    padding-bottom: 80px;
+}
+
+.brand-stat-item {
+    padding: 50px 30px;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.brand-stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.brand-stat-item:hover::before {
+    opacity: 1;
+}
+
+.brand-stat-item:hover {
+    transform: translateY(-10px);
+}
+
+.brand-stat-number {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary-gold), var(--dark-brown));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+    line-height: 1;
+    transition: transform 0.4s ease;
+}
+
+.brand-stat-item:hover .brand-stat-number {
+    transform: scale(1.1);
+}
+
+.brand-stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    opacity: 0.8;
+}
+
+/* ==================== EMPTY STATE ENHANCED ==================== */
+.brands-empty-section {
+    background: linear-gradient(to bottom, var(--white), var(--soft-beige));
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+}
+
+.brands-empty-icon {
+    color: var(--light-gray);
+    margin-bottom: 40px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.brands-empty-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.brands-empty-message {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--text-dark);
+    opacity: 0.7;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+}
+
+.btn-brands-primary {
+    display: inline-block;
+    padding: 18px 50px;
+    background: linear-gradient(135deg, var(--dark-brown), rgba(44, 36, 32, 0.9));
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    border: 2px solid var(--dark-brown);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-brands-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-brands-primary:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+.btn-brands-primary:hover {
+    background: linear-gradient(135deg, var(--primary-gold), rgba(201, 169, 97, 0.9));
+    border-color: var(--primary-gold);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(201, 169, 97, 0.4);
+}
+
+.btn-brands-primary span {
+    position: relative;
+    z-index: 1;
+}
+
+/* ==================== CTA SECTION ENHANCED ==================== */
+.brands-cta-section {
+    background: linear-gradient(135deg, rgba(44, 36, 32, 0.95), rgba(44, 36, 32, 0.85)),
+                url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1920&q=80') center/cover no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+}
+
+.brands-cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(44, 36, 32, 0.85), rgba(44, 36, 32, 0.75));
+    z-index: 1;
+}
+
+.brands-cta-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 2;
+}
+
+.brands-cta-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+}
+
+.brands-cta-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: var(--white);
+    opacity: 0.95;
+    margin-bottom: 50px;
+    line-height: 1.8;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.brands-cta-buttons {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-brands-cta {
+    padding: 18px 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-brands-cta-primary {
+    background: linear-gradient(135deg, var(--primary-gold), rgba(201, 169, 97, 0.9));
+    color: var(--white);
+    border-color: var(--primary-gold);
+    box-shadow: 0 10px 30px rgba(201, 169, 97, 0.3);
+}
+
+.btn-brands-cta-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-brands-cta-primary:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+.btn-brands-cta-primary:hover {
+    background: linear-gradient(135deg, var(--white), var(--soft-beige));
+    color: var(--dark-brown);
+    border-color: var(--white);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+}
+
+.btn-brands-cta-secondary {
+    background-color: transparent;
+    color: var(--white);
+    border-color: var(--white);
+    backdrop-filter: blur(10px);
+}
+
+.btn-brands-cta-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    transition: left 0.4s ease;
+    z-index: -1;
+}
+
+.btn-brands-cta-secondary:hover::before {
+    left: 0;
+}
+
+.btn-brands-cta-secondary:hover {
+    color: var(--dark-brown);
+    border-color: var(--white);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+}
+
+.btn-brands-cta span {
+    position: relative;
+    z-index: 1;
+}
+
+/* ==================== RESPONSIVE ENHANCED ==================== */
+@media (max-width: 1399.98px) {
+    .brands-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 45px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .brands-hero-title {
+        font-size: 64px;
+    }
+
+    .brands-section-title {
+        font-size: 48px;
+    }
+
+    .brands-cta-title {
+        font-size: 48px;
+    }
+
+    .brands-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 40px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .brands-hero-section {
+        min-height: 500px;
+        padding: 140px 0 100px;
+    }
+
+    .brands-hero-title {
+        font-size: 52px;
+        letter-spacing: 4px;
+    }
+
+    .brands-hero-subtitle {
+        font-size: 20px;
+    }
+
+    .brands-section-title {
+        font-size: 42px;
+    }
+
+    .brands-section-header {
+        margin-bottom: 80px;
+    }
+
+    .brands-cta-title {
+        font-size: 42px;
+    }
+
+    .brands-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 35px;
+    }
+
+    .brand-card-content {
+        padding: 50px 35px;
+        min-height: 300px;
+    }
+
+    .brand-logo-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+
+    .brand-logo-text {
+        font-size: 32px;
+    }
+
+    .brand-stat-number {
+        font-size: 56px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .brands-hero-section {
+        min-height: 450px;
+        padding: 120px 0 80px;
+        background-attachment: scroll;
+    }
+
+    .brands-hero-title {
+        font-size: 42px;
+        letter-spacing: 3px;
+        margin-bottom: 25px;
+    }
+
+    .brands-hero-subtitle {
+        font-size: 18px;
+    }
+
+    .brands-section-title {
+        font-size: 36px;
+    }
+
+    .brands-section-header {
+        margin-bottom: 60px;
+    }
+
+    .brands-section-description {
+        font-size: 16px;
+    }
+
+    .brands-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .brand-card-content {
+        padding: 45px 30px;
+        min-height: 280px;
+    }
+
+    .brand-logo-wrapper {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 30px;
+    }
+
+    .brand-logo-text {
+        font-size: 30px;
+    }
+
+    .brand-name {
+        font-size: 26px;
+    }
+
+    .brand-stat-number {
+        font-size: 48px;
+    }
+
+    .brand-stat-label {
+        font-size: 14px;
+    }
+
+    .brands-cta-title {
+        font-size: 36px;
+    }
+
+    .brands-cta-text {
+        font-size: 18px;
+        margin-bottom: 40px;
+    }
+
+    .brands-cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .btn-brands-cta {
+        text-align: center;
+        padding: 16px 40px;
+    }
+
+    .brands-stats-section {
+        margin-top: 80px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .brand-stat-item {
+        padding: 40px 25px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .brands-hero-title {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+
+    .brands-section-title {
+        font-size: 32px;
+    }
+
+    .brand-card-content {
+        padding: 40px 25px;
+    }
+
+    .brand-logo-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .brand-logo-text {
+        font-size: 28px;
+    }
+
+    .brand-name {
+        font-size: 24px;
+    }
+
+    .brands-cta-title {
+        font-size: 28px;
+    }
+
+    .brand-stat-number {
+        font-size: 42px;
+    }
+}
+

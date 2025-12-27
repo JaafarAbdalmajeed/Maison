@@ -89,8 +89,20 @@ $pos = $parentBlock ? $parentBlock->getPositioned() : null;
             // Attribute doesn't exist, ignore
         }
         if ($brand): ?>
-            <div class="product-brand mb-2"><?= $block->escapeHtml($brand) ?></div>
+            <div class="product-brand"><?= $block->escapeHtml($brand) ?></div>
         <?php endif; ?>
+        
+        <h3 class="product-name product-item-name">
+            <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" 
+               class="product-item-link"
+               title="<?= $block->escapeHtmlAttr($_product->getName()) ?>">
+                <?= /* @noEscape */ $_helper ? $_helper->productAttribute($_product, $_product->getName(), 'name') : $block->escapeHtml($_product->getName()) ?>
+            </a>
+        </h3>
+        
+        <div class="product-price price">
+            <?= /* @noEscape */ $parentBlock ? $parentBlock->getProductPrice($_product) : '' ?>
+        </div>
         
         <div class="product-details-row">
             <?php if ($_product->isSaleable() && $parentBlock): ?>
@@ -140,19 +152,6 @@ $pos = $parentBlock ? $parentBlock->getPositioned() : null;
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            
-            <div>
-                <h3 class="product-name mb-2">
-                    <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" 
-                       class="product-item-link"
-                       title="<?= $block->escapeHtmlAttr($_product->getName()) ?>">
-                        <?= /* @noEscape */ $_helper ? $_helper->productAttribute($_product, $_product->getName(), 'name') : $block->escapeHtml($_product->getName()) ?>
-                    </a>
-                </h3>
-                <div class="product-price">
-                    <?= /* @noEscape */ $parentBlock ? $parentBlock->getProductPrice($_product) : '' ?>
-                </div>
-            </div>
         </div>
     </div>
 </div>

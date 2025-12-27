@@ -98,15 +98,21 @@ body.catalog-product-view .page-main > *:first-child,
     padding-top: 0 !important;
 }
 
-/* Product View Container */
+/* ==================== PRODUCT VIEW CONTAINER ==================== */
 .product-view {
-    padding: 40px 0 80px;
+    padding: 60px 0 100px;
     background-color: var(--white);
     margin-top: 0 !important;
-    padding-top: 40px !important;
+    padding-top: 60px !important;
     position: relative;
     z-index: 1;
     min-height: 0;
+}
+
+/* Product Main Row */
+.product-main-row {
+    margin-bottom: 80px;
+    align-items: flex-start;
 }
 
 /* Product View Wrapper */
@@ -172,8 +178,11 @@ body.catalog-product-view .column.main .product-view,
     padding-top: 0 !important;
 }
 
-.product-view .product-info-main {
-    padding: 0 20px 0 40px;
+/* ==================== PRODUCT INFO ==================== */
+.product-view .product-info-main,
+.product-view .product-info-column {
+    padding: 0 0 0 40px;
+    position: relative;
 }
 
 /* Ensure product info is visible */
@@ -183,20 +192,45 @@ body.catalog-product-view .column.main .product-view,
 }
 
 @media (max-width: 991px) {
-    .product-view .product-info-main {
-        padding: 40px 20px 0;
+    .product-view .product-info-main,
+    .product-view .product-info-column {
+        padding: 40px 0 0;
+    }
+    
+    .product-view .product.media,
+    .product-view .product-media-column {
+        position: relative;
+        top: auto;
+        padding: 0;
     }
 }
 
-/* Product Name */
-.product-view .page-title-wrapper .page-title {
+/* ==================== PRODUCT TITLE & BRAND ==================== */
+.product-view .page-title-wrapper {
+    margin-bottom: 20px;
+}
+
+.product-view .page-title-wrapper .page-title,
+.product-view h1.page-title,
+.product-view .product-info-main .page-title {
     font-family: 'Playfair Display', 'Cormorant Garamond', serif;
-    font-size: 42px;
+    font-size: 48px;
     font-weight: 600;
     color: var(--dark-brown);
     margin-bottom: 15px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     line-height: 1.3;
+    text-transform: none;
+}
+
+.product-view .product-brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--primary-gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 /* Product Brand */
@@ -210,22 +244,50 @@ body.catalog-product-view .column.main .product-view,
     opacity: 0.7;
 }
 
-/* Product Price */
+/* ==================== PRODUCT PRICE ==================== */
 .product-view .product-info-price {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid var(--light-gray);
 }
 
-.product-view .price {
+.product-view .price-box,
+.product-view .price-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.product-view .price,
+.product-view .price-box .price,
+.product-view .price-wrapper .price {
     font-family: 'Inter', sans-serif;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 600;
     color: var(--dark-brown);
+    line-height: 1;
+}
+
+.product-view .price-box .old-price .price,
+.product-view .price-wrapper .old-price .price {
+    font-size: 24px;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+.product-view .price-box .special-price .price,
+.product-view .price-wrapper .special-price .price {
+    color: var(--primary-gold);
 }
 
 .product-view .price .price-label {
     display: none;
+}
+
+.product-view .price-label {
+    display: none !important;
 }
 
 /* Product Description */
@@ -370,11 +432,24 @@ body.catalog-product-view .column.main .product-view,
     color: #dc3545;
 }
 
-/* Product Gallery */
+/* ==================== PRODUCT GALLERY ==================== */
+.product-view .product-media-column {
+    margin-bottom: 40px;
+    padding: 0 30px 0 0;
+    position: sticky;
+    top: 200px;
+    align-self: flex-start;
+}
+
 .product-view .product.media {
     margin-bottom: 40px;
-    padding: 0 20px 0 0;
     position: relative;
+}
+
+.product-view .product.media {
+    background-color: var(--soft-beige);
+    padding: 20px;
+    border: 1px solid var(--light-gray);
 }
 
 .product-view .product.media .gallery-placeholder {
