@@ -2,19 +2,42 @@
 <!--
 /**
  * Maison de Pierre - Product Detail Page Layout
- * Custom layout for product view page
+ * Custom layout for product view page - ensures proper structure
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <attribute name="class" value="catalog-product-view"/>
         
-        <!-- Ensure content starts below header -->
+        <!-- Product View Container -->
         <referenceContainer name="content">
-            <container name="product.content.wrapper" htmlTag="div" htmlClass="product-content-wrapper">
-                <!-- Product content will be rendered here by Magento -->
+            <container name="product.view.container" htmlTag="div" htmlClass="product-view">
+                <container name="product.view.wrapper" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
+                    <!-- Magento will render default product blocks here -->
+                </container>
             </container>
         </referenceContainer>
+        
+        <!-- Ensure product media block is visible and properly configured -->
+        <referenceBlock name="product.info.media">
+            <arguments>
+                <argument name="gallery_options" xsi:type="object">Magento\Catalog\Block\Product\View\GalleryOptions</argument>
+            </arguments>
+        </referenceBlock>
+        
+        <!-- Ensure add to cart block is visible -->
+        <referenceBlock name="product.info.addtocart">
+            <arguments>
+                <argument name="view_model" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
+            </arguments>
+        </referenceBlock>
+        
+        <!-- Ensure product info main is visible -->
+        <referenceBlock name="product.info.main">
+            <arguments>
+                <argument name="view_model" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
+            </arguments>
+        </referenceBlock>
     </body>
 </page>
 

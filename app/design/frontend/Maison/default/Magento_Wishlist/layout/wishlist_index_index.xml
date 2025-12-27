@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Wishlist Page Layout
+ * Custom layout for wishlist page with luxury design
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="wishlist-index-index"/>
+        
+        <!-- Wishlist Page Container -->
+        <referenceContainer name="content">
+            <container name="wishlist.container" htmlTag="div" htmlClass="wishlist-container">
+                <container name="wishlist.container.inner" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5">
+                    <!-- Page Title -->
+                    <block class="Magento\Theme\Block\Html\Title" name="page.main.title" template="Magento_Theme::html/title.phtml">
+                        <arguments>
+                            <argument name="css_class" xsi:type="string">page-title</argument>
+                            <argument name="page_title" xsi:type="string" translate="true">My Wish List</argument>
+                        </arguments>
+                    </block>
+                    
+                    <!-- Wishlist Content -->
+                    <block class="Magento\Wishlist\Block\Customer\Wishlist" name="customer.wishlist" template="Magento_Wishlist::view.phtml">
+                        <block class="Magento\Wishlist\Block\Customer\Wishlist\Items" name="customer.wishlist.items" as="items" template="Magento_Wishlist::item/list.phtml">
+                            <block class="Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Image" name="customer.wishlist.item.image" template="Magento_Wishlist::item/column/image.phtml"/>
+                            <block class="Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Info" name="customer.wishlist.item.info" template="Magento_Wishlist::item/column/info.phtml"/>
+                            <block class="Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Comment" name="customer.wishlist.item.comment" template="Magento_Wishlist::item/column/comment.phtml"/>
+                            <block class="Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Actions" name="customer.wishlist.item.actions" template="Magento_Wishlist::item/column/actions.phtml"/>
+                        </block>
+                    </block>
+                </container>
+            </container>
+        </referenceContainer>
+    </body>
+</page>
+

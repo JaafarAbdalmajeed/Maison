@@ -1733,6 +1733,60 @@ body.filter-sidebar-open .header-container {
 }
 
 /* Product Quick View */
+/* Wishlist Button */
+.products-grid .product-wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.products-grid .product-card:hover .product-wishlist-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.products-grid .product-wishlist-btn:hover {
+    background-color: var(--primary-gold);
+    border-color: var(--primary-gold);
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+.products-grid .product-wishlist-btn svg {
+    width: 18px;
+    height: 18px;
+    color: var(--dark-brown);
+    transition: all 0.3s ease;
+}
+
+.products-grid .product-wishlist-btn:hover svg {
+    color: var(--white);
+}
+
+.products-grid .product-wishlist-btn.in-wishlist {
+    opacity: 1;
+    background-color: var(--primary-gold);
+    border-color: var(--primary-gold);
+}
+
+.products-grid .product-wishlist-btn.in-wishlist svg {
+    color: var(--white);
+    fill: var(--white);
+}
+
 .products-grid .product-quick-view {
     position: absolute;
     bottom: 15px;

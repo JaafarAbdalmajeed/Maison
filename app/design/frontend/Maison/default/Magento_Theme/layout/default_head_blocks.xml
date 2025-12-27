@@ -39,6 +39,7 @@
         <css src="css/pages/category.css"/>
         <css src="css/pages/cart.css"/>
         <css src="css/pages/checkout.css"/>
+        <css src="css/pages/wishlist.css"/>
         <css src="css/pages/account.css"/>
         <css src="css/pages/cms.css"/>
         

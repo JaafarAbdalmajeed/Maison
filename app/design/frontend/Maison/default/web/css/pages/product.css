@@ -100,13 +100,51 @@ body.catalog-product-view .page-main > *:first-child,
 
 /* Product View Container */
 .product-view {
-    padding: 0 0 80px;
+    padding: 40px 0 80px;
     background-color: var(--white);
     margin-top: 0 !important;
-    padding-top: 0 !important;
+    padding-top: 40px !important;
     position: relative;
     z-index: 1;
     min-height: 0;
+}
+
+/* Product View Wrapper */
+.product-view .product.view.wrapper {
+    padding: 0;
+}
+
+/* Ensure proper layout structure */
+.product-view .columns {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.product-view .column.main {
+    flex: 1;
+    padding: 0 15px;
+    min-width: 0;
+}
+
+.product-view .sidebar-main {
+    width: 300px;
+    padding: 0 15px;
+}
+
+@media (max-width: 991px) {
+    .product-view .columns {
+        flex-direction: column;
+    }
+    
+    .product-view .sidebar-main {
+        width: 100%;
+        order: 2;
+    }
+    
+    .product-view .column.main {
+        order: 1;
+    }
 }
 
 /* Ensure all product page elements start below header */
@@ -135,7 +173,19 @@ body.catalog-product-view .column.main .product-view,
 }
 
 .product-view .product-info-main {
-    padding: 0 40px;
+    padding: 0 20px 0 40px;
+}
+
+/* Ensure product info is visible */
+.product-view .product-info-main {
+    display: block !important;
+    visibility: visible !important;
+}
+
+@media (max-width: 991px) {
+    .product-view .product-info-main {
+        padding: 40px 20px 0;
+    }
 }
 
 /* Product Name */
@@ -286,22 +336,122 @@ body.catalog-product-view .column.main .product-view,
     color: var(--white);
 }
 
+.product-view .box-tocart .action.primary.tocart:disabled {
+    background-color: var(--light-gray);
+    color: var(--text-dark);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Ensure Add to Cart form is visible */
+.product-view form[data-role="tocart-form"] {
+    display: block !important;
+    visibility: visible !important;
+}
+
+.product-view .box-tocart {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Stock Status */
+.product-view .stock {
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.product-view .stock.available {
+    color: #28a745;
+}
+
+.product-view .stock.unavailable {
+    color: #dc3545;
+}
+
 /* Product Gallery */
 .product-view .product.media {
     margin-bottom: 40px;
+    padding: 0 20px 0 0;
+    position: relative;
+}
+
+.product-view .product.media .gallery-placeholder {
+    width: 100%;
+    min-height: 500px;
+    background-color: var(--soft-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--light-gray);
+}
+
+.product-view .product.media .gallery-placeholder img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-view .product.media .gallery-placeholder .fotorama__img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-view .product.media .fotorama {
+    width: 100% !important;
+    display: block !important;
 }
 
 .product-view .product.media .fotorama__stage {
     background-color: var(--soft-beige);
+    border: 1px solid var(--light-gray);
+    width: 100% !important;
+}
+
+.product-view .product.media .fotorama__stage__frame {
+    width: 100% !important;
+}
+
+.product-view .product.media .fotorama__stage__shaft {
+    width: 100% !important;
+}
+
+.product-view .product.media .fotorama__img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    display: block !important;
 }
 
 .product-view .product.media .fotorama__thumb {
     border: 2px solid transparent;
     transition: border-color 0.3s ease;
+    cursor: pointer;
 }
 
 .product-view .product.media .fotorama__thumb--active {
     border-color: var(--primary-gold);
+}
+
+.product-view .product.media .fotorama__thumb:hover {
+    border-color: var(--primary-gold);
+}
+
+/* Ensure images are visible */
+.product-view .product.media img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 991px) {
+    .product-view .product.media {
+        padding: 0;
+        margin-bottom: 40px;
+    }
 }
 
 /* Product Additional Info Tabs */

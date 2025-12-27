@@ -159,6 +159,56 @@ define([
             }, 300);
         };
         
+        // Wishlist handler (basic AJAX)
+        $(document).on('click', '.product-wishlist-btn', function(e) {
+            var $btn = $(this);
+            var url = $btn.attr('href');
+            
+            if (!url) {
+                return;
+            }
+            
+            // Prevent default navigation
+            e.preventDefault();
+            
+            // Show loading state
+            $btn.addClass('loading');
+            
+            // Make AJAX request
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                success: function(response) {
+                    // Toggle button state
+                    if (response && response.success !== false) {
+                        if ($btn.hasClass('in-wishlist')) {
+                            $btn.removeClass('in-wishlist');
+                            $btn.attr('title', 'Add to Wishlist');
+                            $btn.find('svg').attr('fill', 'none');
+                        } else {
+                            $btn.addClass('in-wishlist');
+                            $btn.attr('title', 'Remove from Wishlist');
+                            $btn.find('svg').attr('fill', 'currentColor');
+                        }
+                    }
+                    
+                    // Reload wishlist counter if available
+                    if (typeof customerData !== 'undefined') {
+                        customerData.reload(['wishlist'], false);
+                    }
+                },
+                error: function() {
+                    // On error, redirect to wishlist page
+                    window.location.href = url;
+                },
+                complete: function() {
+                    $btn.removeClass('loading');
+                }
+            });
+        });
+        
         console.log('✅ Maison Theme: All interactions initialized');
         console.log('✅ Maison Theme: Ready!');
     };
