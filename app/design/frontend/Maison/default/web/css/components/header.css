@@ -728,3 +728,64 @@ header.scrolled .fullscreen-submenu {
         overflow-x: hidden !important;
     }
 }
+
+/* ==================== FINAL OVERRIDES - HIGHEST PRIORITY ==================== */
+/* These rules override any conflicting styles from other CSS files */
+
+/* Force header-wrapper to not cover content */
+html body header#mainHeader .header-wrapper,
+html body .header-wrapper {
+    position: relative !important;
+    z-index: auto !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    background: transparent !important;
+}
+
+/* Force submenu to be hidden by default - override all other styles */
+html body .fullscreen-submenu,
+html body header .fullscreen-submenu,
+html body .submenu-dropdown .fullscreen-submenu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Show submenu ONLY when hovering - highest priority */
+html body .submenu-dropdown:hover .fullscreen-submenu,
+html body header .submenu-dropdown:hover .fullscreen-submenu {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Force hide submenu when not hovering - override all */
+html body .submenu-dropdown:not(:hover) .fullscreen-submenu,
+html body header .submenu-dropdown:not(:hover) .fullscreen-submenu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Force submenu-container to be hidden when not hovering */
+html body .submenu-dropdown:not(:hover) .submenu-container,
+html body header .submenu-dropdown:not(:hover) .submenu-container {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Show submenu-container only when hovering */
+html body .submenu-dropdown:hover .submenu-container,
+html body header .submenu-dropdown:hover .submenu-container {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}

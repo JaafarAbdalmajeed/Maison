@@ -57,7 +57,23 @@
         padding: 30px; 
     }
     .fullscreen-submenu {
-        padding: 0;
+        padding: 0 !important;
+    }
+    
+    /* Ensure submenu is hidden when not hovering - override any conflicting styles */
+    .submenu-dropdown:not(:hover) .fullscreen-submenu {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    
+    /* Show submenu only on hover */
+    .submenu-dropdown:hover .fullscreen-submenu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
     }
     .submenu-layout {
         min-height: 350px;
@@ -271,8 +287,20 @@
     .search-quick-links {
         grid-template-columns: 1fr;
     }
+    /* Hide submenu on mobile - always hidden */
     .fullscreen-submenu {
-        display: none;
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    
+    /* Prevent submenu from showing on mobile even on hover */
+    .submenu-dropdown:hover .fullscreen-submenu {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
     }
     .submenu-featured-image {
         display: none;
