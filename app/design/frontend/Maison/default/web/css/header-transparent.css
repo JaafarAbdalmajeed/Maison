@@ -1,38 +1,39 @@
-/* ==================== TRANSPARENT HEADER OVERRIDES ==================== */
-/* This file ensures header transparency with maximum specificity */
+/* ==================== WHITE HEADER OVERRIDES ==================== */
+/* This file ensures header has white background with visible buttons */
 
-/* Force header transparency - before scroll */
+/* Force header white background - always */
 html body header#mainHeader:not(.scrolled),
 html body .page-header:not(.scrolled),
 html body .header-container:not(.scrolled),
 html body header#mainHeader:not(.scrolled) .header-wrapper,
 html body header#mainHeader:not(.scrolled) .header-nav {
-    background: transparent !important;
-    background-color: transparent !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
 }
 
-/* Hide header-top-row completely */
+/* Show header-top-row completely - ALWAYS VISIBLE */
 html body header#mainHeader:not(.scrolled) .header-top-row,
 html body header#mainHeader.scrolled .header-top-row,
 html body header#mainHeader .header-top-row,
 html body .header-top-row {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    height: 0 !important;
-    padding: 0 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 90px !important;
+    padding: 15px 0 !important;
     margin: 0 !important;
-    overflow: hidden !important;
-    pointer-events: none !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
 }
 
-/* Keep header transparent always - same design */
+/* Keep header white always - same design */
 html body header#mainHeader.scrolled,
 html body .page-header.scrolled,
 html body .header-container.scrolled {
-    background: transparent !important;
-    background-color: transparent !important;
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
     background-image: none !important;
 }
 
@@ -109,18 +110,118 @@ html body.scrolled.catalog-product-view #maincontent.page-main {
 }
 
 /* ==================== NAVIGATION LINKS COLOR FIX ==================== */
-/* Ensure nav links are white (not blue) - highest priority */
+/* Ensure nav links are dark on white background - highest priority */
 html body header .nav-link-custom,
 html body .nav-link-custom,
 html body .nav-menu .nav-link-custom,
 html body .header-nav .nav-link-custom,
 html body .nav-item .nav-link-custom,
-html body header:not(.scrolled) .nav-link-custom {
-    color: #FFFFFF !important;
+html body header:not(.scrolled) .nav-link-custom,
+html body header.scrolled .nav-link-custom {
+    color: var(--dark-brown) !important;
+    text-shadow: none !important;
 }
 
-html body header.scrolled .nav-link-custom {
-    color: var(--text-dark) !important;
+/* Ensure icon links are visible on white background */
+html body header .icon-link-custom,
+html body .icon-link-custom,
+html body header:not(.scrolled) .icon-link-custom,
+html body header.scrolled .icon-link-custom {
+    color: var(--dark-brown) !important;
+    text-shadow: none !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+html body header .icon-link-custom svg,
+html body .icon-link-custom svg {
+    color: var(--dark-brown) !important;
+    filter: none !important;
+}
+
+html body header .icon-link-custom:hover svg,
+html body .icon-link-custom:hover svg {
+    color: var(--primary-gold) !important;
+}
+
+/* Ensure language toggle is visible */
+html body header .language-toggle,
+html body .language-toggle,
+html body header:not(.scrolled) .language-toggle,
+html body header.scrolled .language-toggle {
+    color: var(--dark-brown) !important;
+    text-shadow: none !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+html body header .language-toggle svg,
+html body .language-toggle svg {
+    stroke: var(--dark-brown) !important;
+    filter: none !important;
+}
+
+html body header .language-toggle:hover svg,
+html body .language-toggle:hover svg {
+    stroke: var(--primary-gold) !important;
+}
+
+/* Ensure burger menu is visible */
+html body header .burger-menu span,
+html body .burger-menu span {
+    background: var(--dark-brown) !important;
+    box-shadow: none !important;
+}
+
+/* ==================== FORCE VISIBILITY OF HEADER ICONS ==================== */
+/* Ensure header-right-icons and all buttons are visible */
+html body header .header-right-icons,
+html body .header-right-icons,
+html body header:not(.scrolled) .header-right-icons,
+html body header.scrolled .header-right-icons {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    gap: 25px !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+}
+
+/* Ensure cart button is visible */
+html body header #cartBtn,
+html body #cartBtn,
+html body header .icon-link-custom#cartBtn,
+html body .icon-link-custom#cartBtn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+}
+
+/* Ensure sign in/account button is visible */
+html body header .icon-link-custom[href*="customer/account"],
+html body .icon-link-custom[href*="customer/account"] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure wishlist button is visible when logged in */
+html body header .icon-link-custom[href*="wishlist"],
+html body .icon-link-custom[href*="wishlist"] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure all icon links in header-right-icons are visible */
+html body header .header-right-icons .icon-link-custom,
+html body .header-right-icons .icon-link-custom {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 
