@@ -57,6 +57,73 @@ define([
             $('#searchOverlay').removeClass('active');
         });
         
+        // Close search overlay when clicking outside
+        $('#searchOverlay').on('click', function(e) {
+            if ($(e.target).is('#searchOverlay')) {
+                $(this).removeClass('active');
+            }
+        });
+        
+        // Close search overlay on Escape key
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                if ($('#searchOverlay').hasClass('active')) {
+                    $('#searchOverlay').removeClass('active');
+                }
+            }
+        });
+        
+        // Search form functionality
+        var $searchInput = $('#searchInput');
+        var $searchForm = $('#searchForm');
+        var $searchClear = $('#searchClear');
+        
+        // Show/hide clear button based on input value
+        function toggleClearButton() {
+            if ($searchInput.val().length > 0) {
+                $searchClear.addClass('active');
+            } else {
+                $searchClear.removeClass('active');
+            }
+        }
+        
+        // Handle input changes
+        $searchInput.on('input keyup', function() {
+            toggleClearButton();
+        });
+        
+        // Clear search input
+        $searchClear.on('click', function(e) {
+            e.preventDefault();
+            $searchInput.val('').focus();
+            toggleClearButton();
+        });
+        
+        // Handle form submission (Enter key or form submit)
+        $searchForm.on('submit', function(e) {
+            var searchQuery = $searchInput.val().trim();
+            if (searchQuery.length === 0) {
+                e.preventDefault();
+                return false;
+            }
+            // Form will submit normally to catalogsearch/result
+            return true;
+        });
+        
+        // Handle Enter key in search input
+        $searchInput.on('keydown', function(e) {
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                e.preventDefault();
+                var searchQuery = $(this).val().trim();
+                if (searchQuery.length > 0) {
+                    $searchForm.submit();
+                }
+            }
+        });
+        
+        // Initialize clear button visibility
+        toggleClearButton();
+        
         // Header scroll effect (from design)
         let lastScrollY = 0;
         $(window).on('scroll', function() {

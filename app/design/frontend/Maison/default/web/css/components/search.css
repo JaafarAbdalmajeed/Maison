@@ -136,6 +136,13 @@
     cursor: pointer;
     display: none;
     padding: 5px;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.search-clear.active {
+    display: flex;
 }
 
 .search-clear i {
