@@ -67,6 +67,33 @@ header.scrolled::before {
     box-sizing: border-box !important;
     margin: 0 !important;
     padding: 0 !important;
+    position: relative !important;
+    z-index: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    pointer-events: none !important;
+}
+
+/* Allow pointer events on interactive elements inside header */
+.header-wrapper > *,
+.header-wrapper .container-fluid,
+.header-wrapper .header-top-row,
+.header-wrapper .header-nav,
+.header-wrapper .nav-menu,
+.header-wrapper .nav-item,
+.header-wrapper .nav-link-custom,
+.header-wrapper .icon-link-custom,
+.header-wrapper .header-logo-link,
+.header-wrapper button {
+    pointer-events: auto !important;
+}
+
+/* Prevent header-wrapper from covering content */
+.header-wrapper::before,
+.header-wrapper::after {
+    display: none !important;
+    content: none !important;
 }
 
 .header-wrapper .container-fluid {
@@ -548,12 +575,13 @@ header.scrolling .fullscreen-submenu {
     pointer-events: none !important;
     display: none !important;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 999 !important;
+    z-index: 998 !important;
     padding: 0 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
+    max-height: calc(100vh - 140px) !important;
 }
 
 /* Show submenu only on hover */
@@ -582,6 +610,22 @@ header.scrolled .submenu-dropdown:hover .fullscreen-submenu {
 
 header.scrolled .fullscreen-submenu {
     top: 85px !important;
+    max-height: calc(100vh - 85px) !important;
+}
+
+/* Ensure page content is above submenu when not hovering */
+.page-wrapper,
+.page-main,
+main#maincontent,
+#maincontent,
+.page-content {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* When submenu is visible, it should be above content but only when hovering */
+.submenu-dropdown:hover .fullscreen-submenu {
+    z-index: 999 !important;
 }
 
 /* Additional safety: Hide submenu when mouse leaves the dropdown area */
@@ -597,7 +641,25 @@ header.scrolled .fullscreen-submenu {
     box-sizing: border-box !important;
     overflow-x: hidden !important;
     overflow-y: visible !important;
-    position: relative;
+    position: relative !important;
+    z-index: 998 !important;
+    pointer-events: auto !important;
+}
+
+/* Hide submenu-container when not hovering */
+.submenu-dropdown:not(:hover) .submenu-container {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Show submenu-container only when hovering */
+.submenu-dropdown:hover .submenu-container {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 .submenu-layout {
