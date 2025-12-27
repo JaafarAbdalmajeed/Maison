@@ -515,6 +515,13 @@ header.scrolled .burger-menu span {
     z-index: 1001;
 }
 
+/* Ensure submenu is completely hidden by default - override any conflicting styles */
+.submenu-dropdown:not(:hover) .fullscreen-submenu {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 .fullscreen-submenu {
     position: fixed !important;
     top: 140px !important;
@@ -526,20 +533,23 @@ header.scrolled .burger-menu span {
     border-top: 1px solid var(--light-gray);
     border-bottom: 1px solid var(--light-gray);
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 999 !important;
     padding: 0 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
+    display: block !important;
 }
 
 .submenu-dropdown:hover .fullscreen-submenu {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 header.scrolled .fullscreen-submenu {
