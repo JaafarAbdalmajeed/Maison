@@ -100,40 +100,96 @@ $reviewHelper = $this->helper('Magento\Review\Helper\Data');
                                 ];
                                 
                                 foreach ($specAttributes as $attrCode => $label):
-                                    $attr = $_product->getResource()->getAttribute($attrCode);
-                                    if ($attr && $_product->getData($attrCode)):
-                                        $value = $_product->getAttributeText($attrCode);
-                                        if (!$value) {
-                                            $value = $_product->getData($attrCode);
-                                        }
-                                        if ($value): ?>
-                                            <div class="spec-row">
-                                                <div class="spec-label"><?= $block->escapeHtml($label) ?></div>
-                                                <div class="spec-value"><?= $block->escapeHtml($value) ?></div>
-                                            </div>
-                                        <?php endif;
-                                    endif;
+                                    try {
+                                        $attr = $_product->getResource()->getAttribute($attrCode);
+                                        if ($attr && $attr->getId() && $_product->getData($attrCode)):
+                                            // Safely get attribute text
+                                            $value = null;
+                                            try {
+                                                // Check if attribute has source model
+                                                $source = $attr->getSource();
+                                                if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                                    $attrValue = $_product->getData($attrCode);
+                                                    if ($attrValue) {
+                                                        $value = $source->getOptionText($attrValue);
+                                                    }
+                                                }
+                                            } catch (\Exception $e) {
+                                                // If getSource fails, use raw value
+                                                $value = $_product->getData($attrCode);
+                                            }
+                                            
+                                            // Fallback to raw value if getOptionText failed
+                                            if (!$value) {
+                                                $value = $_product->getData($attrCode);
+                                            }
+                                            
+                                            if ($value): ?>
+                                                <div class="spec-row">
+                                                    <div class="spec-label"><?= $block->escapeHtml($label) ?></div>
+                                                    <div class="spec-value"><?= $block->escapeHtml($value) ?></div>
+                                                </div>
+                                            <?php endif;
+                                        endif;
+                                    } catch (\Exception $e) {
+                                        // Skip this attribute if error
+                                        continue;
+                                    } catch (\Throwable $e) {
+                                        // Skip this attribute if any error
+                                        continue;
+                                    }
                                 endforeach;
                                 
                                 // Additional attributes
-                                $additionalAttrs = $_product->getAttributes();
-                                foreach ($additionalAttrs as $attr):
-                                    if ($attr->getIsVisibleOnFront() && 
-                                        $attr->getIsUserDefined() && 
-                                        !in_array($attr->getAttributeCode(), array_keys($specAttributes)) &&
-                                        $_product->getData($attr->getAttributeCode())):
-                                        $value = $_product->getAttributeText($attr->getAttributeCode());
-                                        if (!$value) {
-                                            $value = $_product->getData($attr->getAttributeCode());
+                                try {
+                                    $additionalAttrs = $_product->getAttributes();
+                                    foreach ($additionalAttrs as $attr):
+                                        try {
+                                            if ($attr && $attr->getIsVisibleOnFront() && 
+                                                $attr->getIsUserDefined() && 
+                                                !in_array($attr->getAttributeCode(), array_keys($specAttributes)) &&
+                                                $_product->getData($attr->getAttributeCode())):
+                                                
+                                                // Safely get attribute text
+                                                $value = null;
+                                                try {
+                                                    $source = $attr->getSource();
+                                                    if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                                        $attrValue = $_product->getData($attr->getAttributeCode());
+                                                        if ($attrValue) {
+                                                            $value = $source->getOptionText($attrValue);
+                                                        }
+                                                    }
+                                                } catch (\Exception $e) {
+                                                    // If getSource fails, use raw value
+                                                    $value = $_product->getData($attr->getAttributeCode());
+                                                }
+                                                
+                                                // Fallback to raw value if getOptionText failed
+                                                if (!$value) {
+                                                    $value = $_product->getData($attr->getAttributeCode());
+                                                }
+                                                
+                                                if ($value && $value != 'No' && $value != '0'): ?>
+                                                    <div class="spec-row">
+                                                        <div class="spec-label"><?= $block->escapeHtml($attr->getFrontendLabel()) ?></div>
+                                                        <div class="spec-value"><?= $block->escapeHtml($value) ?></div>
+                                                    </div>
+                                                <?php endif;
+                                            endif;
+                                        } catch (\Exception $e) {
+                                            // Skip this attribute if error
+                                            continue;
+                                        } catch (\Throwable $e) {
+                                            // Skip this attribute if any error
+                                            continue;
                                         }
-                                        if ($value && $value != 'No' && $value != '0'): ?>
-                                            <div class="spec-row">
-                                                <div class="spec-label"><?= $block->escapeHtml($attr->getFrontendLabel()) ?></div>
-                                                <div class="spec-value"><?= $block->escapeHtml($value) ?></div>
-                                            </div>
-                                        <?php endif;
-                                    endif;
-                                endforeach;
+                                    endforeach;
+                                } catch (\Exception $e) {
+                                    // Error getting attributes, ignore
+                                } catch (\Throwable $e) {
+                                    // Error getting attributes, ignore
+                                }
                                 ?>
                             </div>
                         </div>

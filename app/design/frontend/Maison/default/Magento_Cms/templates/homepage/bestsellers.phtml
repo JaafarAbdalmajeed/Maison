@@ -87,9 +87,18 @@ $products = $block->getBestsellerProducts();
                                                 if ($brandValue && $brandValue != '' && $brandValue != '0' && $brandValue !== null && !$brand) {
                                                     $brandAttr = $product->getResource()->getAttribute('brand');
                                                     if ($brandAttr && $brandAttr->getId()) {
-                                                        $brandText = $brandAttr->getSource()->getOptionText($brandValue);
-                                                        if ($brandText && $brandText != '' && $brandText != '0' && strtolower(trim($brandText)) != 'maison') {
-                                                            $brand = trim($brandText);
+                                                        try {
+                                                            $source = $brandAttr->getSource();
+                                                            if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                                                $brandText = $source->getOptionText($brandValue);
+                                                                if ($brandText && $brandText != '' && $brandText != '0' && strtolower(trim($brandText)) != 'maison') {
+                                                                    $brand = trim($brandText);
+                                                                }
+                                                            }
+                                                        } catch (\Exception $e) {
+                                                            // Error getting source, ignore
+                                                        } catch (\Throwable $e) {
+                                                            // Error getting source, ignore
                                                         }
                                                     }
                                                 }
