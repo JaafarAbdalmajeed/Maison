@@ -1,15 +1,25 @@
-/* ==================== WHITE HEADER OVERRIDES ==================== */
-/* This file ensures header has white background with visible buttons */
+/* ==================== DYNAMIC HEADER - TRANSPARENT TO WHITE ==================== */
+/* Header is transparent before scroll, white after scroll */
 
-/* Force header white background - always */
+/* Header transparent before scroll */
 html body header#mainHeader:not(.scrolled),
 html body .page-header:not(.scrolled),
 html body .header-container:not(.scrolled),
 html body header#mainHeader:not(.scrolled) .header-wrapper,
 html body header#mainHeader:not(.scrolled) .header-nav {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Header white after scroll */
+html body header#mainHeader.scrolled,
+html body .page-header.scrolled,
+html body .header-container.scrolled {
     background: #FFFFFF !important;
     background-color: #FFFFFF !important;
     background-image: none !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Show header-top-row completely - ALWAYS VISIBLE */
@@ -26,15 +36,6 @@ html body .header-top-row {
     margin: 0 !important;
     overflow: visible !important;
     pointer-events: auto !important;
-}
-
-/* Keep header white always - same design */
-html body header#mainHeader.scrolled,
-html body .page-header.scrolled,
-html body .header-container.scrolled {
-    background: #FFFFFF !important;
-    background-color: #FFFFFF !important;
-    background-image: none !important;
 }
 
 /* Ensure no spacing issues */
@@ -109,24 +110,40 @@ html body.scrolled.catalog-product-view #maincontent.page-main {
     padding: 120px 0 0 0 !important;
 }
 
-/* ==================== NAVIGATION LINKS COLOR FIX ==================== */
-/* Ensure nav links are dark on white background - highest priority */
-html body header .nav-link-custom,
-html body .nav-link-custom,
-html body .nav-menu .nav-link-custom,
-html body .header-nav .nav-link-custom,
-html body .nav-item .nav-link-custom,
+/* ==================== NAVIGATION LINKS COLOR - DYNAMIC ==================== */
+/* White text when header is transparent, dark text when header is white */
+
+/* Navigation links - White when transparent, dark when white */
 html body header:not(.scrolled) .nav-link-custom,
-html body header.scrolled .nav-link-custom {
+html body header:not(.scrolled) .nav-menu .nav-link-custom,
+html body header:not(.scrolled) .header-nav .nav-link-custom,
+html body header:not(.scrolled) .nav-item .nav-link-custom {
+    color: #FFFFFF !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+html body header.scrolled .nav-link-custom,
+html body header.scrolled .nav-menu .nav-link-custom,
+html body header.scrolled .header-nav .nav-link-custom,
+html body header.scrolled .nav-item .nav-link-custom {
     color: var(--dark-brown) !important;
     text-shadow: none !important;
 }
 
-/* Ensure icon links are visible on white background */
-html body header .icon-link-custom,
-html body .icon-link-custom,
+/* Icon links - White when transparent, dark when white */
 html body header:not(.scrolled) .icon-link-custom,
-html body header.scrolled .icon-link-custom {
+html body header:not(.scrolled) .header-right-icons .icon-link-custom,
+html body header:not(.scrolled) .header-left-icons .icon-link-custom {
+    color: #FFFFFF !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+html body header.scrolled .icon-link-custom,
+html body header.scrolled .header-right-icons .icon-link-custom,
+html body header.scrolled .header-left-icons .icon-link-custom {
     color: var(--dark-brown) !important;
     text-shadow: none !important;
     display: inline-flex !important;
@@ -134,22 +151,51 @@ html body header.scrolled .icon-link-custom {
     opacity: 1 !important;
 }
 
-html body header .icon-link-custom svg,
-html body .icon-link-custom svg {
+/* Icon SVG - White when transparent, dark when white */
+html body header:not(.scrolled) .icon-link-custom svg,
+html body header:not(.scrolled) .header-right-icons .icon-link-custom svg,
+html body header:not(.scrolled) .header-left-icons .icon-link-custom svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+    fill: #FFFFFF !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
+}
+
+html body header.scrolled .icon-link-custom svg,
+html body header.scrolled .header-right-icons .icon-link-custom svg,
+html body header.scrolled .header-left-icons .icon-link-custom svg {
     color: var(--dark-brown) !important;
+    stroke: var(--dark-brown) !important;
+    fill: var(--dark-brown) !important;
     filter: none !important;
+}
+
+/* Hover effect - Gold for both states */
+html body header .icon-link-custom:hover,
+html body .icon-link-custom:hover {
+    color: var(--primary-gold) !important;
 }
 
 html body header .icon-link-custom:hover svg,
 html body .icon-link-custom:hover svg {
     color: var(--primary-gold) !important;
+    stroke: var(--primary-gold) !important;
+    fill: var(--primary-gold) !important;
+    filter: none !important;
 }
 
-/* Ensure language toggle is visible */
-html body header .language-toggle,
-html body .language-toggle,
+/* Language toggle - White when transparent, dark when white */
 html body header:not(.scrolled) .language-toggle,
-html body header.scrolled .language-toggle {
+html body header:not(.scrolled) .language-toggle .current-lang {
+    color: #FFFFFF !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+html body header.scrolled .language-toggle,
+html body header.scrolled .language-toggle .current-lang {
     color: var(--dark-brown) !important;
     text-shadow: none !important;
     display: flex !important;
@@ -157,20 +203,34 @@ html body header.scrolled .language-toggle {
     opacity: 1 !important;
 }
 
-html body header .language-toggle svg,
-html body .language-toggle svg {
+html body header:not(.scrolled) .language-toggle svg {
+    stroke: #FFFFFF !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
+}
+
+html body header.scrolled .language-toggle svg {
     stroke: var(--dark-brown) !important;
     filter: none !important;
+}
+
+html body header .language-toggle:hover,
+html body .language-toggle:hover {
+    color: var(--primary-gold) !important;
 }
 
 html body header .language-toggle:hover svg,
 html body .language-toggle:hover svg {
     stroke: var(--primary-gold) !important;
+    filter: none !important;
 }
 
-/* Ensure burger menu is visible */
-html body header .burger-menu span,
-html body .burger-menu span {
+/* Burger menu - White when transparent, dark when white */
+html body header:not(.scrolled) .burger-menu span {
+    background: #FFFFFF !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+html body header.scrolled .burger-menu span {
     background: var(--dark-brown) !important;
     box-shadow: none !important;
 }

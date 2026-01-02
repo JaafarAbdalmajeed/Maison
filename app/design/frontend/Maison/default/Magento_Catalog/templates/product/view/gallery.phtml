@@ -8,7 +8,17 @@ if (!$_product) {
     return;
 }
 
-$images = $block->getGalleryImages() ?: [];
+// Safely get gallery images
+$images = [];
+try {
+    $galleryImages = $block->getGalleryImages();
+    if ($galleryImages && (is_array($galleryImages) || $galleryImages instanceof \Traversable)) {
+        $images = $galleryImages;
+    }
+} catch (\Exception $e) {
+    // If getGalleryImages fails, use empty array
+    $images = [];
+}
 $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
 if (!$imageHelper) {
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -20,37 +30,43 @@ $mainImageUrl = '';
 $mainImageLabel = $_product->getName();
 
 try {
-    if ($imageHelper) {
-        $mainImageUrl = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
-        $mainImageLabel = $_product->getName();
+    if ($imageHelper && $_product) {
+        $imageObject = $imageHelper->init($_product, 'product_page_image_large');
+        // Check if init returned a valid object
+        if ($imageObject && is_object($imageObject) && method_exists($imageObject, 'getUrl')) {
+            $mainImageUrl = $imageObject->getUrl();
+            $mainImageLabel = $_product->getName();
+        } else {
+            throw new \Exception('Image helper init failed');
+        }
     } else {
-        throw new \Exception('Image helper not available');
+        throw new \Exception('Image helper or product not available');
     }
 } catch (\Exception $e) {
     // Fallback: try to get placeholder
     try {
-        if ($imageHelper) {
+        if ($imageHelper && method_exists($imageHelper, 'getDefaultPlaceholderUrl')) {
             $mainImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
         } else {
             // Last resort: use a default placeholder path
-            $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+            $mainImageUrl = $block->getViewFileUrl('images/placeholder/image.jpg');
         }
     } catch (\Exception $e2) {
         // Absolute last resort
-        $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+        $mainImageUrl = $block->getViewFileUrl('images/placeholder/image.jpg');
     }
 }
 
 // Ensure we have a valid URL
 if (empty($mainImageUrl)) {
     try {
-        if ($imageHelper) {
+        if ($imageHelper && method_exists($imageHelper, 'getDefaultPlaceholderUrl')) {
             $mainImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
         } else {
-            $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+            $mainImageUrl = $block->getViewFileUrl('images/placeholder/image.jpg');
         }
     } catch (\Exception $e) {
-        $mainImageUrl = '/static/frontend/Maison/default/images/placeholder/image.jpg';
+        $mainImageUrl = $block->getViewFileUrl('images/placeholder/image.jpg');
     }
 }
 ?>
@@ -64,8 +80,23 @@ if (empty($mainImageUrl)) {
         
         <?php
         // Product Badge (Bestseller or New)
-        $isBestseller = $_product->getAttributeText('bestseller');
-        $isNew = $_product->getAttributeText('new');
+        $isBestseller = false;
+        $isNew = false;
+        
+        try {
+            $bestsellerValue = $_product->getAttributeText('bestseller');
+            $isBestseller = !empty($bestsellerValue) && ($bestsellerValue !== false && $bestsellerValue !== null);
+        } catch (\Exception $e) {
+            // Attribute doesn't exist or error, ignore
+        }
+        
+        try {
+            $newValue = $_product->getAttributeText('new');
+            $isNew = !empty($newValue) && ($newValue !== false && $newValue !== null);
+        } catch (\Exception $e) {
+            // Attribute doesn't exist or error, ignore
+        }
+        
         if ($isBestseller): ?>
             <div class="product-badge-detail"><?= __('BEST SELLER') ?></div>
         <?php elseif ($isNew): ?>
@@ -90,22 +121,45 @@ if (empty($mainImageUrl)) {
                 $thumbnailUrl = '';
                 $largeUrl = '';
                 try {
-                    if (!$imageHelper) {
-                        continue; // Skip if no image helper
+                    if (!$imageHelper || !$_product || !$image) {
+                        continue; // Skip if no image helper, product, or image
                     }
+                    
+                    // Check if image is an object and has getFile method
+                    if (!is_object($image) || !method_exists($image, 'getFile')) {
+                        continue; // Skip if image is not a valid object
+                    }
+                    
                     $imageFile = $image->getFile();
-                    if ($imageFile && $imageHelper) {
-                        $thumbnailUrl = $imageHelper->init($_product, 'product_page_image_small')
-                            ->setImageFile($imageFile)
-                            ->getUrl();
-                        $largeUrl = $imageHelper->init($_product, 'product_page_image_large')
-                            ->setImageFile($imageFile)
-                            ->getUrl();
+                    if (empty($imageFile) || !is_string($imageFile)) {
+                        continue; // Skip if no file or invalid file
+                    }
+                    
+                    // Get thumbnail image
+                    $thumbnailImage = $imageHelper->init($_product, 'product_page_image_small')
+                        ->setImageFile($imageFile);
+                    
+                    // Check if thumbnail init was successful
+                    if ($thumbnailImage && is_object($thumbnailImage) && method_exists($thumbnailImage, 'getUrl')) {
+                        $thumbnailUrl = $thumbnailImage->getUrl();
                     } else {
-                        continue; // Skip if no file
+                        continue; // Skip if thumbnail failed
+                    }
+                    
+                    // Get large image
+                    $largeImage = $imageHelper->init($_product, 'product_page_image_large')
+                        ->setImageFile($imageFile);
+                    
+                    // Check if large init was successful
+                    if ($largeImage && is_object($largeImage) && method_exists($largeImage, 'getUrl')) {
+                        $largeUrl = $largeImage->getUrl();
+                    } else {
+                        continue; // Skip if large image failed
                     }
                 } catch (\Exception $e) {
                     continue; // Skip on error
+                } catch (\Throwable $e) {
+                    continue; // Skip on any throwable
                 }
                 
                 // Only render if we have valid URLs
