@@ -4,16 +4,25 @@
  * @var \Magento\Catalog\Block\Product\View\Description $block
  */
 $_product = $block->getProduct();
+if (!$_product || !$_product->getId()) {
+    return; // Exit if no product
+}
+
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 
 // Safely get review count
 $reviewCount = 0;
 try {
-    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-    $reviewFactory = $objectManager->get(\Magento\Review\Model\ReviewFactory::class);
-    $review = $reviewFactory->create();
-    $review->getEntitySummary($_product);
-    $reviewCount = $_product->getRatingSummary()->getReviewsCount() ?: 0;
+    if ($_product && $_product->getId()) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $reviewFactory = $objectManager->get(\Magento\Review\Model\ReviewFactory::class);
+        $review = $reviewFactory->create();
+        $review->getEntitySummary($_product);
+        $ratingSummary = $_product->getRatingSummary();
+        if ($ratingSummary) {
+            $reviewCount = $ratingSummary->getReviewsCount() ?: 0;
+        }
+    }
 } catch (\Exception $e) {
     // Reviews not available, use 0
     $reviewCount = 0;
@@ -41,7 +50,7 @@ try {
                             <div class="row g-5">
                                 <div class="col-lg-8">
                                     <h3 class="tab-heading"><?= __('Product Description') ?></h3>
-                                    <?php if ($_product->getDescription()): ?>
+                                    <?php if ($_product && $_product->getDescription()): ?>
                                         <?= $_helper->productAttribute($_product, $_product->getDescription(), 'description') ?>
                                     <?php else: ?>
                                         <p><?= __('No description available.') ?></p>
@@ -50,11 +59,34 @@ try {
                                     <?php 
                                     // Get additional attributes for features
                                     $features = [];
-                                    $attributes = ['features', 'key_features', 'highlights'];
-                                    foreach ($attributes as $attrCode) {
-                                        $attr = $_product->getResource()->getAttribute($attrCode);
-                                        if ($attr && $_product->getData($attrCode)) {
-                                            $features[] = $_product->getAttributeText($attrCode);
+                                    if ($_product && $_product->getId()) {
+                                        $attributes = ['features', 'key_features', 'highlights'];
+                                        foreach ($attributes as $attrCode) {
+                                            try {
+                                                $attr = $_product->getResource()->getAttribute($attrCode);
+                                                if ($attr && $attr->getId() && $_product->getData($attrCode)) {
+                                                    // Safely get attribute text
+                                                    $source = $attr->getSource();
+                                                    if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                                        $attrValue = $_product->getData($attrCode);
+                                                        if ($attrValue) {
+                                                            $featureText = $source->getOptionText($attrValue);
+                                                            if ($featureText) {
+                                                                $features[] = $featureText;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        // Fallback to raw value
+                                                        $features[] = $_product->getData($attrCode);
+                                                    }
+                                                }
+                                            } catch (\Exception $e) {
+                                                // Skip this attribute if error
+                                                continue;
+                                            } catch (\Throwable $e) {
+                                                // Skip this attribute if any error
+                                                continue;
+                                            }
                                         }
                                     }
                                     if (!empty($features)): ?>
@@ -71,7 +103,28 @@ try {
                                         <h4 class="info-box-title"><?= __('Care Instructions') ?></h4>
                                         <ul class="info-list">
                                             <?php 
-                                            $careInstructions = $_product->getAttributeText('care_instructions');
+                                            $careInstructions = null;
+                                            if ($_product && $_product->getId()) {
+                                                try {
+                                                    $careAttr = $_product->getResource()->getAttribute('care_instructions');
+                                                    if ($careAttr && $careAttr->getId()) {
+                                                        $careValue = $_product->getData('care_instructions');
+                                                        if ($careValue) {
+                                                            $source = $careAttr->getSource();
+                                                            if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                                                $careInstructions = $source->getOptionText($careValue);
+                                                            } else {
+                                                                $careInstructions = $careValue;
+                                                            }
+                                                        }
+                                                    }
+                                                } catch (\Exception $e) {
+                                                    // Attribute doesn't exist, use defaults
+                                                } catch (\Throwable $e) {
+                                                    // Attribute doesn't exist, use defaults
+                                                }
+                                            }
+                                            
                                             if ($careInstructions):
                                                 if (is_array($careInstructions)):
                                                     foreach ($careInstructions as $instruction): ?>
