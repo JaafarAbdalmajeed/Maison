@@ -5,7 +5,22 @@
  */
 $_product = $block->getProduct();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
-$reviewHelper = $this->helper('Magento\Review\Helper\Data');
+
+// Safely get review count
+$reviewCount = 0;
+try {
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $reviewFactory = $objectManager->get(\Magento\Review\Model\ReviewFactory::class);
+    $review = $reviewFactory->create();
+    $review->getEntitySummary($_product);
+    $reviewCount = $_product->getRatingSummary()->getReviewsCount() ?: 0;
+} catch (\Exception $e) {
+    // Reviews not available, use 0
+    $reviewCount = 0;
+} catch (\Throwable $e) {
+    // Reviews not available, use 0
+    $reviewCount = 0;
+}
 ?>
 
 <section class="product-tabs-section">
@@ -17,14 +32,7 @@ $reviewHelper = $this->helper('Magento\Review\Helper\Data');
                     <div class="tabs-nav-vertical">
                         <button class="tab-btn-vertical active" data-tab="description"><?= __('DESCRIPTION') ?></button>
                         <button class="tab-btn-vertical" data-tab="specifications"><?= __('SPECIFICATIONS') ?></button>
-                        <?php 
-                        $reviewCount = 0;
-                        if ($reviewHelper->getReviewSummary($_product)) {
-                            $ratingSummary = $reviewHelper->getReviewSummary($_product);
-                            $reviewCount = $ratingSummary->getReviewsCount();
-                        }
-                        ?>
-                        <button class="tab-btn-vertical" data-tab="reviews"><?= __('REVIEWS') ?> (<?= $reviewCount ?>)</button>
+                        <button class="tab-btn-vertical" data-tab="reviews"><?= __('REVIEWS') ?> <?= $reviewCount > 0 ? '(' . $reviewCount . ')' : '' ?></button>
                     </div>
                     
                     <div class="tabs-content-vertical">
