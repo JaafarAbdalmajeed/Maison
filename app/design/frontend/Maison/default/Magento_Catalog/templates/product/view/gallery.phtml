@@ -79,22 +79,52 @@ if (empty($mainImageUrl)) {
              class="main-product-image">
         
         <?php
-        // Product Badge (Bestseller or New)
+        // Product Badge (Bestseller or New) - Safely check attributes
         $isBestseller = false;
         $isNew = false;
         
+        // Safely check for bestseller attribute
         try {
-            $bestsellerValue = $_product->getAttributeText('bestseller');
-            $isBestseller = !empty($bestsellerValue) && ($bestsellerValue !== false && $bestsellerValue !== null);
+            $bestsellerAttr = $_product->getResource()->getAttribute('bestseller');
+            if ($bestsellerAttr && $bestsellerAttr->getId()) {
+                $bestsellerValue = $_product->getData('bestseller');
+                if ($bestsellerValue) {
+                    $source = $bestsellerAttr->getSource();
+                    if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                        $bestsellerText = $source->getOptionText($bestsellerValue);
+                        $isBestseller = !empty($bestsellerText) && ($bestsellerText !== false && $bestsellerText !== null);
+                    } else {
+                        // If no source model, check if value is truthy
+                        $isBestseller = !empty($bestsellerValue) && ($bestsellerValue !== false && $bestsellerValue !== null && $bestsellerValue != '0');
+                    }
+                }
+            }
         } catch (\Exception $e) {
             // Attribute doesn't exist or error, ignore
+        } catch (\Throwable $e) {
+            // Catch any other errors
         }
         
+        // Safely check for new attribute
         try {
-            $newValue = $_product->getAttributeText('new');
-            $isNew = !empty($newValue) && ($newValue !== false && $newValue !== null);
+            $newAttr = $_product->getResource()->getAttribute('new');
+            if ($newAttr && $newAttr->getId()) {
+                $newValue = $_product->getData('new');
+                if ($newValue) {
+                    $source = $newAttr->getSource();
+                    if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                        $newText = $source->getOptionText($newValue);
+                        $isNew = !empty($newText) && ($newText !== false && $newText !== null);
+                    } else {
+                        // If no source model, check if value is truthy
+                        $isNew = !empty($newValue) && ($newValue !== false && $newValue !== null && $newValue != '0');
+                    }
+                }
+            }
         } catch (\Exception $e) {
             // Attribute doesn't exist or error, ignore
+        } catch (\Throwable $e) {
+            // Catch any other errors
         }
         
         if ($isBestseller): ?>
