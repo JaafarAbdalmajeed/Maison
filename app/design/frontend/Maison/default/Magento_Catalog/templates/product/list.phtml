@@ -9,28 +9,85 @@ use Magento\Framework\App\Action\Action;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 
-// Try to get loaded product collection
-$_productCollection = $block->getLoadedProductCollection();
+// Try to get loaded product collection - multiple methods
+$_productCollection = null;
 
-// Fallback: If collection is empty or null, try to get it from the block
-if (!$_productCollection || !$_productCollection->count()) {
-    try {
-        // Try alternative method
-        if (method_exists($block, 'getProductCollection')) {
-            $_productCollection = $block->getProductCollection();
-        }
-        
-        // If still empty, try to get from category
-        if ((!$_productCollection || !$_productCollection->count()) && $block->getLayer()) {
-            $_productCollection = $block->getLayer()->getProductCollection();
-        }
-    } catch (\Exception $e) {
-        // Log error but continue silently in production
-        // In development, you can uncomment the following line to see errors:
-        // $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        // $logger = $objectManager->get(\Psr\Log\LoggerInterface::class);
-        // $logger->error('Error loading product collection: ' . $e->getMessage());
+try {
+    // Method 1: Standard way
+    $_productCollection = $block->getLoadedProductCollection();
+    
+    // Method 2: If empty, try getProductCollection
+    if ((!$_productCollection || !$_productCollection->count()) && method_exists($block, 'getProductCollection')) {
+        $_productCollection = $block->getProductCollection();
     }
+    
+    // Method 3: If still empty, try from layer
+    if ((!$_productCollection || !$_productCollection->count()) && $block->getLayer()) {
+        $layer = $block->getLayer();
+        if (method_exists($layer, 'getProductCollection')) {
+            $_productCollection = $layer->getProductCollection();
+        }
+    }
+    
+    // Method 4: If still empty, try to get from current category
+    if ((!$_productCollection || !$_productCollection->count())) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $registry = $objectManager->get(\Magento\Framework\Registry::class);
+        $currentCategory = $registry->registry('current_category');
+        
+        if ($currentCategory && $currentCategory->getId()) {
+            try {
+                $productCollectionFactory = $objectManager->get(\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class);
+                $collection = $productCollectionFactory->create();
+                $collection->addAttributeToSelect('*')
+                    ->addCategoryFilter($currentCategory)
+                    ->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+                    ->addAttributeToFilter('visibility', [
+                        \Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH,
+                        \Magento\Catalog\Model\Product\Visibility::VISIBILITY_IN_CATALOG
+                    ])
+                    ->addAttributeToSort('position', 'ASC');
+                
+                // Get toolbar settings if available
+                $toolbarBlock = $block->getToolbarBlock();
+                if ($toolbarBlock) {
+                    $limit = $toolbarBlock->getLimit();
+                    if ($limit) {
+                        $collection->setPageSize($limit);
+                    }
+                    $page = $block->getRequest()->getParam('p', 1);
+                    if ($page) {
+                        $collection->setCurPage($page);
+                    }
+                } else {
+                    // Default pagination
+                    $collection->setPageSize(12)->setCurPage(1);
+                }
+                
+                $_productCollection = $collection;
+            } catch (\Exception $e) {
+                $logger = $objectManager->get(\Psr\Log\LoggerInterface::class);
+                $logger->error('Error creating product collection from category: ' . $e->getMessage());
+            }
+        }
+    }
+    
+    // Method 5: Last resort - try to get from block's data
+    if ((!$_productCollection || !$_productCollection->count()) && $block->getData('product_collection')) {
+        $_productCollection = $block->getData('product_collection');
+    }
+    
+} catch (\Exception $e) {
+    // Log error for debugging
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $logger = $objectManager->get(\Psr\Log\LoggerInterface::class);
+    $logger->error('Error loading product collection: ' . $e->getMessage());
+    $logger->error('Stack trace: ' . $e->getTraceAsString());
+} catch (\Throwable $e) {
+    // Catch any other errors
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $logger = $objectManager->get(\Psr\Log\LoggerInterface::class);
+    $logger->error('Fatal error loading product collection: ' . $e->getMessage());
 }
 
 // Ensure we have a collection object
@@ -46,7 +103,17 @@ $_helper = $block->getData('outputHelper');
         <div><?= $escaper->escapeHtml(__('We can\'t find products matching the selection.')) ?></div>
         <?php
         // Debug information (remove in production)
-        if ($block->getLayer() && $block->getLayer()->getCurrentCategory()) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $registry = $objectManager->get(\Magento\Framework\Registry::class);
+        $currentCategory = $registry->registry('current_category');
+        
+        if ($currentCategory) {
+            echo '<div style="margin-top: 10px; font-size: 12px; color: #666;">';
+            echo 'Category: ' . $escaper->escapeHtml($currentCategory->getName()) . ' (ID: ' . $currentCategory->getId() . ')';
+            echo '<br>Is Active: ' . ($currentCategory->getIsActive() ? 'Yes' : 'No');
+            echo '<br>Product Count (from category): ' . $currentCategory->getProductCount();
+            echo '</div>';
+        } elseif ($block->getLayer() && $block->getLayer()->getCurrentCategory()) {
             $category = $block->getLayer()->getCurrentCategory();
             echo '<div style="margin-top: 10px; font-size: 12px; color: #666;">';
             echo 'Category: ' . $escaper->escapeHtml($category->getName()) . ' (ID: ' . $category->getId() . ')';
@@ -95,11 +162,18 @@ $_helper = $block->getData('outputHelper');
                         if ($bestsellerAttr && $bestsellerAttr->getId()) {
                             $bestsellerValue = $_product->getData('bestseller');
                             if ($bestsellerValue) {
-                                $isBestseller = $bestsellerAttr->getSource()->getOptionText($bestsellerValue);
+                                $source = $bestsellerAttr->getSource();
+                                if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                    $isBestseller = $source->getOptionText($bestsellerValue);
+                                    // Convert to boolean if needed
+                                    $isBestseller = !empty($isBestseller) && ($isBestseller !== false && $isBestseller !== null);
+                                }
                             }
                         }
                     } catch (\Exception $e) {
                         // Attribute doesn't exist, ignore
+                    } catch (\Throwable $e) {
+                        // Catch any other errors
                     }
                     
                     // Safely check for new attribute
@@ -108,11 +182,18 @@ $_helper = $block->getData('outputHelper');
                         if ($newAttr && $newAttr->getId()) {
                             $newValue = $_product->getData('new');
                             if ($newValue) {
-                                $isNew = $newAttr->getSource()->getOptionText($newValue);
+                                $source = $newAttr->getSource();
+                                if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                    $isNew = $source->getOptionText($newValue);
+                                    // Convert to boolean if needed
+                                    $isNew = !empty($isNew) && ($isNew !== false && $isNew !== null);
+                                }
                             }
                         }
                     } catch (\Exception $e) {
                         // Attribute doesn't exist, ignore
+                    } catch (\Throwable $e) {
+                        // Catch any other errors
                     }
                     
                     if ($isBestseller): ?>
@@ -158,11 +239,20 @@ $_helper = $block->getData('outputHelper');
                         if ($brandAttr && $brandAttr->getId()) {
                             $brandValue = $_product->getData('brand');
                             if ($brandValue) {
-                                $brand = $brandAttr->getSource()->getOptionText($brandValue);
+                                $source = $brandAttr->getSource();
+                                if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                                    $brand = $source->getOptionText($brandValue);
+                                    // Ensure brand is a valid string
+                                    if (empty($brand) || $brand === false || $brand === null) {
+                                        $brand = null;
+                                    }
+                                }
                             }
                         }
                     } catch (\Exception $e) {
                         // Attribute doesn't exist, ignore
+                    } catch (\Throwable $e) {
+                        // Catch any other errors
                     }
                     if ($brand): ?>
                         <div class="product-brand mb-2"><?= $escaper->escapeHtml($brand) ?></div>

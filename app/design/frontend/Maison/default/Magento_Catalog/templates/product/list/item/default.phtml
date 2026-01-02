@@ -36,9 +36,28 @@ $pos = $parentBlock ? $parentBlock->getPositioned() : null;
         </a>
         
         <?php
-        // Product Badge (if bestseller or new)
-        $isBestseller = $_product->getAttributeText('bestseller');
-        $isNew = $_product->getAttributeText('new');
+        // Product Badge (if bestseller or new) - Safely check
+        $isBestseller = false;
+        $isNew = false;
+        
+        try {
+            $bestsellerValue = $_product->getAttributeText('bestseller');
+            $isBestseller = !empty($bestsellerValue) && ($bestsellerValue !== false && $bestsellerValue !== null);
+        } catch (\Exception $e) {
+            // Attribute doesn't exist, ignore
+        } catch (\Throwable $e) {
+            // Catch any other errors
+        }
+        
+        try {
+            $newValue = $_product->getAttributeText('new');
+            $isNew = !empty($newValue) && ($newValue !== false && $newValue !== null);
+        } catch (\Exception $e) {
+            // Attribute doesn't exist, ignore
+        } catch (\Throwable $e) {
+            // Catch any other errors
+        }
+        
         if ($isBestseller): ?>
             <div class="product-badge"><?= __('BEST SELLER') ?></div>
         <?php elseif ($isNew): ?>
@@ -82,11 +101,20 @@ $pos = $parentBlock ? $parentBlock->getPositioned() : null;
             if ($brandAttr && $brandAttr->getId()) {
                 $brandValue = $_product->getData('brand');
                 if ($brandValue) {
-                    $brand = $brandAttr->getSource()->getOptionText($brandValue);
+                    $source = $brandAttr->getSource();
+                    if ($source && is_object($source) && method_exists($source, 'getOptionText')) {
+                        $brand = $source->getOptionText($brandValue);
+                        // Ensure brand is a valid string
+                        if (empty($brand) || $brand === false || $brand === null) {
+                            $brand = null;
+                        }
+                    }
                 }
             }
         } catch (\Exception $e) {
             // Attribute doesn't exist, ignore
+        } catch (\Throwable $e) {
+            // Catch any other errors
         }
         if ($brand): ?>
             <div class="product-brand"><?= $block->escapeHtml($brand) ?></div>
