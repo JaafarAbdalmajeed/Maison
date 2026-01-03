@@ -179,15 +179,23 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
         // Disable button during request
         submitButton.prop('disabled', true).text($t('Adding...'));
         
+        // Hide any existing loaders first
+        $('body').loader('hide');
+        $('.loading-mask').remove();
+        
         $.ajax({
             url: $form.attr('action'),
             type: 'POST',
             data: formData,
             showLoader: true,
             success: function(response) {
+                // Hide loader
+                $('body').loader('hide');
+                $('.loading-mask').remove();
+                
                 submitButton.prop('disabled', false);
-                var originalText = submitButton.data('original-text') || $t('Add to Cart');
-                submitButton.text(originalText);
+                var originalText = submitButton.data('original-text') || submitButton.find('span').text() || $t('ADD TO CART');
+                submitButton.find('span').text(originalText);
                 
                 // Check if response is HTML or JSON
                 var responseData = response;
@@ -235,9 +243,13 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
                 }
             },
             error: function(xhr, status, error) {
+                // Hide loader
+                $('body').loader('hide');
+                $('.loading-mask').remove();
+                
                 submitButton.prop('disabled', false);
-                var originalText = submitButton.data('original-text') || $t('Add to Cart');
-                submitButton.text(originalText);
+                var originalText = submitButton.data('original-text') || submitButton.find('span').text() || $t('ADD TO CART');
+                submitButton.find('span').text(originalText);
                 
                 var errorMsg = $t('An error occurred while adding the product to cart. Please try again.');
                 if (xhr.responseJSON && xhr.responseJSON.message) {
@@ -254,6 +266,12 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
                 }
                 
                 showErrorMessage(errorMsg);
+            },
+            complete: function() {
+                // Ensure loader is hidden on complete
+                $('body').loader('hide');
+                $('.loading-mask').remove();
+                $('body').removeClass('_loading');
             }
         });
         
