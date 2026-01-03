@@ -268,7 +268,21 @@ $_helper = $block->getData('outputHelper');
                                 </a>
                             </h3>
                             <div class="product-price">
-                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                                <?php
+                                try {
+                                    echo /* @noEscape */ $block->getProductPrice($_product);
+                                } catch (\Exception $e) {
+                                    // If price rendering fails, show price directly from product
+                                    $priceHelper = $block->getLayout()->createBlock(\Magento\Framework\Pricing\Helper\Data::class);
+                                    $formattedPrice = $priceHelper->currency($_product->getFinalPrice(), true, false);
+                                    echo '<span class="price">' . $escaper->escapeHtml($formattedPrice) . '</span>';
+                                } catch (\Throwable $e) {
+                                    // Catch any other errors
+                                    $priceHelper = $block->getLayout()->createBlock(\Magento\Framework\Pricing\Helper\Data::class);
+                                    $formattedPrice = $priceHelper->currency($_product->getFinalPrice(), true, false);
+                                    echo '<span class="price">' . $escaper->escapeHtml($formattedPrice) . '</span>';
+                                }
+                                ?>
                             </div>
                         </div>
                         
