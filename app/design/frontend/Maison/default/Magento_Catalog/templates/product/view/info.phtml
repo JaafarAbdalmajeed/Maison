@@ -256,10 +256,40 @@ require(['jquery', 'domReady!'], function($) {
         }
     }
     
+    // Function to enable Add to Cart button
+    function enableAddToCartButton() {
+        var addToCartButton = $('#product-addtocart-button, .action.tocart, button[type="submit"].tocart');
+        if (addToCartButton.length) {
+            // Remove disabled attribute
+            addToCartButton.prop('disabled', false);
+            addToCartButton.removeAttr('disabled');
+            
+            // Ensure button is clickable
+            addToCartButton.css({
+                'pointer-events': 'auto',
+                'opacity': '1',
+                'cursor': 'pointer'
+            });
+            
+            // Remove disabled class if exists
+            addToCartButton.removeClass('disabled');
+        }
+    }
+    
     // Initialize quantity in form after page load
     setTimeout(function() {
         var initialQty = parseInt($('#qtyInput').val()) || 1;
         updateQuantityInForm(initialQty);
+        
+        // Enable Add to Cart button
+        enableAddToCartButton();
+        
+        // Watch for changes in product options that might disable the button
+        $(document).on('change', '.product-options-wrapper select, .product-options-wrapper input', function() {
+            setTimeout(function() {
+                enableAddToCartButton();
+            }, 100);
+        });
         
         // Ensure quantity is synced when form is submitted
         $(document).on('submit', 'form[data-role="tocart-form"]', function(e) {
@@ -270,8 +300,43 @@ require(['jquery', 'domReady!'], function($) {
             if (!$(this).find('input[name="qty"]').length) {
                 $(this).prepend('<input type="hidden" name="qty" value="' + qtyValue + '">');
             }
+            
+            // Ensure button is enabled before submit
+            enableAddToCartButton();
+        });
+        
+        // Monitor for any code that tries to disable the button
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
+                    var target = $(mutation.target);
+                    if (target.is('#product-addtocart-button, .action.tocart, button[type="submit"].tocart')) {
+                        if (target.prop('disabled')) {
+                            // Re-enable if product is saleable
+                            setTimeout(function() {
+                                enableAddToCartButton();
+                            }, 50);
+                        }
+                    }
+                }
+            });
+        });
+        
+        // Observe button for disabled attribute changes
+        addToCartButton.each(function() {
+            observer.observe(this, {
+                attributes: true,
+                attributeFilter: ['disabled']
+            });
         });
     }, 500);
+    
+    // Also enable on page fully loaded
+    $(window).on('load', function() {
+        setTimeout(function() {
+            enableAddToCartButton();
+        }, 1000);
+    });
 });
 </script>
 

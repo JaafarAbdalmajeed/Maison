@@ -416,6 +416,26 @@ body.catalog-product-view .column.main .product-view,
     visibility: visible !important;
 }
 
+/* Force enable Add to Cart button */
+.product-view #product-addtocart-button,
+.product-view .action.primary.tocart,
+.product-view button[type="submit"].tocart {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+}
+
+/* Override disabled state if product is saleable */
+.product-view #product-addtocart-button:not([disabled]),
+.product-view .action.primary.tocart:not([disabled]),
+.product-view button[type="submit"].tocart:not([disabled]) {
+    background-color: var(--dark-brown) !important;
+    color: var(--white) !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+}
+
 /* Stock Status */
 .product-view .stock {
     margin-bottom: 20px;
