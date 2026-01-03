@@ -2,6 +2,56 @@
 /* This file ensures the new designs override any conflicting styles */
 
 /* ==================== CART PAGE OVERRIDES ==================== */
+/* Ensure header is always white on cart page */
+body.checkout-cart-index header,
+body.checkout-cart-index header#mainHeader,
+body.checkout-cart-index .page-header,
+body.checkout-cart-index .header-container,
+.checkout-cart-index header,
+.checkout-cart-index header#mainHeader,
+.checkout-cart-index .page-header,
+.checkout-cart-index .header-container {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.checkout-cart-index header:not(.scrolled),
+body.checkout-cart-index header#mainHeader:not(.scrolled),
+.checkout-cart-index header:not(.scrolled),
+.checkout-cart-index header#mainHeader:not(.scrolled) {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure header nav links are dark on cart page */
+body.checkout-cart-index header .nav-link-custom,
+body.checkout-cart-index header .icon-link-custom,
+body.checkout-cart-index header .language-toggle,
+.checkout-cart-index header .nav-link-custom,
+.checkout-cart-index header .icon-link-custom,
+.checkout-cart-index header .language-toggle {
+    color: var(--dark-brown) !important;
+    text-shadow: none !important;
+}
+
+body.checkout-cart-index header .icon-link-custom svg,
+body.checkout-cart-index header .language-toggle svg,
+.checkout-cart-index header .icon-link-custom svg,
+.checkout-cart-index header .language-toggle svg {
+    color: var(--dark-brown) !important;
+    stroke: var(--dark-brown) !important;
+    fill: var(--dark-brown) !important;
+    filter: none !important;
+}
+
+body.checkout-cart-index header .burger-menu span,
+.checkout-cart-index header .burger-menu span {
+    background: var(--dark-brown) !important;
+    box-shadow: none !important;
+}
+
 .checkout-cart-index .page-main,
 body.checkout-cart-index .page-main,
 body.checkout-cart-index #maincontent,
