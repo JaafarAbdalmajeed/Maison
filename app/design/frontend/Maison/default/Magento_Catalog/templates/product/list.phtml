@@ -273,12 +273,14 @@ $_helper = $block->getData('outputHelper');
                                     echo /* @noEscape */ $block->getProductPrice($_product);
                                 } catch (\Exception $e) {
                                     // If price rendering fails, show price directly from product
-                                    $priceHelper = $block->getLayout()->createBlock(\Magento\Framework\Pricing\Helper\Data::class);
+                                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                                    $priceHelper = $objectManager->get(\Magento\Framework\Pricing\Helper\Data::class);
                                     $formattedPrice = $priceHelper->currency($_product->getFinalPrice(), true, false);
                                     echo '<span class="price">' . $escaper->escapeHtml($formattedPrice) . '</span>';
                                 } catch (\Throwable $e) {
                                     // Catch any other errors
-                                    $priceHelper = $block->getLayout()->createBlock(\Magento\Framework\Pricing\Helper\Data::class);
+                                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                                    $priceHelper = $objectManager->get(\Magento\Framework\Pricing\Helper\Data::class);
                                     $formattedPrice = $priceHelper->currency($_product->getFinalPrice(), true, false);
                                     echo '<span class="price">' . $escaper->escapeHtml($formattedPrice) . '</span>';
                                 }
