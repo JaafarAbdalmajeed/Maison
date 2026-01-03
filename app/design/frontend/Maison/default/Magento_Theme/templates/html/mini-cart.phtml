@@ -4,8 +4,15 @@
  */
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $cart = $objectManager->get('\Magento\Checkout\Model\Cart');
-$items = $cart->getQuote()->getAllVisibleItems();
-$subtotal = $cart->getQuote()->getSubtotal();
+try {
+    $quote = $cart->getQuote();
+    $quote->collectTotals(); // Ensure quote is loaded and totals are calculated
+    $items = $quote->getAllVisibleItems();
+    $subtotal = $quote->getSubtotal();
+} catch (\Exception $e) {
+    $items = [];
+    $subtotal = 0;
+}
 ?>
 <!-- Mini Cart Sidebar -->
 <div class="mini-cart" id="miniCart">
@@ -22,8 +29,18 @@ $subtotal = $cart->getQuote()->getSubtotal();
                 <?php foreach ($items as $item): ?>
                     <div class="mini-cart-item">
                         <div class="mini-cart-item-image">
-                            <?php $product = $item->getProduct(); ?>
-                            <img src="<?= $block->escapeUrl($product->getSmallImage()) ?>" alt="<?= $block->escapeHtml($item->getName()) ?>">
+                            <?php 
+                            $product = $item->getProduct();
+                            $imageHelper = $objectManager->get('\Magento\Catalog\Helper\Image');
+                            $imageUrl = $imageHelper->init($product, 'product_thumbnail_image')
+                                ->setImageFile($product->getSmallImage())
+                                ->resize(200, 200)
+                                ->getUrl();
+                            if (!$imageUrl || $imageUrl == '') {
+                                $imageUrl = $block->getViewFileUrl('images/placeholder.jpg');
+                            }
+                            ?>
+                            <img src="<?= $block->escapeUrl($imageUrl) ?>" alt="<?= $block->escapeHtml($item->getName()) ?>">
                         </div>
                         <div class="mini-cart-item-details">
                             <h4 class="mini-cart-item-name"><?= $block->escapeHtml($item->getName()) ?></h4>
@@ -43,8 +60,9 @@ $subtotal = $cart->getQuote()->getSubtotal();
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="mini-cart-empty">
-                    <p><?= __('Your shopping bag is empty') ?></p>
+                <div class="mini-cart-empty" style="text-align: center; padding: 60px 20px;">
+                    <p style="font-size: 16px; color: var(--text-dark); margin-bottom: 20px;"><?= __('Your shopping bag is empty') ?></p>
+                    <a href="<?= $block->getUrl('catalog') ?>" class="btn-cart-view" style="display: inline-block; width: auto; padding: 12px 30px;"><?= __('Continue Shopping') ?></a>
                 </div>
             <?php endif; ?>
         </div>

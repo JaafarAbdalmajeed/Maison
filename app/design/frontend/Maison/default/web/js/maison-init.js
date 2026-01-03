@@ -55,6 +55,14 @@ define([
                 miniCart.addClass('active');
                 // Prevent body scroll when minicart is open
                 $('body').addClass('minicart-open');
+                
+                // Reload minicart content via AJAX to ensure fresh data
+                if (typeof window.customerData !== 'undefined') {
+                    window.customerData.reload(['cart'], false).done(function() {
+                        // Optionally reload the page section that contains minicart
+                        // or update minicart content via AJAX
+                    });
+                }
             } else {
                 console.warn('Mini cart element not found, navigating to cart page');
                 // Fallback: navigate to cart page

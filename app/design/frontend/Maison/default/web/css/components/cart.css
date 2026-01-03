@@ -294,3 +294,27 @@
     color: var(--white);
 }
 
+.mini-cart-empty {
+    text-align: center;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.mini-cart-empty p {
+    font-size: 16px;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.mini-cart-empty .btn-cart-view {
+    display: inline-block;
+    width: auto;
+    padding: 12px 30px;
+    margin-top: 10px;
+}
+
