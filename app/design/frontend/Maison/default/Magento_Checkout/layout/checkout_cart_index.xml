@@ -42,9 +42,10 @@
                                    htmlTag="div"
                                    htmlClass="col-lg-8 cart-items-column">
 
-                            <!-- Main Cart Block -->
+                            <!-- Main Cart Block - with template to render children -->
                             <block class="Magento\Checkout\Block\Cart"
-                                   name="checkout.cart">
+                                   name="checkout.cart"
+                                   template="Magento_Checkout::cart/cart-wrapper.phtml">
                                 <arguments>
                                     <argument name="view_model" xsi:type="object">Magento\Checkout\ViewModel\Cart</argument>
                                 </arguments>
