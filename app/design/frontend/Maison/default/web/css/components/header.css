@@ -86,7 +86,7 @@ html body header#mainHeader .header-top-row {
     visibility: visible !important;
     opacity: 1 !important;
     height: auto !important;
-    min-height: 90px !important;
+    min-height: 0 !important;
     padding: 15px 0 !important;
     margin: 0 !important;
     overflow: visible !important;
@@ -103,7 +103,7 @@ header .header-top-row {
     visibility: visible !important;
     opacity: 1 !important;
     height: auto !important;
-    min-height: 90px !important;
+    min-height: 0 !important;
     padding: 15px 0 !important;
     margin: 0 !important;
 }
@@ -803,7 +803,7 @@ html body header.scrolled .header-top-row {
     visibility: visible !important;
     opacity: 1 !important;
     height: auto !important;
-    min-height: 90px !important;
+    min-height: 0 !important;
     padding: 15px 0 !important;
     margin: 0 !important;
     overflow: visible !important;
@@ -898,7 +898,7 @@ html body header .header-top-row {
     visibility: visible !important;
     opacity: 1 !important;
     height: auto !important;
-    min-height: 90px !important;
+    min-height: 0 !important;
     padding: 15px 0 !important;
     margin: 0 !important;
     overflow: visible !important;
