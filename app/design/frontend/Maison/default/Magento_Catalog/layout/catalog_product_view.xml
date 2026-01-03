@@ -73,18 +73,11 @@
             </action>
         </referenceBlock>
         
-        <!-- Ensure Add to Cart block is properly configured -->
+        <!-- Ensure Add to Cart block is properly configured with custom template -->
         <referenceBlock name="product.info.addtocart">
-            <arguments>
+            <action method="setTemplate">
                 <argument name="template" xsi:type="string">Magento_Catalog::product/view/addtocart.phtml</argument>
-            </arguments>
-        </referenceBlock>
-        
-        <!-- Ensure Quantity field is in Add to Cart form -->
-        <referenceBlock name="product.info.addtocart.qty">
-            <arguments>
-                <argument name="template" xsi:type="string">Magento_Catalog::product/view/addtocart/qty.phtml</argument>
-            </arguments>
+            </action>
         </referenceBlock>
         
         <!-- Image Zoom Modal -->

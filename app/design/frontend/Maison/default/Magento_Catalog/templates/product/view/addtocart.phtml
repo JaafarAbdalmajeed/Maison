@@ -1,0 +1,191 @@
+<?php
+/**
+ * Add to Cart Template - Custom
+ * @var \Magento\Catalog\Block\Product\View $block
+ */
+$_product = $block->getProduct();
+if (!$_product || !$_product->isSaleable()) {
+    return;
+}
+
+$postParams = $block->getAddToCartPostParams($_product);
+?>
+<form data-role="tocart-form"
+      data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"
+      action="<?= $block->escapeUrl($postParams['action']) ?>"
+      data-mage-init='{"catalogAddToCart": {"product_sku": "<?= $block->escapeJs($_product->getSku()) ?>"}}'
+      method="post">
+    <?= $block->getBlockHtml('formkey') ?>
+    <input type="hidden" name="product" value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+    <input type="hidden" name="<?= /* @noEscape */ \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED] ?>">
+    
+    <!-- Quantity Field -->
+    <div class="field qty product-qty-field">
+        <label class="label" for="qty">
+            <span><?= $block->escapeHtml(__('Quantity')) ?></span>
+        </label>
+        <div class="control">
+            <div class="quantity-selector-detail">
+                <button type="button" class="qty-btn-detail qty-minus" id="qtyMinus">-</button>
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       value="1"
+                       min="1"
+                       max="9999"
+                       title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                       class="input-text qty"
+                       data-validate="<?= $block->escapeHtml(json_encode(['required-entry' => true, 'validate-greater-than-zero' => true])) ?>">
+                <button type="button" class="qty-btn-detail qty-plus" id="qtyPlus">+</button>
+            </div>
+        </div>
+    </div>
+    
+    <?php if ($_product->hasOptions()): ?>
+        <?= $block->getChildHtml('product.info.options') ?>
+    <?php endif; ?>
+    
+    <div class="box-tocart product-add-to-cart-container">
+        <div class="fieldset">
+            <div class="actions">
+                <button type="submit"
+                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                        id="product-addtocart-button"
+                        class="action primary tocart btn-add-to-cart">
+                    <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/x-magento-init">
+{
+    "[data-role=tocart-form]": {
+        "catalogAddToCart": {
+            "product_sku": "<?= $block->escapeJs($_product->getSku()) ?>",
+            "bindSubmit": true
+        }
+    }
+}
+</script>
+
+<script>
+require(['jquery', 'domReady!', 'mage/url'], function($, urlBuilder) {
+    'use strict';
+    
+    // Quantity controls
+    $(document).on('click', '#qtyPlus', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var qtyInput = $('#qty');
+        if (!qtyInput.length) return;
+        var currentVal = parseInt(qtyInput.val()) || 1;
+        var maxVal = parseInt(qtyInput.attr('max')) || 9999;
+        if (currentVal < maxVal) {
+            qtyInput.val(currentVal + 1).trigger('change');
+        }
+    });
+    
+    $(document).on('click', '#qtyMinus', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var qtyInput = $('#qty');
+        if (!qtyInput.length) return;
+        var currentVal = parseInt(qtyInput.val()) || 1;
+        var minVal = parseInt(qtyInput.attr('min')) || 1;
+        if (currentVal > minVal) {
+            qtyInput.val(currentVal - 1).trigger('change');
+        }
+    });
+    
+    // Enable Add to Cart button
+    function enableAddToCartButton() {
+        var addToCartButton = $('#product-addtocart-button');
+        if (addToCartButton.length) {
+            // Force remove disabled
+            addToCartButton.prop('disabled', false);
+            addToCartButton.removeAttr('disabled');
+            addToCartButton.removeClass('disabled');
+            
+            // Force styling
+            addToCartButton.css({
+                'pointer-events': 'auto',
+                'opacity': '1',
+                'cursor': 'pointer',
+                'background-color': '',
+                'color': ''
+            });
+            
+            // Ensure click handler works
+            addToCartButton.off('click.forceEnable').on('click.forceEnable', function(e) {
+                var $form = $(this).closest('form[data-role="tocart-form"]');
+                if (!$form.length) {
+                    console.warn('Add to Cart form not found');
+                    return false;
+                }
+                
+                // Ensure quantity is valid
+                var qty = parseInt($('#qty').val()) || 1;
+                if (qty < 1) {
+                    $('#qty').val(1);
+                }
+                
+                // If form validation fails, let it show error
+                if ($form[0].checkValidity && !$form[0].checkValidity()) {
+                    $form[0].reportValidity();
+                    return false;
+                }
+                
+                // Let Magento handle the submission
+                return true;
+            });
+        }
+    }
+    
+    // Initialize immediately and on ready
+    enableAddToCartButton();
+    
+    $(document).ready(function() {
+        enableAddToCartButton();
+        
+        // Monitor for button disable attempts
+        var addToCartButton = $('#product-addtocart-button');
+        if (addToCartButton.length) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes') {
+                        var target = $(mutation.target);
+                        if (target.is('#product-addtocart-button')) {
+                            if (mutation.attributeName === 'disabled' && target.prop('disabled')) {
+                                setTimeout(enableAddToCartButton, 10);
+                            } else if (mutation.attributeName === 'class' && target.hasClass('disabled')) {
+                                setTimeout(enableAddToCartButton, 10);
+                            }
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(addToCartButton[0], {
+                attributes: true,
+                attributeFilter: ['disabled', 'class', 'style']
+            });
+        }
+        
+        // Also check periodically (fallback)
+        setInterval(function() {
+            var btn = $('#product-addtocart-button');
+            if (btn.length && btn.prop('disabled')) {
+                enableAddToCartButton();
+            }
+        }, 500);
+    });
+    
+    // Also enable on full page load
+    $(window).on('load', function() {
+        setTimeout(enableAddToCartButton, 100);
+    });
+});
+</script>
+

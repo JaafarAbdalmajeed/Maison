@@ -416,24 +416,133 @@ body.catalog-product-view .column.main .product-view,
     visibility: visible !important;
 }
 
-/* Force enable Add to Cart button */
-.product-view #product-addtocart-button,
-.product-view .action.primary.tocart,
-.product-view button[type="submit"].tocart {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    opacity: 1 !important;
+/* Quantity Selector Styles */
+.product-view .product-qty-field {
+    margin-bottom: 25px;
 }
 
-/* Override disabled state if product is saleable */
-.product-view #product-addtocart-button:not([disabled]),
-.product-view .action.primary.tocart:not([disabled]),
-.product-view button[type="submit"].tocart:not([disabled]) {
+.product-view .product-qty-field .label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+}
+
+.product-view .quantity-selector-detail {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.product-view .qty-btn-detail {
+    background: transparent;
+    border: none;
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-view .qty-btn-detail:hover {
+    background: var(--primary-gold);
+    color: var(--white);
+}
+
+.product-view .product-qty-field #qty {
+    width: 80px;
+    height: 45px;
+    border: none;
+    border-left: 2px solid #e0e0e0;
+    border-right: 2px solid #e0e0e0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-brown);
+    padding: 0;
+}
+
+.product-view .product-qty-field #qty:focus {
+    outline: none;
+    border-left-color: var(--primary-gold);
+    border-right-color: var(--primary-gold);
+}
+
+/* Add to Cart Container */
+.product-view .product-add-to-cart-container {
+    margin-bottom: 20px;
+}
+
+.product-view .product-add-to-cart-container .actions {
+    width: 100%;
+}
+
+/* Force enable Add to Cart button */
+.product-view #product-addtocart-button,
+.product-view .btn-add-to-cart,
+.product-view .action.primary.tocart,
+.product-view button[type="submit"].tocart {
+    width: 100% !important;
+    padding: 16px 32px !important;
+    background-color: var(--dark-brown) !important;
+    color: var(--white) !important;
+    border: none !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border-radius: 0 !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+.product-view #product-addtocart-button:hover,
+.product-view .btn-add-to-cart:hover,
+.product-view .action.primary.tocart:hover {
+    background-color: var(--primary-gold) !important;
+    color: var(--white) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-view #product-addtocart-button:active,
+.product-view .btn-add-to-cart:active {
+    transform: translateY(0);
+}
+
+/* Override disabled state */
+.product-view #product-addtocart-button[disabled],
+.product-view .btn-add-to-cart[disabled] {
     background-color: var(--dark-brown) !important;
     color: var(--white) !important;
     cursor: pointer !important;
-    pointer-events: auto !important;
     opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure form is visible and styled */
+.product-view form[data-role="tocart-form"] {
+    display: block !important;
+    visibility: visible !important;
+    width: 100%;
+}
+
+.product-view form[data-role="tocart-form"] .field.qty {
+    margin-bottom: 25px;
 }
 
 /* Stock Status */

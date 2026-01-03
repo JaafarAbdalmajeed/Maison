@@ -93,26 +93,7 @@ try {
     
     <div class="divider-gold"></div>
     
-    <!-- Product Options -->
-    <div class="product-options-section">
-        <?= $block->getChildHtml('product.info.options') ?>
-        
-        <!-- Quantity -->
-        <div class="option-group-detail">
-            <label class="option-label-detail"><?= __('Quantity') ?></label>
-            <div class="quantity-selector-detail">
-                <button type="button" class="qty-btn-detail qty-minus" id="qtyMinus">-</button>
-                <input type="number" 
-                       class="qty-input-detail" 
-                       value="1" 
-                       min="1" 
-                       max="99" 
-                       id="qtyInput"
-                       name="qty">
-                <button type="button" class="qty-btn-detail qty-plus" id="qtyPlus">+</button>
-            </div>
-        </div>
-    </div>
+    <!-- Product Options - moved inside addtocart template -->
     
     <!-- Add to Cart & Wishlist -->
     <div class="product-actions-detail">
@@ -209,53 +190,6 @@ try {
 
 <script>
 require(['jquery', 'domReady!'], function($) {
-    // Quantity controls
-    $('#qtyPlus').on('click', function(e) {
-        e.preventDefault();
-        var qtyInput = $('#qtyInput');
-        var currentVal = parseInt(qtyInput.val()) || 1;
-        if (currentVal < 99) {
-            qtyInput.val(currentVal + 1).trigger('change');
-        }
-    });
-    
-    $('#qtyMinus').on('click', function(e) {
-        e.preventDefault();
-        var qtyInput = $('#qtyInput');
-        var currentVal = parseInt(qtyInput.val()) || 1;
-        if (currentVal > 1) {
-            qtyInput.val(currentVal - 1).trigger('change');
-        }
-    });
-    
-    // Update quantity input change event
-    $('#qtyInput').on('change', function() {
-        var qtyValue = parseInt($(this).val()) || 1;
-        if (qtyValue < 1) qtyValue = 1;
-        if (qtyValue > 99) qtyValue = 99;
-        $(this).val(qtyValue);
-        updateQuantityInForm(qtyValue);
-    });
-    
-    // Function to update quantity in add to cart form
-    function updateQuantityInForm(qty) {
-        var addToCartForm = $('form[data-role="tocart-form"]');
-        if (addToCartForm.length) {
-            var qtyInputInForm = addToCartForm.find('input[name="qty"]');
-            if (qtyInputInForm.length) {
-                qtyInputInForm.val(qty);
-            } else {
-                // If qty input doesn't exist in form, create it
-                var qtyField = addToCartForm.find('.field.qty input, .qty input');
-                if (qtyField.length) {
-                    qtyField.val(qty);
-                } else {
-                    addToCartForm.prepend('<input type="hidden" name="qty" value="' + qty + '" id="product-qty">');
-                }
-            }
-        }
-    }
-    
     // Function to enable Add to Cart button
     function enableAddToCartButton() {
         var addToCartButton = $('#product-addtocart-button, .action.tocart, button[type="submit"].tocart');
@@ -273,62 +207,77 @@ require(['jquery', 'domReady!'], function($) {
             
             // Remove disabled class if exists
             addToCartButton.removeClass('disabled');
+            
+            // Ensure button has click handler
+            addToCartButton.off('click.addtocart').on('click.addtocart', function(e) {
+                var $form = $(this).closest('form[data-role="tocart-form"]');
+                if ($form.length && $form[0].checkValidity()) {
+                    // Form is valid, let Magento handle submission
+                    return true;
+                } else {
+                    e.preventDefault();
+                    $form[0].reportValidity();
+                    return false;
+                }
+            });
         }
     }
     
-    // Initialize quantity in form after page load
+    // Quantity controls for custom quantity input if exists
+    $(document).on('click', '#qtyPlus', function(e) {
+        e.preventDefault();
+        var qtyInput = $('#qty, input[name="qty"]').first();
+        if (!qtyInput.length) qtyInput = $('#qtyInput');
+        var currentVal = parseInt(qtyInput.val()) || 1;
+        if (currentVal < 9999) {
+            qtyInput.val(currentVal + 1).trigger('change');
+        }
+    });
+    
+    $(document).on('click', '#qtyMinus', function(e) {
+        e.preventDefault();
+        var qtyInput = $('#qty, input[name="qty"]').first();
+        if (!qtyInput.length) qtyInput = $('#qtyInput');
+        var currentVal = parseInt(qtyInput.val()) || 1;
+        if (currentVal > 1) {
+            qtyInput.val(currentVal - 1).trigger('change');
+        }
+    });
+    
+    // Initialize after page load
     setTimeout(function() {
-        var initialQty = parseInt($('#qtyInput').val()) || 1;
-        updateQuantityInForm(initialQty);
-        
-        // Enable Add to Cart button
         enableAddToCartButton();
         
-        // Watch for changes in product options that might disable the button
+        // Watch for changes in product options
         $(document).on('change', '.product-options-wrapper select, .product-options-wrapper input', function() {
             setTimeout(function() {
                 enableAddToCartButton();
             }, 100);
         });
         
-        // Ensure quantity is synced when form is submitted
-        $(document).on('submit', 'form[data-role="tocart-form"]', function(e) {
-            var qtyValue = parseInt($('#qtyInput').val()) || 1;
-            updateQuantityInForm(qtyValue);
-            
-            // Ensure form has qty field
-            if (!$(this).find('input[name="qty"]').length) {
-                $(this).prepend('<input type="hidden" name="qty" value="' + qtyValue + '">');
-            }
-            
-            // Ensure button is enabled before submit
-            enableAddToCartButton();
-        });
-        
         // Monitor for any code that tries to disable the button
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
-                    var target = $(mutation.target);
-                    if (target.is('#product-addtocart-button, .action.tocart, button[type="submit"].tocart')) {
-                        if (target.prop('disabled')) {
-                            // Re-enable if product is saleable
-                            setTimeout(function() {
-                                enableAddToCartButton();
-                            }, 50);
+        var addToCartButton = $('#product-addtocart-button');
+        if (addToCartButton.length) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
+                        var target = $(mutation.target);
+                        if (target.is('#product-addtocart-button, .action.tocart')) {
+                            if (target.prop('disabled')) {
+                                setTimeout(function() {
+                                    enableAddToCartButton();
+                                }, 50);
+                            }
                         }
                     }
-                }
+                });
             });
-        });
-        
-        // Observe button for disabled attribute changes
-        addToCartButton.each(function() {
-            observer.observe(this, {
+            
+            observer.observe(addToCartButton[0], {
                 attributes: true,
-                attributeFilter: ['disabled']
+                attributeFilter: ['disabled', 'class']
             });
-        });
+        }
     }, 500);
     
     // Also enable on page fully loaded
