@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Homepage Module DI Configuration
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin to fix SQL error when empty product IDs array is passed to SpecialPriceBulkResolver -->
+    <type name="Magento\Catalog\Pricing\Price\SpecialPriceBulkResolver">
+        <plugin name="maison_homepage_fix_empty_product_ids" 
+                type="Maison\Homepage\Plugin\Pricing\Price\SpecialPriceBulkResolverPlugin" 
+                sortOrder="10"/>
+    </type>
+</config>
+
