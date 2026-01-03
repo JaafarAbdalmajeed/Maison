@@ -40,7 +40,7 @@
                                    htmlClass="col-lg-8 cart-items-column">
 
                             <!-- ✅ CORRECT CART FORM BLOCK -->
-                            <block class="Magento\Checkout\Block\Cart\Form"
+                            <block class="Magento\Checkout\Block\Cart"
                                    name="checkout.cart.form"
                                    template="Magento_Checkout::cart/form.phtml">
 
