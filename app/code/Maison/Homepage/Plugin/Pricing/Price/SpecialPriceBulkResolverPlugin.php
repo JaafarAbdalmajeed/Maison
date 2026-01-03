@@ -19,20 +19,27 @@ class SpecialPriceBulkResolverPlugin
      *
      * @param SpecialPriceBulkResolver $subject
      * @param callable $proceed
-     * @param array $productIds
+     * @param mixed $productIds
      * @return array
      */
     public function aroundGenerateSpecialPriceMap(
         SpecialPriceBulkResolver $subject,
         callable $proceed,
-        array $productIds
+        $productIds
     ) {
-        // If product IDs array is empty, return empty array to prevent SQL error
-        if (empty($productIds)) {
-            return [];
+        // Only process if productIds is an array
+        if (is_array($productIds)) {
+            // If product IDs array is empty, return empty array to prevent SQL error
+            if (empty($productIds)) {
+                return [];
+            }
+            
+            // Proceed with normal execution for non-empty arrays
+            return $proceed($productIds);
         }
         
-        // Otherwise, proceed with normal execution
+        // If not an array, proceed with original arguments (might be different signature)
+        // This handles cases where the method is called with different parameter types
         return $proceed($productIds);
     }
 }
