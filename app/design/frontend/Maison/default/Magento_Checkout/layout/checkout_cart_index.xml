@@ -65,10 +65,13 @@
         </referenceContainer>
 
         <!-- Move blocks to correct positions (move must be at body level) -->
-        <move element="checkout.cart.form" destination="cart.items" before="-"/>
+        <move element="checkout.cart" destination="cart.items" before="-"/>
         <move element="checkout.cart.totals" destination="cart.summary.container" before="-"/>
         <move element="checkout.cart.coupon" destination="cart.summary.container" after="checkout.cart.totals"/>
         <move element="checkout.cart.methods.onepage.bottom" destination="cart.summary.container" after="checkout.cart.coupon"/>
+        
+        <!-- Hide minicart on cart page -->
+        <referenceBlock name="maison.mini.cart" remove="true"/>
 
     </body>
 </page>

@@ -43,6 +43,85 @@ body.checkout-cart-index #maincontent,
     align-self: flex-start !important;
 }
 
+/* Hide minicart elements from cart page */
+.checkout-cart-index .mini-cart-title,
+.checkout-cart-index .mini-cart-header,
+.checkout-cart-index .btn-cart-checkout,
+.checkout-cart-index .btn-cart-view,
+.checkout-cart-index .mini-cart-subtotal,
+.checkout-cart-index .mini-cart-footer,
+.checkout-cart-index .mini-cart-note,
+.checkout-cart-index .subtotal-amount,
+.checkout-cart-index .mini-cart-empty,
+body.checkout-cart-index .mini-cart-title,
+body.checkout-cart-index .mini-cart-header,
+body.checkout-cart-index .btn-cart-checkout,
+body.checkout-cart-index .btn-cart-view,
+body.checkout-cart-index .mini-cart-subtotal,
+body.checkout-cart-index .mini-cart-footer,
+body.checkout-cart-index .mini-cart-note,
+body.checkout-cart-index .subtotal-amount,
+body.checkout-cart-index .mini-cart-empty {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Hide minicart dropdown content if it appears in cart page */
+.checkout-cart-index .mini-cart-panel,
+body.checkout-cart-index .mini-cart-panel,
+.checkout-cart-index .mini-cart-items .mini-cart-empty,
+body.checkout-cart-index .mini-cart-items .mini-cart-empty,
+.checkout-cart-index .mini-cart-items p,
+body.checkout-cart-index .mini-cart-items p {
+    display: none !important;
+}
+
+/* Hide any minicart content that might be injected into cart page */
+.checkout-cart-index .cart.content .mini-cart,
+.checkout-cart-index .cart-container .mini-cart,
+.checkout-cart-index #maincontent .mini-cart,
+.checkout-cart-index .cart.summary .mini-cart,
+.checkout-cart-index .cart-summary-column .mini-cart,
+body.checkout-cart-index .cart.content .mini-cart,
+body.checkout-cart-index .cart-container .mini-cart,
+body.checkout-cart-index #maincontent .mini-cart,
+body.checkout-cart-index .cart.summary .mini-cart,
+body.checkout-cart-index .cart-summary-column .mini-cart {
+    display: none !important;
+}
+
+/* Hide Shopping Bag text and related elements using attribute selectors */
+.checkout-cart-index h3.mini-cart-title,
+.checkout-cart-index .mini-cart-title,
+body.checkout-cart-index h3.mini-cart-title,
+body.checkout-cart-index .mini-cart-title {
+    display: none !important;
+}
+
+/* Hide entire minicart block on cart page */
+.checkout-cart-index #miniCart,
+.checkout-cart-index .mini-cart,
+body.checkout-cart-index #miniCart,
+body.checkout-cart-index .mini-cart {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Hide minicart from before.body.end container on cart page */
+.checkout-cart-index [data-block="minicart"],
+.checkout-cart-index .block-minicart,
+body.checkout-cart-index [data-block="minicart"],
+body.checkout-cart-index .block-minicart {
+    display: none !important;
+}
+
 /* ==================== CHECKOUT PAGE OVERRIDES ==================== */
 .checkout-index-index .page-main,
 body.checkout-index-index .page-main,

@@ -95,14 +95,15 @@ if (!$actionUrl || !$productId) {
     "[data-role=tocart-form]": {
         "catalogAddToCart": {
             "product_sku": "<?= $block->escapeJs($_product->getSku()) ?>",
-            "bindSubmit": true
+            "bindSubmit": true,
+            "redirectToCart": false
         }
     }
 }
 </script>
 
 <script>
-require(['jquery', 'domReady!', 'mage/url'], function($, urlBuilder) {
+require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/modal', 'mage/translate'], function($, urlBuilder, modal, $t) {
     'use strict';
     
     // Quantity controls
@@ -130,6 +131,132 @@ require(['jquery', 'domReady!', 'mage/url'], function($, urlBuilder) {
         }
     });
     
+    // Show success message
+    function showSuccessMessage(message) {
+        require(['Magento_Ui/js/modal/alert'], function(alert) {
+            alert({
+                title: $t('Success'),
+                content: message,
+                modalClass: 'alert alert-success',
+                buttons: [{
+                    text: $t('OK'),
+                    class: 'action-primary',
+                    click: function() {
+                        this.closeModal();
+                    }
+                }]
+            });
+        });
+    }
+    
+    // Show error message
+    function showErrorMessage(message) {
+        require(['Magento_Ui/js/modal/alert'], function(alert) {
+            alert({
+                title: $t('Error'),
+                content: message,
+                modalClass: 'alert alert-danger',
+                buttons: [{
+                    text: $t('OK'),
+                    class: 'action-primary',
+                    click: function() {
+                        this.closeModal();
+                    }
+                }]
+            });
+        });
+    }
+    
+    // Add to Cart via AJAX
+    function addToCartAjax(form) {
+        var $form = $(form);
+        var formData = $form.serialize();
+        var submitButton = $form.find('#product-addtocart-button');
+        
+        // Disable button during request
+        submitButton.prop('disabled', true).text($t('Adding...'));
+        
+        $.ajax({
+            url: $form.attr('action'),
+            type: 'POST',
+            data: formData,
+            showLoader: true,
+            success: function(response) {
+                submitButton.prop('disabled', false);
+                var originalText = submitButton.data('original-text') || $t('Add to Cart');
+                submitButton.text(originalText);
+                
+                // Check if response is HTML or JSON
+                var responseData = response;
+                if (typeof response === 'string') {
+                    try {
+                        responseData = JSON.parse(response);
+                    } catch (e) {
+                        // If it's HTML, check for success indicators
+                        if (response.indexOf('message-success') > -1 || response.indexOf('success') > -1) {
+                            responseData = { success: true, message: $t('Product added to cart successfully.') };
+                        } else {
+                            responseData = { error: true, message: $t('Could not add product to cart.') };
+                        }
+                    }
+                }
+                
+                if (responseData.backUrl || responseData.success) {
+                    // Product added successfully
+                    var productName = '<?= $block->escapeJs($_product->getName()) ?>';
+                    var message = responseData.message || $t('You added %1 to your shopping cart.').replace('%1', productName);
+                    
+                    // Show success message
+                    showSuccessMessage(message);
+                    
+                    // Update minicart if exists
+                    if (typeof window.customerData !== 'undefined') {
+                        var sections = ['cart'];
+                        customerData.invalidate(sections);
+                        customerData.reload(sections, true);
+                    }
+                    
+                    // Trigger minicart update event
+                    $('body').trigger('updateMiniCart');
+                    $(document).trigger('ajax:addToCart');
+                    
+                    // Update cart count in header if exists
+                    $('[data-block="minicart"]').trigger('contentUpdated');
+                } else if (responseData.error || responseData.message) {
+                    // Show error message
+                    var errorMsg = responseData.message || $t('Could not add product to cart.');
+                    showErrorMessage(errorMsg);
+                } else {
+                    // Default success if no clear response
+                    showSuccessMessage($t('Product added to cart successfully.'));
+                }
+            },
+            error: function(xhr, status, error) {
+                submitButton.prop('disabled', false);
+                var originalText = submitButton.data('original-text') || $t('Add to Cart');
+                submitButton.text(originalText);
+                
+                var errorMsg = $t('An error occurred while adding the product to cart. Please try again.');
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                } else if (xhr.responseText) {
+                    try {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        if (errorResponse.message) {
+                            errorMsg = errorResponse.message;
+                        }
+                    } catch (e) {
+                        // Use default error message
+                    }
+                }
+                
+                showErrorMessage(errorMsg);
+            }
+        });
+        
+        return false;
+    }
+    
     // Enable Add to Cart button
     function enableAddToCartButton() {
         var addToCartButton = $('#product-addtocart-button');
@@ -148,11 +275,20 @@ require(['jquery', 'domReady!', 'mage/url'], function($, urlBuilder) {
                 'color': ''
             });
             
-            // Ensure click handler works
-            addToCartButton.off('click.forceEnable').on('click.forceEnable', function(e) {
-                var $form = $(this).closest('form[data-role="tocart-form"]');
-                if (!$form.length) {
-                    console.warn('Add to Cart form not found');
+            // Store original button text
+            if (!addToCartButton.data('original-text')) {
+                addToCartButton.data('original-text', addToCartButton.text());
+            }
+            
+            // Custom submit handler to prevent redirect
+            var $form = addToCartButton.closest('form[data-role="tocart-form"]');
+            $form.off('submit.addToCart').on('submit.addToCart', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Validate form
+                if (this.checkValidity && !this.checkValidity()) {
+                    this.reportValidity();
                     return false;
                 }
                 
@@ -162,14 +298,10 @@ require(['jquery', 'domReady!', 'mage/url'], function($, urlBuilder) {
                     $('#qty').val(1);
                 }
                 
-                // If form validation fails, let it show error
-                if ($form[0].checkValidity && !$form[0].checkValidity()) {
-                    $form[0].reportValidity();
-                    return false;
-                }
+                // Add to cart via AJAX
+                addToCartAjax(this);
                 
-                // Let Magento handle the submission
-                return true;
+                return false;
             });
         }
     }
@@ -216,6 +348,11 @@ require(['jquery', 'domReady!', 'mage/url'], function($, urlBuilder) {
     // Also enable on full page load
     $(window).on('load', function() {
         setTimeout(enableAddToCartButton, 100);
+    });
+    
+    // Initialize on document ready
+    $(document).ready(function() {
+        enableAddToCartButton();
     });
 });
 </script>
