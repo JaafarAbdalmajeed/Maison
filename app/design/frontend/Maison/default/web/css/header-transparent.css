@@ -110,18 +110,14 @@ html body.scrolled.catalog-product-view #maincontent.page-main {
     padding: 120px 0 0 0 !important;
 }
 
-/* ==================== NAVIGATION LINKS COLOR - DYNAMIC ==================== */
-/* White text when header is transparent, dark text when header is white */
+/* ==================== NAVIGATION LINKS COLOR - ALWAYS BLACK ==================== */
+/* All text and icons are always black, regardless of scroll state */
 
-/* Navigation links - White when transparent, dark when white */
+/* Navigation links - ALWAYS BLACK */
 html body header:not(.scrolled) .nav-link-custom,
 html body header:not(.scrolled) .nav-menu .nav-link-custom,
 html body header:not(.scrolled) .header-nav .nav-link-custom,
-html body header:not(.scrolled) .nav-item .nav-link-custom {
-    color: #FFFFFF !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-}
-
+html body header:not(.scrolled) .nav-item .nav-link-custom,
 html body header.scrolled .nav-link-custom,
 html body header.scrolled .nav-menu .nav-link-custom,
 html body header.scrolled .header-nav .nav-link-custom,
@@ -130,17 +126,10 @@ html body header.scrolled .nav-item .nav-link-custom {
     text-shadow: none !important;
 }
 
-/* Icon links - White when transparent, dark when white */
+/* Icon links - ALWAYS BLACK */
 html body header:not(.scrolled) .icon-link-custom,
 html body header:not(.scrolled) .header-right-icons .icon-link-custom,
-html body header:not(.scrolled) .header-left-icons .icon-link-custom {
-    color: #FFFFFF !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
+html body header:not(.scrolled) .header-left-icons .icon-link-custom,
 html body header.scrolled .icon-link-custom,
 html body header.scrolled .header-right-icons .icon-link-custom,
 html body header.scrolled .header-left-icons .icon-link-custom {
@@ -151,22 +140,16 @@ html body header.scrolled .header-left-icons .icon-link-custom {
     opacity: 1 !important;
 }
 
-/* Icon SVG - White when transparent, dark when white */
+/* Icon SVG - ALWAYS BLACK */
 html body header:not(.scrolled) .icon-link-custom svg,
 html body header:not(.scrolled) .header-right-icons .icon-link-custom svg,
-html body header:not(.scrolled) .header-left-icons .icon-link-custom svg {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-    fill: #FFFFFF !important;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
-}
-
+html body header:not(.scrolled) .header-left-icons .icon-link-custom svg,
 html body header.scrolled .icon-link-custom svg,
 html body header.scrolled .header-right-icons .icon-link-custom svg,
 html body header.scrolled .header-left-icons .icon-link-custom svg {
     color: var(--dark-brown) !important;
     stroke: var(--dark-brown) !important;
-    fill: var(--dark-brown) !important;
+    fill: none !important;
     filter: none !important;
 }
 
@@ -180,20 +163,13 @@ html body header .icon-link-custom:hover svg,
 html body .icon-link-custom:hover svg {
     color: var(--primary-gold) !important;
     stroke: var(--primary-gold) !important;
-    fill: var(--primary-gold) !important;
+    fill: none !important;
     filter: none !important;
 }
 
-/* Language toggle - White when transparent, dark when white */
+/* Language toggle - ALWAYS BLACK */
 html body header:not(.scrolled) .language-toggle,
-html body header:not(.scrolled) .language-toggle .current-lang {
-    color: #FFFFFF !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
+html body header:not(.scrolled) .language-toggle .current-lang,
 html body header.scrolled .language-toggle,
 html body header.scrolled .language-toggle .current-lang {
     color: var(--dark-brown) !important;
@@ -203,13 +179,11 @@ html body header.scrolled .language-toggle .current-lang {
     opacity: 1 !important;
 }
 
-html body header:not(.scrolled) .language-toggle svg {
-    stroke: #FFFFFF !important;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
-}
-
+html body header:not(.scrolled) .language-toggle svg,
 html body header.scrolled .language-toggle svg {
     stroke: var(--dark-brown) !important;
+    color: var(--dark-brown) !important;
+    fill: none !important;
     filter: none !important;
 }
 
@@ -221,15 +195,12 @@ html body .language-toggle:hover {
 html body header .language-toggle:hover svg,
 html body .language-toggle:hover svg {
     stroke: var(--primary-gold) !important;
+    color: var(--primary-gold) !important;
     filter: none !important;
 }
 
-/* Burger menu - White when transparent, dark when white */
-html body header:not(.scrolled) .burger-menu span {
-    background: #FFFFFF !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-}
-
+/* Burger menu - ALWAYS BLACK */
+html body header:not(.scrolled) .burger-menu span,
 html body header.scrolled .burger-menu span {
     background: var(--dark-brown) !important;
     box-shadow: none !important;
