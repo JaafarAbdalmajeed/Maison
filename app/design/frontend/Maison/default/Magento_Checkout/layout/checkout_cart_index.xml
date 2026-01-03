@@ -2,7 +2,7 @@
 <!--
 /**
  * Maison de Pierre - Shopping Cart Page Layout
- * FINAL – Safe & Magento-core compatible
+ * Complete cart page layout with proper structure
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -12,17 +12,8 @@
     <body>
         <attribute name="class" value="checkout-cart-index"/>
 
-        <!-- Add view model to default cart block if it exists -->
-        <referenceBlock name="checkout.cart">
-            <arguments>
-                <argument name="view_model" xsi:type="object">Magento\Checkout\ViewModel\Cart</argument>
-            </arguments>
-            <referenceBlock name="checkout.cart.form">
-                <arguments>
-                    <argument name="view_model" xsi:type="object">Magento\Checkout\ViewModel\Cart</argument>
-                </arguments>
-            </referenceBlock>
-        </referenceBlock>
+        <!-- Remove default cart block to rebuild properly -->
+        <referenceBlock name="checkout.cart" remove="true"/>
 
         <!-- Main Content -->
         <referenceContainer name="content">
@@ -51,8 +42,54 @@
                                    htmlTag="div"
                                    htmlClass="col-lg-8 cart-items-column">
 
-                            <!-- Move cart form block here -->
-                            <move element="checkout.cart.form" destination="cart.items" before="-"/>
+                            <!-- Main Cart Block -->
+                            <block class="Magento\Checkout\Block\Cart"
+                                   name="checkout.cart">
+                                <arguments>
+                                    <argument name="view_model" xsi:type="object">Magento\Checkout\ViewModel\Cart</argument>
+                                </arguments>
+
+                                <!-- Cart Form Block - displays cart items -->
+                                <block class="Magento\Checkout\Block\Cart"
+                                       name="checkout.cart.form"
+                                       template="Magento_Checkout::cart/form.phtml">
+                                    <arguments>
+                                        <argument name="item_renderers" xsi:type="array">
+                                            <item name="default" xsi:type="string">
+                                                Magento\Checkout\Block\Cart\Item\Renderer
+                                            </item>
+                                        </argument>
+                                        <argument name="view_model" xsi:type="object">Magento\Checkout\ViewModel\Cart</argument>
+                                    </arguments>
+
+                                    <!-- Default Item Renderer -->
+                                    <block class="Magento\Checkout\Block\Cart\Item\Renderer"
+                                           name="checkout.cart.item.renderers.default"
+                                           as="default"
+                                           template="Magento_Checkout::cart/item/default.phtml"/>
+                                </block>
+
+                                <!-- Totals Block (child of cart for JS layout) -->
+                                <block class="Magento\Checkout\Block\Cart\Totals"
+                                       name="checkout.cart.totals"
+                                       template="Magento_Checkout::cart/totals.phtml"/>
+
+                                <!-- Coupon Block -->
+                                <block class="Magento\Checkout\Block\Cart\Coupon"
+                                       name="checkout.cart.coupon"
+                                       template="Magento_Checkout::cart/coupon.phtml"
+                                       after="checkout.cart.totals"/>
+
+                                <!-- Proceed to Checkout Button -->
+                                <block class="Magento\Checkout\Block\Onepage\Link"
+                                       name="checkout.cart.methods.onepage.bottom"
+                                       template="Magento_Checkout::onepage/link.phtml"
+                                       after="checkout.cart.coupon">
+                                    <arguments>
+                                        <argument name="css_class" xsi:type="string">checkout</argument>
+                                    </arguments>
+                                </block>
+                            </block>
 
                         </container>
 
@@ -61,10 +98,14 @@
                                    htmlTag="div"
                                    htmlClass="col-lg-4 cart-summary-column">
 
-                            <!-- Move summary blocks here -->
-                            <move element="checkout.cart.totals" destination="cart.summary.container" before="-"/>
-                            <move element="checkout.cart.coupon" destination="cart.summary.container" after="checkout.cart.totals"/>
-                            <move element="checkout.cart.methods.onepage.bottom" destination="cart.summary.container" after="checkout.cart.coupon"/>
+                            <!-- Render totals, coupon, and checkout link -->
+                            <block class="Magento\Framework\View\Element\Template"
+                                   name="cart.summary.content"
+                                   template="Magento_Checkout::cart/summary-content.phtml">
+                                <arguments>
+                                    <argument name="cart_block_name" xsi:type="string">checkout.cart</argument>
+                                </arguments>
+                            </block>
 
                         </container>
 
