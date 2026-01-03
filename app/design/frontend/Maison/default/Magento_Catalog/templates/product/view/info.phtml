@@ -101,7 +101,7 @@ try {
         <div class="option-group-detail">
             <label class="option-label-detail"><?= __('Quantity') ?></label>
             <div class="quantity-selector-detail">
-                <button class="qty-btn-detail qty-minus" id="qtyMinus">-</button>
+                <button type="button" class="qty-btn-detail qty-minus" id="qtyMinus">-</button>
                 <input type="number" 
                        class="qty-input-detail" 
                        value="1" 
@@ -109,7 +109,7 @@ try {
                        max="99" 
                        id="qtyInput"
                        name="qty">
-                <button class="qty-btn-detail qty-plus" id="qtyPlus">+</button>
+                <button type="button" class="qty-btn-detail qty-plus" id="qtyPlus">+</button>
             </div>
         </div>
     </div>
@@ -208,23 +208,70 @@ try {
 </div>
 
 <script>
-require(['jquery'], function($) {
+require(['jquery', 'domReady!'], function($) {
     // Quantity controls
-    $('#qtyPlus').on('click', function() {
+    $('#qtyPlus').on('click', function(e) {
+        e.preventDefault();
         var qtyInput = $('#qtyInput');
-        var currentVal = parseInt(qtyInput.val());
+        var currentVal = parseInt(qtyInput.val()) || 1;
         if (currentVal < 99) {
-            qtyInput.val(currentVal + 1);
+            qtyInput.val(currentVal + 1).trigger('change');
         }
     });
     
-    $('#qtyMinus').on('click', function() {
+    $('#qtyMinus').on('click', function(e) {
+        e.preventDefault();
         var qtyInput = $('#qtyInput');
-        var currentVal = parseInt(qtyInput.val());
+        var currentVal = parseInt(qtyInput.val()) || 1;
         if (currentVal > 1) {
-            qtyInput.val(currentVal - 1);
+            qtyInput.val(currentVal - 1).trigger('change');
         }
     });
+    
+    // Update quantity input change event
+    $('#qtyInput').on('change', function() {
+        var qtyValue = parseInt($(this).val()) || 1;
+        if (qtyValue < 1) qtyValue = 1;
+        if (qtyValue > 99) qtyValue = 99;
+        $(this).val(qtyValue);
+        updateQuantityInForm(qtyValue);
+    });
+    
+    // Function to update quantity in add to cart form
+    function updateQuantityInForm(qty) {
+        var addToCartForm = $('form[data-role="tocart-form"]');
+        if (addToCartForm.length) {
+            var qtyInputInForm = addToCartForm.find('input[name="qty"]');
+            if (qtyInputInForm.length) {
+                qtyInputInForm.val(qty);
+            } else {
+                // If qty input doesn't exist in form, create it
+                var qtyField = addToCartForm.find('.field.qty input, .qty input');
+                if (qtyField.length) {
+                    qtyField.val(qty);
+                } else {
+                    addToCartForm.prepend('<input type="hidden" name="qty" value="' + qty + '" id="product-qty">');
+                }
+            }
+        }
+    }
+    
+    // Initialize quantity in form after page load
+    setTimeout(function() {
+        var initialQty = parseInt($('#qtyInput').val()) || 1;
+        updateQuantityInForm(initialQty);
+        
+        // Ensure quantity is synced when form is submitted
+        $(document).on('submit', 'form[data-role="tocart-form"]', function(e) {
+            var qtyValue = parseInt($('#qtyInput').val()) || 1;
+            updateQuantityInForm(qtyValue);
+            
+            // Ensure form has qty field
+            if (!$(this).find('input[name="qty"]').length) {
+                $(this).prepend('<input type="hidden" name="qty" value="' + qtyValue + '">');
+            }
+        });
+    }, 500);
 });
 </script>
 
