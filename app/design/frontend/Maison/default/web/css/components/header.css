@@ -278,9 +278,12 @@ header.scrolled .header-scrolled-icons-right {
     transform: translateY(-2px);
 }
 
-/* Keep nav links dark on white background */
+/* Keep nav links dark on white background - ALWAYS BLACK */
 header.scrolled .nav-link-custom,
-header .nav-link-custom {
+header:not(.scrolled) .nav-link-custom,
+header .nav-link-custom,
+html body header .nav-link-custom,
+html body header#mainHeader .nav-link-custom {
     color: var(--dark-brown) !important;
     text-shadow: none !important;
 }
@@ -311,32 +314,45 @@ header .nav-link-custom {
     color: var(--primary-gold) !important;
 }
 
-/* Keep icon links dark on white background */
+/* Keep icon links dark on white background - ALWAYS BLACK */
 header.scrolled .icon-link-custom,
-header .icon-link-custom {
+header:not(.scrolled) .icon-link-custom,
+header .icon-link-custom,
+html body header .icon-link-custom,
+html body header#mainHeader .icon-link-custom {
     color: var(--dark-brown) !important;
     text-shadow: none !important;
 }
 
 .icon-link-custom svg {
     filter: none !important;
-    color: var(--dark-brown);
+    color: var(--dark-brown) !important;
+    stroke: var(--dark-brown) !important;
+    fill: none !important;
 }
 
 .icon-link-custom:hover svg {
-    color: var(--primary-gold);
+    color: var(--primary-gold) !important;
+    stroke: var(--primary-gold) !important;
 }
 
-/* Keep svg without filter on white background */
+/* Keep svg without filter on white background - ALWAYS BLACK */
 header.scrolled .icon-link-custom svg,
-header .icon-link-custom svg {
+header:not(.scrolled) .icon-link-custom svg,
+header .icon-link-custom svg,
+html body header .icon-link-custom svg,
+html body header#mainHeader .icon-link-custom svg {
     filter: none !important;
-    color: var(--dark-brown);
+    color: var(--dark-brown) !important;
+    stroke: var(--dark-brown) !important;
+    fill: none !important;
 }
 
 header.scrolled .icon-link-custom:hover svg,
+header:not(.scrolled) .icon-link-custom:hover svg,
 header .icon-link-custom:hover svg {
-    color: var(--primary-gold);
+    color: var(--primary-gold) !important;
+    stroke: var(--primary-gold) !important;
 }
 
 /* Cart Badge */
@@ -386,7 +402,7 @@ header .icon-link-custom:hover svg {
     }
 }
 
-/* Language Toggle */
+/* Language Toggle - Always Black */
 .language-toggle {
     display: flex;
     align-items: center;
@@ -394,36 +410,32 @@ header .icon-link-custom:hover svg {
     background: none;
     border: none;
     cursor: pointer;
-    color: #FFFFFF !important;
+    color: var(--dark-brown) !important;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 1.5px;
     padding: 8px;
     transition: all 0.3s ease;
     text-decoration: none;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-}
-
-header:not(.scrolled) .language-toggle,
-header:not(.scrolled) .language-toggle .current-lang {
-    color: #FFFFFF !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-}
-
-header.scrolled .language-toggle,
-header.scrolled .language-toggle .current-lang {
-    color: var(--text-dark) !important;
     text-shadow: none !important;
 }
 
-header:not(.scrolled) .language-toggle svg {
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
-    stroke: #FFFFFF !important;
+header:not(.scrolled) .language-toggle,
+header:not(.scrolled) .language-toggle .current-lang,
+header.scrolled .language-toggle,
+header.scrolled .language-toggle .current-lang,
+header .language-toggle,
+header .language-toggle .current-lang {
+    color: var(--dark-brown) !important;
+    text-shadow: none !important;
 }
 
-header.scrolled .language-toggle svg {
+header:not(.scrolled) .language-toggle svg,
+header.scrolled .language-toggle svg,
+header .language-toggle svg {
     filter: none !important;
-    stroke: var(--text-dark) !important;
+    stroke: var(--dark-brown) !important;
+    color: var(--dark-brown) !important;
 }
 
 .language-toggle:hover {
@@ -432,6 +444,7 @@ header.scrolled .language-toggle svg {
 
 .language-toggle:hover svg {
     stroke: var(--primary-gold) !important;
+    color: var(--primary-gold) !important;
     filter: none !important;
 }
 
@@ -463,18 +476,20 @@ header.scrolled .language-toggle svg {
     display: block;
     width: 100%;
     height: 2px;
-    background: #FFFFFF;
+    background: var(--dark-brown) !important;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: none !important;
 }
 
 .burger-menu:hover span {
-    background: var(--primary-gold);
+    background: var(--primary-gold) !important;
 }
 
-header.scrolled .burger-menu span {
-    background: var(--dark-brown);
-    box-shadow: none;
+header.scrolled .burger-menu span,
+header:not(.scrolled) .burger-menu span,
+header .burger-menu span {
+    background: var(--dark-brown) !important;
+    box-shadow: none !important;
 }
 
 .burger-menu.active span:nth-child(1) {
