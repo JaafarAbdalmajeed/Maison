@@ -50,12 +50,17 @@ if (!$actionUrl || !$productId) {
     <input type="hidden" name="product" value="<?= /* @noEscape */ $productId ?>">
     <input type="hidden" name="<?= /* @noEscape */ \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $urlEncoded ?>">
     
-    <!-- Quantity Field -->
-    <div class="field qty product-qty-field">
-        <label class="label" for="qty">
-            <span><?= $block->escapeHtml(__('Quantity')) ?></span>
-        </label>
-        <div class="control">
+    <!-- Product Options Section -->
+    <div class="product-options-section">
+        <?php if ($_product->hasOptions()): ?>
+            <div class="product-options-wrapper">
+                <?= $block->getChildHtml('product.info.options') ?>
+            </div>
+        <?php endif; ?>
+        
+        <!-- Quantity -->
+        <div class="option-group-detail">
+            <label class="option-label-detail"><?= __('Quantity') ?></label>
             <div class="quantity-selector-detail">
                 <button type="button" class="qty-btn-detail qty-minus" id="qtyMinus">-</button>
                 <input type="number"
@@ -65,29 +70,21 @@ if (!$actionUrl || !$productId) {
                        min="1"
                        max="9999"
                        title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
-                       class="input-text qty"
+                       class="input-text qty qty-input-detail"
                        data-validate="<?= $block->escapeHtml(json_encode(['required-entry' => true, 'validate-greater-than-zero' => true])) ?>">
                 <button type="button" class="qty-btn-detail qty-plus" id="qtyPlus">+</button>
             </div>
         </div>
     </div>
     
-    <?php if ($_product->hasOptions()): ?>
-        <?= $block->getChildHtml('product.info.options') ?>
-    <?php endif; ?>
-    
-    <div class="box-tocart product-add-to-cart-container">
-        <div class="fieldset">
-            <div class="actions">
-                <button type="submit"
-                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
-                        id="product-addtocart-button"
-                        class="action primary tocart btn-add-to-cart">
-                    <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Add to Cart Button -->
+    <button type="submit"
+            title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+            id="product-addtocart-button"
+            class="btn-add-cart-detail">
+        <i data-feather="shopping-bag"></i>
+        <span><?= $block->escapeHtml(__('ADD TO CART')) ?></span>
+    </button>
 </form>
 
 <script type="text/x-magento-init">
@@ -103,7 +100,7 @@ if (!$actionUrl || !$productId) {
 </script>
 
 <script>
-require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/modal', 'mage/translate'], function($, urlBuilder, modal, $t) {
+require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magento_Ui/js/modal/modal', 'mage/translate'], function($, domReady, urlBuilder, alert, modal, $t) {
     'use strict';
     
     // Quantity controls
@@ -133,37 +130,43 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/modal', 'mage/t
     
     // Show success message
     function showSuccessMessage(message) {
-        require(['Magento_Ui/js/modal/alert'], function(alert) {
-            alert({
-                title: $t('Success'),
-                content: message,
-                modalClass: 'alert alert-success',
-                buttons: [{
-                    text: $t('OK'),
-                    class: 'action-primary',
-                    click: function() {
-                        this.closeModal();
-                    }
-                }]
-            });
-        });
+        var options = {
+            type: 'popup',
+            responsive: true,
+            innerScroll: true,
+            title: $t('Success'),
+            buttons: [{
+                text: $t('Continue Shopping'),
+                class: 'action-secondary action-dismiss',
+                click: function() {
+                    this.closeModal();
+                }
+            }, {
+                text: $t('View Cart'),
+                class: 'action-primary',
+                click: function() {
+                    window.location.href = urlBuilder.build('checkout/cart');
+                }
+            }]
+        };
+        var popup = modal(options, $('<div class="add-to-cart-success-modal"></div>'));
+        popup.find('.add-to-cart-success-modal').html('<p>' + message + '</p>');
+        popup.openModal();
     }
     
     // Show error message
     function showErrorMessage(message) {
-        require(['Magento_Ui/js/modal/alert'], function(alert) {
-            alert({
-                title: $t('Error'),
-                content: message,
-                modalClass: 'alert alert-danger',
-                buttons: [{
-                    text: $t('OK'),
-                    class: 'action-primary',
-                    click: function() {
-                        this.closeModal();
-                    }
-                }]
-            });
+        alert({
+            title: $t('Error'),
+            content: message,
+            modalClass: 'alert',
+            buttons: [{
+                text: $t('OK'),
+                class: 'action-primary',
+                click: function() {
+                    this.closeModal();
+                }
+            }]
         });
     }
     

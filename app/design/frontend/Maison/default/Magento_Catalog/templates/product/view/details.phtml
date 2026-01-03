@@ -10,8 +10,10 @@ if (!$_product || !$_product->getId()) {
 
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 
-// Safely get review count
+// Safely get review count and average rating
 $reviewCount = 0;
+$averageRating = 0;
+$ratingSummary = null;
 try {
     if ($_product && $_product->getId()) {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -21,14 +23,38 @@ try {
         $ratingSummary = $_product->getRatingSummary();
         if ($ratingSummary) {
             $reviewCount = $ratingSummary->getReviewsCount() ?: 0;
+            $ratingPercent = $ratingSummary->getRatingSummary() ?: 0;
+            $averageRating = round(($ratingPercent / 20), 1); // Convert to 5-star scale with 1 decimal
         }
     }
 } catch (\Exception $e) {
     // Reviews not available, use 0
     $reviewCount = 0;
+    $averageRating = 0;
 } catch (\Throwable $e) {
     // Reviews not available, use 0
     $reviewCount = 0;
+    $averageRating = 0;
+}
+
+// Get review list
+$reviewCollection = null;
+try {
+    if ($_product && $_product->getId()) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $reviewCollectionFactory = $objectManager->get(\Magento\Review\Model\ResourceModel\Review\CollectionFactory::class);
+        $reviewCollection = $reviewCollectionFactory->create()
+            ->addStatusFilter(\Magento\Review\Model\Review::STATUS_APPROVED)
+            ->addEntityFilter('product', $_product->getId())
+            ->addStoreFilter($objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)->getStore()->getId())
+            ->setDateOrder()
+            ->setPageSize(5) // Show 5 reviews initially
+            ->setCurPage(1);
+    }
+} catch (\Exception $e) {
+    $reviewCollection = null;
+} catch (\Throwable $e) {
+    $reviewCollection = null;
 }
 ?>
 
@@ -257,7 +283,108 @@ try {
                         
                         <!-- Reviews Tab -->
                         <div class="tab-pane" id="reviews">
-                            <?= $block->getChildHtml('product.info.review') ?>
+                            <?php if ($reviewCount > 0): ?>
+                                <!-- Reviews Summary -->
+                                <div class="reviews-summary">
+                                    <div class="rating-overview">
+                                        <div class="average-rating"><?= $block->escapeHtml($averageRating) ?></div>
+                                        <div class="rating-details">
+                                            <div class="stars-large">
+                                                <?php 
+                                                $fullStars = floor($averageRating);
+                                                $hasHalfStar = ($averageRating - $fullStars) >= 0.5;
+                                                for ($i = 1; $i <= 5; $i++): 
+                                                    if ($i <= $fullStars): ?>
+                                                        <i data-feather="star" class="star-filled"></i>
+                                                    <?php elseif ($i == $fullStars + 1 && $hasHalfStar): ?>
+                                                        <i data-feather="star" class="star-half"></i>
+                                                    <?php else: ?>
+                                                        <i data-feather="star"></i>
+                                                    <?php endif;
+                                                endfor; 
+                                                ?>
+                                            </div>
+                                            <p class="rating-count"><?= __('Based on %1 reviews', $reviewCount) ?></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="#review-form" class="btn-write-review" onclick="document.getElementById('review-form').scrollIntoView({behavior: 'smooth'}); return false;">
+                                        <i data-feather="edit-3"></i>
+                                        <?= __('WRITE A REVIEW') ?>
+                                    </a>
+                                </div>
+                                
+                                <!-- Reviews List -->
+                                <?php if ($reviewCollection && $reviewCollection->count() > 0): ?>
+                                <div class="reviews-list">
+                                    <?php 
+                                    foreach ($reviewCollection as $_review): 
+                                        $ratingVotes = null;
+                                        $ratingValue = 0;
+                                        try {
+                                            $ratingFactory = $objectManager->get(\Magento\Review\Model\RatingFactory::class);
+                                            $ratingCollection = $ratingFactory->create()
+                                                ->getResourceCollection()
+                                                ->addEntityFilter('product')
+                                                ->setStoreFilter($objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)->getStore()->getId())
+                                                ->addRatingPerStoreName($objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)->getStore()->getId())
+                                                ->setPositionOrder();
+                                            
+                                            $ratingVotes = $ratingCollection->getItemByColumnValue('review_id', $_review->getId());
+                                            if ($ratingVotes) {
+                                                $ratingValue = round($ratingVotes->getSum() / $ratingVotes->getCount() / 20, 0); // Convert to 5-star scale
+                                            }
+                                        } catch (\Exception $e) {
+                                            // Rating not available
+                                            $ratingValue = 0;
+                                        }
+                                    ?>
+                                    <div class="review-item">
+                                        <div class="review-header">
+                                            <div class="reviewer-info">
+                                                <strong class="reviewer-name"><?= $block->escapeHtml($_review->getNickname()) ?></strong>
+                                                <div class="review-stars">
+                                                    <?php 
+                                                    for ($i = 1; $i <= 5; $i++): 
+                                                        if ($i <= $ratingValue): ?>
+                                                            <i data-feather="star" class="star-filled"></i>
+                                                        <?php else: ?>
+                                                            <i data-feather="star"></i>
+                                                        <?php endif;
+                                                    endfor; 
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <span class="review-date"><?= $block->escapeHtml($block->formatDate($_review->getCreatedAt(), \IntlDateFormatter::LONG, false)) ?></span>
+                                        </div>
+                                        <?php if ($_review->getTitle()): ?>
+                                        <h4 class="review-title"><?= $block->escapeHtml($_review->getTitle()) ?></h4>
+                                        <?php endif; ?>
+                                        <p class="review-text"><?= $block->escapeHtml(nl2br($_review->getDetail())) ?></p>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                
+                                <?php if ($reviewCollection->getSize() > $reviewCollection->getPageSize()): ?>
+                                <div class="text-center mt-5">
+                                    <button class="btn-load-more-reviews" onclick="loadMoreReviews(2)"><?= __('LOAD MORE REVIEWS') ?></button>
+                                </div>
+                                <?php endif; ?>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <div class="reviews-summary">
+                                    <p><?= __('No reviews yet. Be the first to review this product!') ?></p>
+                                    <a href="#review-form" class="btn-write-review" onclick="document.getElementById('review-form').scrollIntoView({behavior: 'smooth'}); return false;">
+                                        <i data-feather="edit-3"></i>
+                                        <?= __('WRITE A REVIEW') ?>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Magento Review Form -->
+                            <div id="review-form">
+                                <?= $block->getChildHtml('product.info.review') ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -268,7 +395,31 @@ try {
                 <div class="tabs-image-wrapper">
                     <?php 
                     $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
-                    $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+                    // Try to get a secondary image from gallery, or use main image
+                    $decorativeImage = '';
+                    try {
+                        $galleryImages = $_product->getMediaGalleryImages();
+                        if ($galleryImages && $galleryImages->count() > 1) {
+                            // Get the second image (index 1)
+                            $galleryArray = $galleryImages->toArray();
+                            $images = isset($galleryArray['items']) ? $galleryArray['items'] : [];
+                            if (count($images) > 1 && isset($images[1]['file'])) {
+                                $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')
+                                    ->setImageFile($images[1]['file'])
+                                    ->getUrl();
+                            } else {
+                                $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+                            }
+                        } else {
+                            $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+                        }
+                    } catch (\Exception $e) {
+                        $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+                    }
+                    
+                    if (empty($decorativeImage)) {
+                        $decorativeImage = $imageHelper->init($_product, 'product_page_image_large')->getUrl();
+                    }
                     ?>
                     <img src="<?= $block->escapeUrl($decorativeImage) ?>" 
                          alt="<?= $block->escapeHtmlAttr($_product->getName()) ?>" 
@@ -280,7 +431,7 @@ try {
 </section>
 
 <script>
-require(['jquery'], function($) {
+require(['jquery', 'mage/url'], function($, urlBuilder) {
     // Tab switching
     $('.tab-btn-vertical').on('click', function() {
         var tabId = $(this).data('tab');
@@ -292,7 +443,50 @@ require(['jquery'], function($) {
         // Update panes
         $('.tab-pane').removeClass('active');
         $('#' + tabId).addClass('active');
+        
+        // Reinitialize feather icons after tab switch
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
     });
+    
+    // Load More Reviews function
+    window.loadMoreReviews = function(page) {
+        require(['jquery', 'mage/url'], function($, urlBuilder) {
+            var productId = '<?= $_product->getId() ?>';
+            var url = urlBuilder.build('review/product/listAjax/id/' + productId + '/p/' + page);
+            
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'html',
+                showLoader: true,
+                success: function(response) {
+                    $('.reviews-list').append(response);
+                    
+                    // Check if there are more reviews
+                    if ($(response).find('.review-item').length < 5) {
+                        $('.btn-load-more-reviews').hide();
+                    } else {
+                        $('.btn-load-more-reviews').attr('onclick', 'loadMoreReviews(' + (page + 1) + ')');
+                    }
+                    
+                    // Reinitialize feather icons
+                    if (typeof feather !== 'undefined') {
+                        feather.replace();
+                    }
+                },
+                error: function() {
+                    $('.btn-load-more-reviews').hide();
+                }
+            });
+        });
+    };
+    
+    // Initialize feather icons on page load
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
 });
 </script>
 

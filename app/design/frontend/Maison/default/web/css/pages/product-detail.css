@@ -306,6 +306,97 @@
     margin-bottom: 40px;
 }
 
+/* Magento Product Options Wrapper */
+.product-options-section .product-options-wrapper {
+    margin-bottom: 30px;
+}
+
+.product-options-section .product-options-wrapper .fieldset {
+    margin-bottom: 0;
+}
+
+.product-options-section .product-options-wrapper .fieldset .field {
+    margin-bottom: 30px;
+}
+
+.product-options-section .product-options-wrapper .fieldset .field:last-child {
+    margin-bottom: 0;
+}
+
+/* Style Magento option fields to match our design */
+.product-options-section .product-options-wrapper .fieldset .field .label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--charcoal);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    display: block;
+}
+
+.product-options-section .product-options-wrapper .fieldset .field .label .required {
+    color: #e74c3c;
+    margin-left: 4px;
+}
+
+/* Style Magento swatches to match our color swatches */
+.product-options-section .swatch-opt .swatch-attribute-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--charcoal);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    display: block;
+}
+
+.product-options-section .swatch-opt .swatch-attribute-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.product-options-section .swatch-opt .swatch-option.color {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-options-section .swatch-opt .swatch-option.color:hover {
+    transform: scale(1.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-options-section .swatch-opt .swatch-option.color.selected {
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 2px var(--white), 0 0 0 5px var(--primary-gold);
+}
+
+/* Style Magento text/select options to match our size buttons */
+.product-options-section .fieldset .field:not(:has(.swatch-option)) .control select,
+.product-options-section .fieldset .field:not(:has(.swatch-option)) .control input[type="text"],
+.product-options-section .fieldset .field:not(:has(.swatch-option)) .control input[type="number"] {
+    padding: 12px 20px;
+    border: 2px solid #ddd;
+    background: transparent;
+    color: var(--charcoal);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    width: 100%;
+    max-width: 300px;
+    transition: all 0.3s ease;
+}
+
+.product-options-section .fieldset .field:not(:has(.swatch-option)) .control select:focus,
+.product-options-section .fieldset .field:not(:has(.swatch-option)) .control input:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+}
+
 .option-group-detail {
     margin-bottom: 30px;
 }
@@ -429,7 +520,8 @@
 }
 
 .btn-add-cart-detail,
-.product-actions-detail .action.tocart {
+.product-actions-detail .action.tocart,
+.product-actions-detail button[type="submit"] {
     flex: 1;
     background-color: transparent;
     color: var(--charcoal);
@@ -449,7 +541,8 @@
 }
 
 .btn-add-cart-detail:hover,
-.product-actions-detail .action.tocart:hover {
+.product-actions-detail .action.tocart:hover,
+.product-actions-detail button[type="submit"]:hover {
     background: var(--charcoal);
     color: var(--white);
     transform: translateY(-3px);
@@ -457,16 +550,24 @@
 }
 
 .btn-add-cart-detail:hover i,
-.product-actions-detail .action.tocart:hover i {
+.product-actions-detail .action.tocart:hover i,
+.product-actions-detail button[type="submit"]:hover i {
     stroke: var(--white);
 }
 
 .btn-add-cart-detail i,
-.product-actions-detail .action.tocart i {
+.product-actions-detail .action.tocart i,
+.product-actions-detail button[type="submit"] i {
     width: 20px;
     height: 20px;
     stroke: var(--charcoal);
     transition: all 0.4s ease;
+}
+
+/* Override default Magento button styling inside product-actions-detail */
+.product-actions-detail button[type="submit"].btn-add-cart-detail {
+    margin: 0;
+    border-radius: 0;
 }
 
 .btn-wishlist-detail {

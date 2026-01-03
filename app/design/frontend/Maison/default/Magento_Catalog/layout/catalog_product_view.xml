@@ -21,12 +21,12 @@
                     </block>
                     
                     <!-- Product Main Info Row Container -->
-                    <container name="product.main.row" htmlTag="div" htmlClass="row g-4 product-main-row">
-                        <!-- Product Media Column -->
-                        <container name="product.media.column" htmlTag="div" htmlClass="col-lg-6 product-media-column"/>
+                    <container name="product.main.row" htmlTag="div" htmlClass="row product-main-row product-detail-section">
+                        <!-- Product Media Column (55% - 7 columns) -->
+                        <container name="product.media.column" htmlTag="div" htmlClass="col-lg-7 mb-5 mb-lg-0 product-media-column"/>
                         
-                        <!-- Product Info Column -->
-                        <container name="product.info.column" htmlTag="div" htmlClass="col-lg-6 product-info-column"/>
+                        <!-- Product Info Column (45% - 5 columns) -->
+                        <container name="product.info.column" htmlTag="div" htmlClass="col-lg-5 product-info-column"/>
                     </container>
                 </container>
             </container>

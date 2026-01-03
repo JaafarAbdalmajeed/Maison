@@ -93,9 +93,7 @@ try {
     
     <div class="divider-gold"></div>
     
-    <!-- Product Options - moved inside addtocart template -->
-    
-    <!-- Add to Cart & Wishlist -->
+    <!-- Add to Cart Form (includes Product Options & Quantity) -->
     <div class="product-actions-detail">
         <?= $block->getChildHtml('product.info.addtocart') ?>
         
@@ -157,6 +155,39 @@ try {
             </span>
         </div>
         <?php endif; ?>
+        <?php 
+        // Get product tags
+        try {
+            $tagCollection = null;
+            if (class_exists('\Magento\Tag\Model\ResourceModel\Tag\CollectionFactory')) {
+                $tagCollectionFactory = $objectManager->get(\Magento\Tag\Model\ResourceModel\Tag\CollectionFactory::class);
+                $tagCollection = $tagCollectionFactory->create();
+                $tagCollection->addPopularity()
+                    ->addStatusFilter(\Magento\Tag\Model\Tag::STATUS_APPROVED)
+                    ->addProductFilter($_product->getId())
+                    ->setFlag('relation', true)
+                    ->addStoreFilter($storeManager->getStore()->getId())
+                    ->setActiveFilter();
+            }
+            
+            if ($tagCollection && $tagCollection->count() > 0):
+                $tagNames = [];
+                foreach ($tagCollection as $tag):
+                    $tagNames[] = $block->escapeHtml($tag->getName());
+                endforeach;
+                if (!empty($tagNames)): ?>
+                <div class="meta-item">
+                    <span class="meta-label"><?= __('Tags') ?>:</span>
+                    <span class="meta-value"><?= implode(', ', $tagNames) ?></span>
+                </div>
+                <?php endif;
+            endif;
+        } catch (\Exception $e) {
+            // Tags not available, skip
+        } catch (\Throwable $e) {
+            // Tags not available, skip
+        }
+        ?>
     </div>
     
     <!-- Share -->
