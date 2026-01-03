@@ -17,27 +17,41 @@ class SpecialPriceBulkResolverPlugin
      * 
      * Fixes SQL syntax error when empty array is passed: WHERE (e.entity_id IN ())
      * 
-     * Note: Method signature is generateSpecialPriceMap($customerGroupId, array $productIds)
+     * Note: Method can be called with different parameter types (array or Collection)
      *
      * @param SpecialPriceBulkResolver $subject
      * @param callable $proceed
-     * @param int $customerGroupId
-     * @param array $productIds
      * @return array
      */
     public function aroundGenerateSpecialPriceMap(
         SpecialPriceBulkResolver $subject,
-        callable $proceed,
-        $customerGroupId,
-        array $productIds
+        callable $proceed
     ) {
-        // If product IDs array is empty, return empty array to prevent SQL error
-        if (empty($productIds)) {
+        // Get all arguments passed to the method (excluding $subject and $proceed)
+        $args = func_get_args();
+        $methodArgs = array_slice($args, 2);
+        
+        // Find array or collection argument - check all parameters
+        $productIds = null;
+        $productIdsIndex = null;
+        
+        foreach ($methodArgs as $index => $arg) {
+            if (is_array($arg)) {
+                $productIds = $arg;
+                $productIdsIndex = $index;
+                break;
+            }
+            // Collection objects might be passed instead of arrays
+            // We'll let it pass through and let the original method handle it
+        }
+        
+        // If we found an array and it's empty, return empty array to prevent SQL error
+        if ($productIds !== null && empty($productIds)) {
             return [];
         }
         
-        // Proceed with normal execution, passing both parameters
-        return $proceed($customerGroupId, $productIds);
+        // Proceed with normal execution, passing all original arguments
+        return call_user_func_array($proceed, $methodArgs);
     }
 }
 
