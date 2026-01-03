@@ -1,5 +1,6 @@
 /**
- * Maison de Pierre - Theme Initialization Module (Professional RequireJS Way)
+ * Maison de Pierre - Theme Initialization Module
+ * Unified theme functionality
  */
 define([
     'jquery',
@@ -9,7 +10,7 @@ define([
     'use strict';
     
     return function() {
-        console.log('✅ Maison Theme: Initializing (Professional RequireJS module)...');
+        console.log('✅ Maison Theme: Initializing...');
         
         // Initialize cart counter
         if (cartCounter && typeof cartCounter.init === 'function') {
@@ -36,12 +37,10 @@ define([
             $('#mobileNav').removeClass('active');
         });
         
-        // Mini cart toggle
+        // Mini cart toggle - Unified handler
         $(document).on('click', '#cartBtn, #cartBtnScrolled', function(e) {
             // Check if we're on cart page
             if ($('body').hasClass('checkout-cart-index')) {
-                // On cart page, minicart is removed, so just allow normal link behavior
-                // (user is already on cart page, so nothing happens)
                 return true;
             }
             
@@ -53,16 +52,19 @@ define([
             if (miniCart.length) {
                 // Minicart exists, open it
                 miniCart.addClass('active');
-                // Prevent body scroll when minicart is open
                 $('body').addClass('minicart-open');
                 
-                // Reload customerData cart section to ensure fresh data
-                if (typeof window.customerData !== 'undefined') {
-                    window.customerData.reload(['cart'], false);
+                // Update minicart content to ensure fresh data
+                if (cartCounter && typeof cartCounter.updateMiniCart === 'function') {
+                    cartCounter.updateMiniCart();
+                } else {
+                    // Fallback: reload customerData
+                    if (typeof window.customerData !== 'undefined') {
+                        window.customerData.reload(['cart'], false);
+                    }
                 }
             } else {
                 console.warn('Mini cart element not found, navigating to cart page');
-                // Fallback: navigate to cart page
                 window.location.href = '/checkout/cart/';
             }
             
@@ -80,7 +82,6 @@ define([
             e.preventDefault();
             $('#searchOverlay').addClass('active');
             $('#searchInput').focus();
-            // Re-initialize Feather icons for search overlay
             if (typeof feather !== 'undefined') {
                 setTimeout(function() {
                     feather.replace();
@@ -105,6 +106,10 @@ define([
                 if ($('#searchOverlay').hasClass('active')) {
                     $('#searchOverlay').removeClass('active');
                 }
+                if ($('#miniCart').hasClass('active')) {
+                    $('#miniCart').removeClass('active');
+                    $('body').removeClass('minicart-open');
+                }
             }
         });
         
@@ -113,7 +118,6 @@ define([
         var $searchForm = $('#searchForm');
         var $searchClear = $('#searchClear');
         
-        // Show/hide clear button based on input value
         function toggleClearButton() {
             if ($searchInput.val().length > 0) {
                 $searchClear.addClass('active');
@@ -122,30 +126,25 @@ define([
             }
         }
         
-        // Handle input changes
         $searchInput.on('input keyup', function() {
             toggleClearButton();
         });
         
-        // Clear search input
         $searchClear.on('click', function(e) {
             e.preventDefault();
             $searchInput.val('').focus();
             toggleClearButton();
         });
         
-        // Handle form submission (Enter key or form submit)
         $searchForm.on('submit', function(e) {
             var searchQuery = $searchInput.val().trim();
             if (searchQuery.length === 0) {
                 e.preventDefault();
                 return false;
             }
-            // Form will submit normally to catalogsearch/result
             return true;
         });
         
-        // Handle Enter key in search input
         $searchInput.on('keydown', function(e) {
             if (e.key === 'Enter' || e.keyCode === 13) {
                 e.preventDefault();
@@ -156,10 +155,9 @@ define([
             }
         });
         
-        // Initialize clear button visibility
         toggleClearButton();
         
-        // Header scroll effect (from design)
+        // Header scroll effect
         let lastScrollY = 0;
         $(window).on('scroll', function() {
             const header = document.getElementById('mainHeader');
@@ -194,7 +192,7 @@ define([
             }, 300);
         };
         
-        // Wishlist handler (basic AJAX)
+        // Wishlist handler
         $(document).on('click', '.product-wishlist-btn', function(e) {
             var $btn = $(this);
             var url = $btn.attr('href');
@@ -203,20 +201,15 @@ define([
                 return;
             }
             
-            // Prevent default navigation
             e.preventDefault();
-            
-            // Show loading state
             $btn.addClass('loading');
             
-            // Make AJAX request
             $.ajax({
                 url: url,
                 type: 'POST',
                 dataType: 'json',
                 cache: false,
                 success: function(response) {
-                    // Toggle button state
                     if (response && response.success !== false) {
                         if ($btn.hasClass('in-wishlist')) {
                             $btn.removeClass('in-wishlist');
@@ -229,13 +222,11 @@ define([
                         }
                     }
                     
-                    // Reload wishlist counter if available
                     if (typeof customerData !== 'undefined') {
                         customerData.reload(['wishlist'], false);
                     }
                 },
                 error: function() {
-                    // On error, redirect to wishlist page
                     window.location.href = url;
                 },
                 complete: function() {

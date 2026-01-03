@@ -1,6 +1,6 @@
 /**
- * Cart Counter Update - Updates cart count in header across all pages
- * Uses multiple methods to ensure cart count is always accurate
+ * Cart Counter & Mini Cart Manager
+ * Unified cart functionality across all pages
  */
 define([
     'jquery',
@@ -11,12 +11,16 @@ define([
     
     var cartCountCache = null;
     var updateInProgress = false;
+    var minicartUpdateInProgress = false;
     
     /**
      * Get cart count from Magento via AJAX
      */
     var getCartCountViaAjax = function(callback) {
         if (updateInProgress) {
+            if (typeof callback === 'function') {
+                callback(cartCountCache !== null ? cartCountCache : 0);
+            }
             return;
         }
         
@@ -27,6 +31,7 @@ define([
             type: 'GET',
             dataType: 'json',
             cache: false,
+            timeout: 5000,
             success: function(response) {
                 updateInProgress = false;
                 var count = 0;
@@ -64,7 +69,6 @@ define([
                 if (cartObservable) {
                     var cartData = null;
                     
-                    // Try to get the value from observable
                     if (typeof cartObservable === 'function') {
                         cartData = cartObservable();
                     } else if (cartObservable && typeof cartObservable === 'object') {
@@ -72,7 +76,6 @@ define([
                     }
                     
                     if (cartData && typeof cartData === 'object') {
-                        // Try different properties
                         if (cartData.summary_count !== undefined && cartData.summary_count !== null) {
                             cartCount = parseInt(cartData.summary_count) || 0;
                         } else if (cartData.items_qty !== undefined && cartData.items_qty !== null) {
@@ -121,6 +124,57 @@ define([
         });
         
         return displayCount;
+    };
+    
+    /**
+     * Update minicart content via AJAX
+     */
+    var updateMiniCartContent = function() {
+        if (minicartUpdateInProgress) {
+            return;
+        }
+        
+        minicartUpdateInProgress = true;
+        
+        // Reload customerData cart section
+        if (typeof window.customerData !== 'undefined') {
+            window.customerData.reload(['cart'], false).done(function() {
+                // Reload page section that contains minicart
+                $.ajax({
+                    url: window.location.href,
+                    type: 'GET',
+                    cache: false,
+                    success: function(html) {
+                        var $newHtml = $(html);
+                        var $newMiniCart = $newHtml.find('#miniCart');
+                        if ($newMiniCart.length) {
+                            $('#miniCart').replaceWith($newMiniCart);
+                            // Re-initialize minicart handlers
+                            initMiniCartHandlers();
+                        }
+                        minicartUpdateInProgress = false;
+                    },
+                    error: function() {
+                        minicartUpdateInProgress = false;
+                    }
+                });
+            }).fail(function() {
+                minicartUpdateInProgress = false;
+            });
+        } else {
+            minicartUpdateInProgress = false;
+        }
+    };
+    
+    /**
+     * Initialize minicart event handlers
+     */
+    var initMiniCartHandlers = function() {
+        // Close mini cart
+        $(document).off('click', '#miniCartClose, #miniCartOverlay').on('click', '#miniCartClose, #miniCartOverlay', function() {
+            $('#miniCart').removeClass('active');
+            $('body').removeClass('minicart-open');
+        });
     };
     
     /**
@@ -190,6 +244,10 @@ define([
                     cartDataObservable.subscribe(function(cartData) {
                         setTimeout(function() {
                             fetchAndUpdateCartCount(false);
+                            // Also update minicart if it's open
+                            if ($('#miniCart').hasClass('active')) {
+                                updateMiniCartContent();
+                            }
                         }, 300);
                     }, null, 'change');
                 }
@@ -202,12 +260,14 @@ define([
         $(document).on('ajax:addToCart', function() {
             setTimeout(function() {
                 fetchAndUpdateCartCount(false);
+                updateMiniCartContent();
             }, 500);
         });
         
         $(document).on('updateMiniCart', function() {
             setTimeout(function() {
                 fetchAndUpdateCartCount(false);
+                updateMiniCartContent();
             }, 500);
         });
         
@@ -217,10 +277,10 @@ define([
             }, 300);
         });
         
-        // Listen for checkout cart updates
         $(document).on('checkout:updateCart', function() {
             setTimeout(function() {
                 fetchAndUpdateCartCount(false);
+                updateMiniCartContent();
             }, 300);
         });
         
@@ -237,11 +297,15 @@ define([
                 }, 500);
             }
         });
+        
+        // Initialize minicart handlers
+        initMiniCartHandlers();
     };
     
     return {
         init: initCartCounter,
         update: fetchAndUpdateCartCount,
+        updateMiniCart: updateMiniCartContent,
         getCount: function() {
             return cartCountCache !== null ? cartCountCache : 0;
         }

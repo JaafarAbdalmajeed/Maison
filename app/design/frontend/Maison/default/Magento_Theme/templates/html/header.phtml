@@ -1,16 +1,15 @@
 <?php
 /**
- * Maison de Pierre - Header (Exact from /Users/naserodeh/Desktop/maison design/index.html)
+ * Maison de Pierre - Header
  */
+/** @var \Maison\Homepage\Block\CartBlock $cartBlock */
+$cartBlock = $block->getLayout()->createBlock(\Maison\Homepage\Block\CartBlock::class);
+$itemsCount = $cartBlock->getItemsCount();
+
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
-try {
-    $quote = $cart->getQuote();
-    $quote->collectTotals(); // Ensure quote is loaded
-    $itemsCount = (int) $quote->getItemsCount();
-} catch (\Exception $e) {
-    $itemsCount = 0;
-}
+$customerSession = $objectManager->get(\Magento\Customer\Model\Session::class);
+$wishlistHelper = $objectManager->get(\Magento\Wishlist\Helper\Data::class);
+$isLoggedIn = $customerSession->isLoggedIn();
 ?>
 <!-- Header with Bootstrap -->
 <header id="mainHeader">
@@ -51,12 +50,6 @@ try {
                         </svg>
                         <span class="d-none d-lg-inline current-lang"><?= __('EN') ?></span>
                     </a>
-                    <?php
-                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                    $customerSession = $objectManager->get(\Magento\Customer\Model\Session::class);
-                    $wishlistHelper = $objectManager->get(\Magento\Wishlist\Helper\Data::class);
-                    $isLoggedIn = $customerSession->isLoggedIn();
-                    ?>
                     <?php if ($isLoggedIn && $wishlistHelper->isAllow()): ?>
                         <a href="<?= $block->getUrl('wishlist') ?>" class="icon-link-custom" title="<?= __('My Wish List') ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

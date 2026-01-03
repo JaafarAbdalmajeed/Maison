@@ -87,40 +87,11 @@ if (!$actionUrl || !$productId) {
 </form>
 
 <script>
-require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magento_Ui/js/modal/modal', 'mage/translate', 'mage/loader'], function($, domReady, urlBuilder, alert, modal, $t, loader) {
+require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magento_Ui/js/modal/modal', 'mage/translate', 'mage/loader', 'cartCounter'], function($, domReady, urlBuilder, alert, modal, $t, loader, cartCounter) {
     'use strict';
     
     var productName = '<?= $block->escapeJs($_product->getName()) ?>';
     var productSku = '<?= $block->escapeJs($_product->getSku()) ?>';
-    
-    // Function to update cart count in header
-    function updateCartCount() {
-        // Try to get from customerData (most reliable)
-        if (typeof window.customerData !== 'undefined') {
-            var cartData = window.customerData.get('cart');
-            var cartCount = 0;
-            if (cartData && cartData.summary_count !== undefined) {
-                cartCount = parseInt(cartData.summary_count) || 0;
-            }
-            
-            // Update all cart count elements in header
-            $('.cart-count').each(function() {
-                $(this).text(cartCount > 0 ? cartCount : '0').show();
-            });
-        }
-    }
-    
-    // Listen for customerData updates
-    if (typeof window.customerData !== 'undefined') {
-        window.customerData.get('cart').subscribe(function(cartData) {
-            if (cartData && cartData.summary_count !== undefined) {
-                var cartCount = parseInt(cartData.summary_count) || 0;
-                $('.cart-count').each(function() {
-                    $(this).text(cartCount > 0 ? cartCount : '0').show();
-                });
-            }
-        });
-    }
     
     // Quantity controls
     $(document).on('click', '#qtyPlus', function(e) {
@@ -232,30 +203,32 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
                     var message = response.message || $t('You added %1 to your shopping cart.').replace('%1', productName);
                     showSuccessMessage(message);
                     
-                    // Update minicart and cart count
+                    // Update minicart and cart count using unified cartCounter
                     if (typeof window.customerData !== 'undefined') {
                         var sections = ['cart'];
                         window.customerData.invalidate(sections);
                         window.customerData.reload(sections, true).done(function() {
-                            // Update cart count in header after customerData reload
-                            setTimeout(updateCartCount, 500);
+                            // Update cart count using cartCounter module
+                            if (cartCounter && typeof cartCounter.update === 'function') {
+                                cartCounter.update(false);
+                            }
+                            // Update minicart content
+                            if (cartCounter && typeof cartCounter.updateMiniCart === 'function') {
+                                cartCounter.updateMiniCart();
+                            }
                         });
                     }
                     
-                    // Also update cart count immediately (increment by 1)
-                    $('.cart-count').each(function() {
-                        var currentCount = parseInt($(this).text()) || 0;
-                        $(this).text(currentCount + 1).show();
-                    });
-                    
-                    // Trigger minicart update events (these will also trigger cart counter update)
+                    // Trigger events for cart counter and minicart
                     $('body').trigger('updateMiniCart');
                     $(document).trigger('ajax:addToCart');
                     $('[data-block="minicart"]').trigger('contentUpdated');
                     
-                    // Force cart count update after a delay to ensure customerData is updated
+                    // Force cart count update after a delay
                     setTimeout(function() {
-                        updateCartCount();
+                        if (cartCounter && typeof cartCounter.update === 'function') {
+                            cartCounter.update(false);
+                        }
                     }, 1000);
                 } else if (response.error) {
                     // Error occurred
