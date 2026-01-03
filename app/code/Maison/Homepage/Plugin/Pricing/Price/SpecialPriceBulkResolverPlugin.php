@@ -9,6 +9,7 @@
 namespace Maison\Homepage\Plugin\Pricing\Price;
 
 use Magento\Catalog\Pricing\Price\SpecialPriceBulkResolver;
+use Magento\Framework\Data\Collection\AbstractDb;
 
 class SpecialPriceBulkResolverPlugin
 {
@@ -31,25 +32,15 @@ class SpecialPriceBulkResolverPlugin
         $args = func_get_args();
         $methodArgs = array_slice($args, 2);
         
-        // Find array or collection argument - check all parameters
-        $productIds = null;
-        $productIdsIndex = null;
-        
-        foreach ($methodArgs as $index => $arg) {
-            if (is_array($arg)) {
-                $productIds = $arg;
-                $productIdsIndex = $index;
-                break;
+        // Check if we have an array argument that is empty
+        foreach ($methodArgs as $arg) {
+            if (is_array($arg) && empty($arg)) {
+                // Return empty array to prevent SQL error when empty array is passed
+                return [];
             }
-            // Collection objects might be passed instead of arrays
-            // We'll let it pass through and let the original method handle it
         }
         
-        // If we found an array and it's empty, return empty array to prevent SQL error
-        if ($productIds !== null && empty($productIds)) {
-            return [];
-        }
-        
+        // For Collections or non-empty arrays, let the original method handle them
         // Proceed with normal execution, passing all original arguments
         return call_user_func_array($proceed, $methodArgs);
     }
