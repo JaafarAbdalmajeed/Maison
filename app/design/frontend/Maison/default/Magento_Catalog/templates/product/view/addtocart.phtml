@@ -8,7 +8,15 @@ if (!$_product || !$_product->isSaleable()) {
     return;
 }
 
-$postParams = $block->getAddToCartPostParams($_product);
+try {
+    $postParams = $block->getAddToCartPostParams($_product);
+} catch (\Exception $e) {
+    $postParams = null;
+}
+
+if (!$postParams || !isset($postParams['action']) || !isset($postParams['data'])) {
+    return;
+}
 ?>
 <form data-role="tocart-form"
       data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"
@@ -16,8 +24,8 @@ $postParams = $block->getAddToCartPostParams($_product);
       data-mage-init='{"catalogAddToCart": {"product_sku": "<?= $block->escapeJs($_product->getSku()) ?>"}}'
       method="post">
     <?= $block->getBlockHtml('formkey') ?>
-    <input type="hidden" name="product" value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
-    <input type="hidden" name="<?= /* @noEscape */ \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED] ?>">
+    <input type="hidden" name="product" value="<?= /* @noEscape */ $postParams['data']['product'] ?? '' ?>">
+    <input type="hidden" name="<?= /* @noEscape */ \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED] ?? '' ?>">
     
     <!-- Quantity Field -->
     <div class="field qty product-qty-field">
