@@ -70,6 +70,9 @@
         <move element="checkout.cart.coupon" destination="cart.summary.container" after="checkout.cart.totals"/>
         <move element="checkout.cart.methods.onepage.bottom" destination="cart.summary.container" after="checkout.cart.coupon"/>
         
+        <!-- Remove invalid shipping block if it exists -->
+        <referenceBlock name="checkout.cart.shipping" remove="true"/>
+        
         <!-- Hide minicart on cart page -->
         <referenceBlock name="maison.mini.cart" remove="true"/>
 

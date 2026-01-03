@@ -91,6 +91,11 @@
             </action>
         </referenceBlock>
         
+        <!-- Remove PayPal Braintree Credit Calculator blocks if they don't exist -->
+        <referenceBlock name="paypal.braintree.credit.calculator" remove="true"/>
+        <referenceBlock name="paypal.braintree.credit.calculator.product.view" remove="true"/>
+        <referenceBlock name="braintree.credit.calculator" remove="true"/>
+        
         <!-- Image Zoom Modal -->
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" 
