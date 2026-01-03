@@ -2,11 +2,25 @@
 /**
  * Maison de Pierre - Header
  */
-/** @var \Maison\Homepage\Block\CartBlock $cartBlock */
-$cartBlock = $block->getLayout()->createBlock(\Maison\Homepage\Block\CartBlock::class);
-$itemsCount = $cartBlock->getItemsCount();
-
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$checkoutSession = $objectManager->get('\Magento\Checkout\Model\Session');
+
+try {
+    $quote = $checkoutSession->getQuote();
+    if (!$quote->getId()) {
+        $quote = $cart->getQuote();
+    }
+    if ($quote->getId()) {
+        $quote->collectTotals();
+        $itemsCount = (int) $quote->getItemsCount();
+    } else {
+        $itemsCount = 0;
+    }
+} catch (\Exception $e) {
+    $itemsCount = 0;
+}
+
 $customerSession = $objectManager->get(\Magento\Customer\Model\Session::class);
 $wishlistHelper = $objectManager->get(\Magento\Wishlist\Helper\Data::class);
 $isLoggedIn = $customerSession->isLoggedIn();

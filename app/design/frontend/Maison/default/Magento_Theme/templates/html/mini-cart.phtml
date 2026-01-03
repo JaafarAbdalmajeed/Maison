@@ -3,13 +3,42 @@
  * Maison de Pierre - Mini Cart Sidebar
  * Unified cart display
  */
-/** @var \Maison\Homepage\Block\CartBlock $cartBlock */
-$cartBlock = $block->getLayout()->createBlock(\Maison\Homepage\Block\CartBlock::class);
-$items = $cartBlock->getCartItems();
-$subtotal = $cartBlock->getSubtotal();
-
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$checkoutSession = $objectManager->get('\Magento\Checkout\Model\Session');
 $imageHelper = $objectManager->get('\Magento\Catalog\Helper\Image');
+
+try {
+    // Get quote from session (more reliable)
+    $quote = $checkoutSession->getQuote();
+    
+    // Ensure quote is loaded
+    if (!$quote->getId()) {
+        $quote = $cart->getQuote();
+    }
+    
+    // Load quote with all items
+    if ($quote->getId()) {
+        $quote->load($quote->getId());
+    }
+    
+    // Collect totals to ensure items are loaded
+    $quote->collectTotals();
+    
+    // Get all visible items
+    $items = $quote->getAllVisibleItems();
+    
+    // If no visible items, try all items
+    if (empty($items)) {
+        $items = $quote->getAllItems();
+    }
+    
+    $subtotal = $quote->getSubtotal() ?: $quote->getGrandTotal() ?: 0;
+    
+} catch (\Exception $e) {
+    $items = [];
+    $subtotal = 0;
+}
 ?>
 <!-- Mini Cart Sidebar -->
 <div class="mini-cart" id="miniCart">
