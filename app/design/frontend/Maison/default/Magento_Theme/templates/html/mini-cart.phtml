@@ -4,11 +4,35 @@
  */
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$checkoutSession = $objectManager->get('\Magento\Checkout\Model\Session');
+
 try {
-    $quote = $cart->getQuote();
-    $quote->collectTotals(); // Ensure quote is loaded and totals are calculated
+    // Get quote from session (more reliable)
+    $quote = $checkoutSession->getQuote();
+    
+    // Ensure quote is loaded
+    if (!$quote->getId()) {
+        $quote = $cart->getQuote();
+    }
+    
+    // Load quote with all items
+    if ($quote->getId()) {
+        $quote->load($quote->getId());
+    }
+    
+    // Collect totals to ensure items are loaded
+    $quote->collectTotals();
+    
+    // Get all visible items
     $items = $quote->getAllVisibleItems();
-    $subtotal = $quote->getSubtotal();
+    
+    // If no visible items, try all items
+    if (empty($items)) {
+        $items = $quote->getAllItems();
+    }
+    
+    $subtotal = $quote->getSubtotal() ?: $quote->getGrandTotal();
+    
 } catch (\Exception $e) {
     $items = [];
     $subtotal = 0;
@@ -24,45 +48,53 @@ try {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
-        <div class="mini-cart-items">
-            <?php if (count($items) > 0): ?>
+        <div class="mini-cart-items" id="miniCartItems">
+            <?php if (!empty($items) && count($items) > 0): ?>
                 <?php foreach ($items as $item): ?>
-                    <div class="mini-cart-item">
+                    <?php 
+                    try {
+                        $product = $item->getProduct();
+                        if (!$product || !$product->getId()) {
+                            continue; // Skip invalid items
+                        }
+                        
+                        $imageHelper = $objectManager->get('\Magento\Catalog\Helper\Image');
+                        $imageUrl = $imageHelper->init($product, 'product_thumbnail_image')
+                            ->setImageFile($product->getSmallImage())
+                            ->resize(200, 200)
+                            ->getUrl();
+                        if (!$imageUrl || $imageUrl == '') {
+                            $imageUrl = $block->getViewFileUrl('images/placeholder.jpg');
+                        }
+                    } catch (\Exception $e) {
+                        continue; // Skip items with errors
+                    }
+                    ?>
+                    <div class="mini-cart-item" data-item-id="<?= $item->getId() ?>">
                         <div class="mini-cart-item-image">
-                            <?php 
-                            $product = $item->getProduct();
-                            $imageHelper = $objectManager->get('\Magento\Catalog\Helper\Image');
-                            $imageUrl = $imageHelper->init($product, 'product_thumbnail_image')
-                                ->setImageFile($product->getSmallImage())
-                                ->resize(200, 200)
-                                ->getUrl();
-                            if (!$imageUrl || $imageUrl == '') {
-                                $imageUrl = $block->getViewFileUrl('images/placeholder.jpg');
-                            }
-                            ?>
                             <img src="<?= $block->escapeUrl($imageUrl) ?>" alt="<?= $block->escapeHtml($item->getName()) ?>">
                         </div>
                         <div class="mini-cart-item-details">
                             <h4 class="mini-cart-item-name"><?= $block->escapeHtml($item->getName()) ?></h4>
                             <p class="mini-cart-item-brand"><?= $block->escapeHtml($product->getAttributeText('manufacturer') ?: 'Maison') ?></p>
                             <div class="mini-cart-item-qty">
-                                <button class="qty-btn minus">−</button>
+                                <button class="qty-btn minus" data-item-id="<?= $item->getId() ?>">−</button>
                                 <span class="qty-value"><?= (int)$item->getQty() ?></span>
-                                <button class="qty-btn plus">+</button>
+                                <button class="qty-btn plus" data-item-id="<?= $item->getId() ?>">+</button>
                             </div>
                         </div>
                         <div class="mini-cart-item-price">
                             <p class="item-price">$<?= number_format($item->getPrice() ?: 0, 2) ?></p>
-                            <button class="item-remove">
+                            <button class="item-remove" data-item-id="<?= $item->getId() ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                             </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="mini-cart-empty" style="text-align: center; padding: 60px 20px;">
-                    <p style="font-size: 16px; color: var(--text-dark); margin-bottom: 20px;"><?= __('Your shopping bag is empty') ?></p>
-                    <a href="<?= $block->getUrl('catalog') ?>" class="btn-cart-view" style="display: inline-block; width: auto; padding: 12px 30px;"><?= __('Continue Shopping') ?></a>
+                <div class="mini-cart-empty">
+                    <p><?= __('Your shopping bag is empty') ?></p>
+                    <a href="<?= $block->getUrl('catalog') ?>" class="btn-cart-view"><?= __('Continue Shopping') ?></a>
                 </div>
             <?php endif; ?>
         </div>
