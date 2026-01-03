@@ -17,19 +17,19 @@ class SpecialPriceBulkResolverPlugin
      * 
      * Fixes SQL syntax error when empty array is passed: WHERE (e.entity_id IN ())
      * 
-     * Note: The method signature accepts 2 parameters (array $productIds and another parameter)
+     * Note: Method signature is generateSpecialPriceMap($customerGroupId, array $productIds)
      *
      * @param SpecialPriceBulkResolver $subject
      * @param callable $proceed
+     * @param int $customerGroupId
      * @param array $productIds
-     * @param mixed $customerGroupId
      * @return array
      */
     public function aroundGenerateSpecialPriceMap(
         SpecialPriceBulkResolver $subject,
         callable $proceed,
-        array $productIds,
-        $customerGroupId = null
+        $customerGroupId,
+        array $productIds
     ) {
         // If product IDs array is empty, return empty array to prevent SQL error
         if (empty($productIds)) {
@@ -37,7 +37,7 @@ class SpecialPriceBulkResolverPlugin
         }
         
         // Proceed with normal execution, passing both parameters
-        return $proceed($productIds, $customerGroupId);
+        return $proceed($customerGroupId, $productIds);
     }
 }
 
