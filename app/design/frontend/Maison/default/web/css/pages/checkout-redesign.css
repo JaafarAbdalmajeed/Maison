@@ -64,8 +64,30 @@ body.checkout-index-index #maincontent,
     padding: 0 20px;
 }
 
+/* Show step navigation but hide default styling */
 .opc-wrapper .opc {
-    display: none; /* Hide step navigation */
+    display: flex !important;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+    justify-content: center;
+    gap: 30px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.opc-wrapper .opc .step-title {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.opc-wrapper .opc .step-title._active {
+    color: #1a1a1a;
+    font-weight: 600;
+    border-bottom: 2px solid #1a1a1a;
 }
 
 /* Main Content Layout */
@@ -76,10 +98,31 @@ body.checkout-index-index #maincontent,
 }
 
 /* Checkout Main Content */
+.opc-wrapper {
+    display: block !important;
+    visibility: visible !important;
+}
+
 .opc-wrapper .checkout-container {
-    display: flex;
+    display: flex !important;
     gap: 30px;
     align-items: flex-start;
+}
+
+/* Ensure checkout steps are visible */
+.checkout-index-index #checkout,
+.checkout-index-index .checkout-container,
+.checkout-index-index .opc-wrapper {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Shipping Address Form */
+.checkout-shipping-address,
+.checkout-shipping-method,
+.checkout-payment-method {
+    display: block !important;
+    visibility: visible !important;
 }
 
 .checkout-shipping-address,
@@ -87,6 +130,8 @@ body.checkout-index-index #maincontent,
 .checkout-payment-method-wrapper {
     flex: 1;
     min-width: 0;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .opc-sidebar {
@@ -95,6 +140,30 @@ body.checkout-index-index #maincontent,
     position: sticky;
     top: 160px;
     align-self: flex-start;
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Ensure all checkout UI components are visible */
+.checkout-index-index #checkout,
+.checkout-index-index #checkout-step-shipping,
+.checkout-index-index #checkout-step-shipping_method,
+.checkout-index-index #checkout-step-payment,
+.checkout-index-index [data-role="checkout-shipping-address"],
+.checkout-index-index [data-role="checkout-shipping-method"],
+.checkout-index-index [data-role="checkout-payment"] {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Ensure action buttons are visible */
+.checkout-index-index .actions-toolbar,
+.checkout-index-index .action.primary,
+.checkout-index-index button.action.primary,
+.checkout-index-index .action.primary.checkout {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* ==================== BILLING ADDRESS SECTION ==================== */

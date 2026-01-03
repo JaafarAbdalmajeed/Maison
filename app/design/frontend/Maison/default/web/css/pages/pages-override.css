@@ -63,8 +63,31 @@ body.checkout-index-index #maincontent,
     padding: 0 20px !important;
 }
 
+/* Show checkout steps navigation */
 .opc-wrapper .opc {
-    display: none !important;
+    display: flex !important;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+    justify-content: center;
+    gap: 30px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.opc-wrapper .opc .step-title {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.opc-wrapper .opc .step-title._active {
+    color: #1a1a1a;
+    font-weight: 600;
+    border-bottom: 2px solid #1a1a1a;
+    margin-bottom: -2px;
 }
 
 .opc-sidebar {
