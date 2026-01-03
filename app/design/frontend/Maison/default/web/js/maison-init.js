@@ -50,24 +50,24 @@ define([
             e.stopPropagation();
             
             var miniCart = $('#miniCart');
-            if (miniCart.length && miniCart.is(':visible')) {
+            if (miniCart.length) {
+                // Minicart exists, open it
                 miniCart.addClass('active');
-                console.log('Mini cart opened');
-            } else if (miniCart.length) {
-                // Minicart exists but might be hidden, try to show it
-                miniCart.addClass('active');
-                console.log('Mini cart opened (was hidden)');
+                // Prevent body scroll when minicart is open
+                $('body').addClass('minicart-open');
             } else {
                 console.warn('Mini cart element not found, navigating to cart page');
                 // Fallback: navigate to cart page
-                window.location.href = $(this).attr('href') || '/checkout/cart/';
+                window.location.href = '/checkout/cart/';
             }
             
             return false;
         });
         
-        $('#miniCartClose, #miniCartOverlay').on('click', function() {
+        // Close mini cart
+        $(document).on('click', '#miniCartClose, #miniCartOverlay', function() {
             $('#miniCart').removeClass('active');
+            $('body').removeClass('minicart-open');
         });
         
         // Search overlay toggle
