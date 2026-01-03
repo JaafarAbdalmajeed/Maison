@@ -943,57 +943,7 @@ html body header * * {
     box-sizing: border-box;
 }
 
-/* ==================== FORCE BLACK TEXT AND ICONS AT TOP OF PAGE ==================== */
-/* Ensure all text and icons are black when at top of page (not scrolled) */
-html body header#mainHeader:not(.scrolled) .icon-link-custom,
-html body header:not(.scrolled) .icon-link-custom,
-html body header#mainHeader:not(.scrolled) .icon-link-custom *,
-html body header:not(.scrolled) .icon-link-custom * {
-    color: var(--dark-brown) !important;
-    text-shadow: none !important;
-}
-
-html body header#mainHeader:not(.scrolled) .icon-link-custom svg,
-html body header:not(.scrolled) .icon-link-custom svg,
-html body header#mainHeader:not(.scrolled) .icon-link-custom svg *,
-html body header:not(.scrolled) .icon-link-custom svg * {
-    color: var(--dark-brown) !important;
-    stroke: var(--dark-brown) !important;
-    fill: none !important;
-    filter: none !important;
-}
-
-html body header#mainHeader:not(.scrolled) .nav-link-custom,
-html body header:not(.scrolled) .nav-link-custom,
-html body header#mainHeader:not(.scrolled) .nav-link-custom *,
-html body header:not(.scrolled) .nav-link-custom * {
-    color: var(--dark-brown) !important;
-    text-shadow: none !important;
-}
-
-html body header#mainHeader:not(.scrolled) .language-toggle,
-html body header:not(.scrolled) .language-toggle,
-html body header#mainHeader:not(.scrolled) .language-toggle .current-lang,
-html body header:not(.scrolled) .language-toggle .current-lang {
-    color: var(--dark-brown) !important;
-    text-shadow: none !important;
-}
-
-html body header#mainHeader:not(.scrolled) .language-toggle svg,
-html body header:not(.scrolled) .language-toggle svg,
-html body header#mainHeader:not(.scrolled) .language-toggle svg *,
-html body header:not(.scrolled) .language-toggle svg * {
-    color: var(--dark-brown) !important;
-    stroke: var(--dark-brown) !important;
-    fill: none !important;
-    filter: none !important;
-}
-
-html body header#mainHeader:not(.scrolled) .burger-menu span,
-html body header:not(.scrolled) .burger-menu span {
-    background: var(--dark-brown) !important;
-    box-shadow: none !important;
-}
+/* Note: Rules for black text/icons at top of page are in header-transparent.css */
 
 /* Remove position relative from all header elements */
 html body header#mainHeader,

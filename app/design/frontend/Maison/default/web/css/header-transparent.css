@@ -146,7 +146,13 @@ html body header:not(.scrolled) .header-right-icons .icon-link-custom svg,
 html body header:not(.scrolled) .header-left-icons .icon-link-custom svg,
 html body header.scrolled .icon-link-custom svg,
 html body header.scrolled .header-right-icons .icon-link-custom svg,
-html body header.scrolled .header-left-icons .icon-link-custom svg {
+html body header.scrolled .header-left-icons .icon-link-custom svg,
+html body header#mainHeader:not(.scrolled) .icon-link-custom svg,
+html body header#mainHeader:not(.scrolled) .header-right-icons .icon-link-custom svg,
+html body header#mainHeader:not(.scrolled) .header-left-icons .icon-link-custom svg,
+html body header#mainHeader.scrolled .icon-link-custom svg,
+html body header#mainHeader.scrolled .header-right-icons .icon-link-custom svg,
+html body header#mainHeader.scrolled .header-left-icons .icon-link-custom svg {
     color: var(--dark-brown) !important;
     stroke: var(--dark-brown) !important;
     fill: none !important;
