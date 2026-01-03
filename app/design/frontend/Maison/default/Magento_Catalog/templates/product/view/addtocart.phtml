@@ -8,24 +8,47 @@ if (!$_product || !$_product->isSaleable()) {
     return;
 }
 
+// Get post params with fallback
+$postParams = null;
+$actionUrl = null;
+$productId = null;
+$urlEncoded = null;
+
 try {
     $postParams = $block->getAddToCartPostParams($_product);
+    if ($postParams && isset($postParams['action']) && isset($postParams['data'])) {
+        $actionUrl = $postParams['action'];
+        $productId = $postParams['data']['product'] ?? $_product->getId();
+        $urlEncoded = $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED] ?? '';
+    }
 } catch (\Exception $e) {
+    // Fallback if method fails
     $postParams = null;
 }
 
-if (!$postParams || !isset($postParams['action']) || !isset($postParams['data'])) {
-    return;
+// Fallback: create basic params manually if needed
+if (!$actionUrl || !$productId) {
+    try {
+        $actionUrl = $block->getUrl('checkout/cart/add', ['_secure' => $block->getRequest()->isSecure()]);
+        $productId = $_product->getId();
+        $urlHelper = $this->helper(\Magento\Framework\Url\Helper\Data::class);
+        $urlEncoded = $urlHelper->getEncodedUrl($actionUrl);
+    } catch (\Exception $e) {
+        // Final fallback
+        $actionUrl = '/checkout/cart/add/';
+        $productId = $_product->getId();
+        $urlEncoded = '';
+    }
 }
 ?>
 <form data-role="tocart-form"
       data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"
-      action="<?= $block->escapeUrl($postParams['action']) ?>"
+      action="<?= $block->escapeUrl($actionUrl) ?>"
       data-mage-init='{"catalogAddToCart": {"product_sku": "<?= $block->escapeJs($_product->getSku()) ?>"}}'
       method="post">
     <?= $block->getBlockHtml('formkey') ?>
-    <input type="hidden" name="product" value="<?= /* @noEscape */ $postParams['data']['product'] ?? '' ?>">
-    <input type="hidden" name="<?= /* @noEscape */ \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED] ?? '' ?>">
+    <input type="hidden" name="product" value="<?= /* @noEscape */ $productId ?>">
+    <input type="hidden" name="<?= /* @noEscape */ \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $urlEncoded ?>">
     
     <!-- Quantity Field -->
     <div class="field qty product-qty-field">

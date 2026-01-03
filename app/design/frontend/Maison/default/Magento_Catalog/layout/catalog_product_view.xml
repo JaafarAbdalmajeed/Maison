@@ -73,7 +73,18 @@
             </action>
         </referenceBlock>
         
-        <!-- Ensure Add to Cart block is properly configured with custom template -->
+        <!-- Ensure Add to Cart block exists and is properly configured -->
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Catalog\Block\Product\View" 
+                   name="product.info.addtocart" 
+                   as="addtocart" 
+                   template="Magento_Catalog::product/view/addtocart.phtml"
+                   after="product.info.options">
+                <container name="product.info.addtocart.qty" as="qty" htmlTag="div" htmlClass="field qty"/>
+            </block>
+        </referenceContainer>
+        
+        <!-- Also ensure it can be referenced -->
         <referenceBlock name="product.info.addtocart">
             <action method="setTemplate">
                 <argument name="template" xsi:type="string">Magento_Catalog::product/view/addtocart.phtml</argument>
