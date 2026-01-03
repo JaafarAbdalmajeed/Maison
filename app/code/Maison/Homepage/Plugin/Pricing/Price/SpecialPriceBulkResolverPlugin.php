@@ -16,31 +16,28 @@ class SpecialPriceBulkResolverPlugin
      * Plugin to handle empty product IDs array around generateSpecialPriceMap
      * 
      * Fixes SQL syntax error when empty array is passed: WHERE (e.entity_id IN ())
+     * 
+     * Note: The method signature accepts 2 parameters (array $productIds and another parameter)
      *
      * @param SpecialPriceBulkResolver $subject
      * @param callable $proceed
-     * @param mixed $productIds
+     * @param array $productIds
+     * @param mixed $customerGroupId
      * @return array
      */
     public function aroundGenerateSpecialPriceMap(
         SpecialPriceBulkResolver $subject,
         callable $proceed,
-        $productIds
+        array $productIds,
+        $customerGroupId = null
     ) {
-        // Only process if productIds is an array
-        if (is_array($productIds)) {
-            // If product IDs array is empty, return empty array to prevent SQL error
-            if (empty($productIds)) {
-                return [];
-            }
-            
-            // Proceed with normal execution for non-empty arrays
-            return $proceed($productIds);
+        // If product IDs array is empty, return empty array to prevent SQL error
+        if (empty($productIds)) {
+            return [];
         }
         
-        // If not an array, proceed with original arguments (might be different signature)
-        // This handles cases where the method is called with different parameter types
-        return $proceed($productIds);
+        // Proceed with normal execution, passing both parameters
+        return $proceed($productIds, $customerGroupId);
     }
 }
 
