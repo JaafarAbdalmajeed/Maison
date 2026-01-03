@@ -30,8 +30,14 @@ define([
             $('#mobileNav').removeClass('active');
         });
         
-        // Mini cart toggle
+        // Mini cart toggle (disabled on cart page)
         $('#cartBtn, #cartBtnScrolled').on('click', function(e) {
+            // Don't open minicart on cart page - redirect to cart page instead
+            if ($('body').hasClass('checkout-cart-index')) {
+                e.preventDefault();
+                window.location.href = $(this).attr('href') || '/checkout/cart/';
+                return false;
+            }
             e.preventDefault();
             $('#miniCart').addClass('active');
         });
