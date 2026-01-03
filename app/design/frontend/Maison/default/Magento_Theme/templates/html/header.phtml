@@ -370,3 +370,96 @@ $itemsCount = $cart->getQuote()->getItemsCount();
         </div>
     </div>
 </header>
+
+<script>
+require(['jquery', 'domReady!'], function($) {
+    'use strict';
+    
+    // Function to update cart count in header
+    function updateCartCount() {
+        var cartCount = 0;
+        
+        // Try customerData first (Magento's standard way)
+        if (typeof window.customerData !== 'undefined') {
+            try {
+                var cartData = window.customerData.get('cart');
+                if (cartData) {
+                    // cartData might be an observable, so try to get value
+                    var value = cartData;
+                    if (typeof cartData === 'function') {
+                        value = cartData();
+                    }
+                    if (value && typeof value === 'object') {
+                        if (value.summary_count !== undefined && value.summary_count !== null) {
+                            cartCount = parseInt(value.summary_count) || 0;
+                        } else if (value.items_qty !== undefined && value.items_qty !== null) {
+                            cartCount = parseInt(value.items_qty) || 0;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn('Error getting cart data from customerData:', e);
+            }
+        }
+        
+        // Update all cart count elements
+        $('.cart-count').each(function() {
+            $(this).text(cartCount > 0 ? cartCount : '0').show();
+        });
+    }
+    
+    // Wait for customerData to be available and initialize
+    function initCartCounter() {
+        var attempts = 0;
+        var maxAttempts = 50;
+        
+        function checkCustomerData() {
+            attempts++;
+            if (typeof window.customerData !== 'undefined') {
+                // Initial update
+                setTimeout(updateCartCount, 500);
+                
+                // Listen for customerData cart updates
+                try {
+                    var cartDataObservable = window.customerData.get('cart');
+                    if (cartDataObservable) {
+                        // Try to subscribe if it's a Knockout observable
+                        if (typeof cartDataObservable.subscribe === 'function') {
+                            cartDataObservable.subscribe(function(cartData) {
+                                updateCartCount();
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Error subscribing to cart data:', e);
+                }
+            } else if (attempts < maxAttempts) {
+                setTimeout(checkCustomerData, 100);
+            }
+        }
+        
+        checkCustomerData();
+    }
+    
+    // Initialize on page load
+    initCartCounter();
+    
+    // Also listen for custom events
+    $(document).on('ajax:addToCart', function() {
+        setTimeout(updateCartCount, 500);
+    });
+    
+    $(document).on('updateMiniCart', function() {
+        setTimeout(updateCartCount, 500);
+    });
+    
+    $(document).on('contentUpdated', function() {
+        setTimeout(updateCartCount, 300);
+    });
+    
+    // Periodic update check (fallback)
+    setInterval(function() {
+        updateCartCount();
+    }, 3000);
+});
+</script>
