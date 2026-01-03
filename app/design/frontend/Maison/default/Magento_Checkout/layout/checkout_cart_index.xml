@@ -2,7 +2,7 @@
 <!--
 /**
  * Maison de Pierre - Shopping Cart Page Layout
- * Complete cart page layout - modify default structure instead of removing
+ * Complete cart page layout with proper structure
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -48,19 +48,23 @@
                         <!-- Left Column - Cart Items -->
                         <container name="cart.items"
                                    htmlTag="div"
-                                   htmlClass="col-lg-8 cart-items-column"/>
+                                   htmlClass="col-lg-8 cart-items-column">
+                            <!-- Cart form will be moved here -->
+                        </container>
 
                         <!-- Right Column - Summary -->
                         <container name="cart.summary.container"
                                    htmlTag="div"
-                                   htmlClass="col-lg-4 cart-summary-column"/>
+                                   htmlClass="col-lg-4 cart-summary-column">
+                            <!-- Summary blocks will be moved here -->
+                        </container>
 
                     </container>
                 </container>
             </container>
         </referenceContainer>
 
-        <!-- Move default blocks to our custom containers (move must be at body level) -->
+        <!-- Move blocks to correct positions (move must be at body level) -->
         <move element="checkout.cart.form" destination="cart.items" before="-"/>
         <move element="checkout.cart.totals" destination="cart.summary.container" before="-"/>
         <move element="checkout.cart.coupon" destination="cart.summary.container" after="checkout.cart.totals"/>

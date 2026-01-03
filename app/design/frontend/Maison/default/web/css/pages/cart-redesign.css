@@ -626,7 +626,7 @@ body.checkout-cart-index #maincontent,
 .cart.main.actions {
     margin: 40px 0 0 0;
     padding: 0;
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
@@ -645,6 +645,7 @@ body.checkout-cart-index #maincontent,
     border: none;
     background: transparent;
     transition: color 0.2s ease;
+    display: inline-block !important;
 }
 
 .cart.main.actions .action.continue:hover {
@@ -665,11 +666,59 @@ body.checkout-cart-index #maincontent,
     background: transparent;
     cursor: pointer;
     transition: color 0.2s ease;
+    display: inline-block !important;
 }
 
 .cart.main.actions .action.update:hover,
 .cart.main.actions .action.clear:hover {
     color: #c9a961;
+}
+
+/* Ensure checkout button is visible */
+.cart.summary .action.primary.checkout,
+.checkout-cart-index .action.primary.checkout,
+.cart.summary .checkout,
+.checkout-cart-index .checkout,
+.checkout.cart.methods .checkout,
+.checkout.cart.methods.onepage.bottom .checkout {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100%;
+    padding: 16px 24px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 24px;
+}
+
+.cart.summary .action.primary.checkout:hover,
+.checkout-cart-index .action.primary.checkout:hover,
+.cart.summary .checkout:hover,
+.checkout-cart-index .checkout:hover {
+    background-color: #333333;
+    border-color: #333333;
+    color: #ffffff;
+}
+
+/* Ensure summary blocks are visible */
+.cart-summary-column .block,
+.cart-summary-column .cart-totals,
+.cart-summary-column .block.discount,
+.cart-summary-column .checkout.cart.methods {
+    display: block !important;
+    visibility: visible !important;
+    margin-bottom: 24px;
 }
 
 /* ==================== EMPTY CART ==================== */
