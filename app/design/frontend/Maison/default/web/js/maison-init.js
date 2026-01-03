@@ -3,12 +3,18 @@
  */
 define([
     'jquery',
-    'domReady!'
-], function($) {
+    'domReady!',
+    'cartCounter'
+], function($, domReady, cartCounter) {
     'use strict';
     
     return function() {
         console.log('✅ Maison Theme: Initializing (Professional RequireJS module)...');
+        
+        // Initialize cart counter
+        if (cartCounter && typeof cartCounter.init === 'function') {
+            cartCounter.init();
+        }
         
         // Initialize Feather Icons
         if (typeof feather !== 'undefined') {
@@ -30,16 +36,34 @@ define([
             $('#mobileNav').removeClass('active');
         });
         
-        // Mini cart toggle (disabled on cart page)
-        $('#cartBtn, #cartBtnScrolled').on('click', function(e) {
-            // Don't open minicart on cart page - redirect to cart page instead
+        // Mini cart toggle
+        $(document).on('click', '#cartBtn, #cartBtnScrolled', function(e) {
+            // Check if we're on cart page
             if ($('body').hasClass('checkout-cart-index')) {
-                e.preventDefault();
-                window.location.href = $(this).attr('href') || '/checkout/cart/';
-                return false;
+                // On cart page, minicart is removed, so just allow normal link behavior
+                // (user is already on cart page, so nothing happens)
+                return true;
             }
+            
+            // On other pages, open minicart
             e.preventDefault();
-            $('#miniCart').addClass('active');
+            e.stopPropagation();
+            
+            var miniCart = $('#miniCart');
+            if (miniCart.length && miniCart.is(':visible')) {
+                miniCart.addClass('active');
+                console.log('Mini cart opened');
+            } else if (miniCart.length) {
+                // Minicart exists but might be hidden, try to show it
+                miniCart.addClass('active');
+                console.log('Mini cart opened (was hidden)');
+            } else {
+                console.warn('Mini cart element not found, navigating to cart page');
+                // Fallback: navigate to cart page
+                window.location.href = $(this).attr('href') || '/checkout/cart/';
+            }
+            
+            return false;
         });
         
         $('#miniCartClose, #miniCartOverlay').on('click', function() {

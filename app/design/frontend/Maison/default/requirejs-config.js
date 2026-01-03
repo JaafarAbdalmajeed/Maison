@@ -7,7 +7,8 @@ var config = {
             'maisonInit': 'js/maison-init',
             'filterSidebar': 'js/filter-sidebar',
             'ajaxFilters': 'js/ajax-filters',
-            'productDetail': 'js/product-detail'
+            'productDetail': 'js/product-detail',
+            'cartCounter': 'js/cart-counter'
         }
     },
     deps: [

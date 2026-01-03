@@ -248,10 +248,15 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
                         $(this).text(currentCount + 1).show();
                     });
                     
-                    // Trigger minicart update events
+                    // Trigger minicart update events (these will also trigger cart counter update)
                     $('body').trigger('updateMiniCart');
                     $(document).trigger('ajax:addToCart');
                     $('[data-block="minicart"]').trigger('contentUpdated');
+                    
+                    // Force cart count update after a delay to ensure customerData is updated
+                    setTimeout(function() {
+                        updateCartCount();
+                    }, 1000);
                 } else if (response.error) {
                     // Error occurred
                     var errorMsg = response.message || $t('Could not add product to cart.');
