@@ -3,4 +3,16 @@
 !app/
 !app/**
 
+!css/
+!css/**
+
+!js/
+!js/**
+
+!images/
+!images/**
+
+!*.html
+!*.md
+
 !.gitignore

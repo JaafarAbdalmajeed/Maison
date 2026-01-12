@@ -1,0 +1,278 @@
+/* ==================== ABOUT PAGE STYLES ==================== */
+
+/* Hero Section */
+.about-hero {
+    margin-top: 180px;
+    position: relative;
+}
+
+.about-hero-image {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.about-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-hero-title {
+    font-family: var(--font-heading);
+    font-size: 56px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.about-hero-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+/* About Content */
+.about-content-section {
+    padding: 100px 0 120px;
+    background: var(--soft-beige);
+}
+
+.about-story,
+.about-values,
+.about-why,
+.about-team {
+    margin-bottom: 100px;
+}
+
+.about-story:last-child,
+.about-team:last-child {
+    margin-bottom: 0;
+}
+
+.about-section-title {
+    font-family: var(--font-heading);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 30px;
+}
+
+.about-text {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.about-image {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+/* Values */
+.value-card {
+    background: var(--white);
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    background: var(--soft-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.value-icon i {
+    width: 40px;
+    height: 40px;
+    stroke: var(--primary-gold);
+}
+
+.value-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 15px;
+}
+
+.value-text {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Why Choose Us */
+.about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.about-feature-item {
+    display: flex;
+    gap: 20px;
+}
+
+.about-feature-item i {
+    width: 28px;
+    height: 28px;
+    stroke: var(--primary-gold);
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.about-feature-item h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+}
+
+.about-feature-item p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Team */
+.team-card {
+    background: var(--white);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.team-image {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.team-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.team-card:hover .team-image img {
+    transform: scale(1.05);
+}
+
+.team-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin: 25px 20px 8px;
+}
+
+.team-role {
+    font-size: 14px;
+    color: var(--primary-gold);
+    margin: 0 20px 25px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .about-hero {
+        margin-top: 140px;
+    }
+
+    .about-hero-image {
+        height: 400px;
+    }
+
+    .about-hero-title {
+        font-size: 44px;
+    }
+
+    .about-content-section {
+        padding: 80px 0 100px;
+    }
+
+    .about-section-title {
+        font-size: 32px;
+    }
+
+    .about-image {
+        height: 450px;
+        margin-bottom: 30px;
+    }
+
+    .about-story,
+    .about-values,
+    .about-why,
+    .about-team {
+        margin-bottom: 80px;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-hero {
+        margin-top: 70px;
+    }
+
+    .about-hero-image {
+        height: 300px;
+    }
+
+    .about-hero-title {
+        font-size: 32px;
+    }
+
+    .about-hero-subtitle {
+        font-size: 15px;
+    }
+
+    .about-content-section {
+        padding: 60px 0 80px;
+    }
+
+    .about-section-title {
+        font-size: 28px;
+    }
+
+    .about-image {
+        height: 350px;
+    }
+
+    .value-card {
+        padding: 30px 20px;
+    }
+
+    .team-image {
+        height: 350px;
+    }
+}

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxor Velvet Armchair - D&G - Maison de Pierre</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/product-detail.css">
+
+    <!-- Additional Required CSS -->
+    <link rel="stylesheet" href="app/design/frontend/Maison/default/web/css/components/nav-links-enhanced.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-logo">
+            <img src="images/maison-logo.png" alt="Maison de Pierre" style="height: 80px; display: block; margin: 0 auto;">
+        </div>
+    </div>
+
+    <!-- Header (Same as Homepage) -->
+    <header id="mainHeader">
+        <div class="header-default">
+            <div class="container-fluid px-4 px-lg-5">
+                <div class="row align-items-center mb-3">
+                <div class="col-4 col-lg-3">
+                    <div class="d-flex gap-3 align-items-center">
+                        <button class="burger-menu d-lg-none" id="burgerMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a href="#" class="icon-link-custom" id="searchBtn">
+                        <i data-feather="search"></i>
+                            <span class="d-none d-lg-inline">SEARCH</span>
+                    </a>
+                </div>
+                </div>
+                    <div class="col-4 col-lg-6 text-center logo-top">
+                        <a href="index.html">
+                            <img src="images/maison-logo.png" alt="Maison de Pierre" class="img-fluid">
+                        </a>
+                </div>
+                    <div class="col-4 col-lg-3">
+                        <div class="d-flex gap-3 justify-content-end align-items-center">
+                            <a href="#" class="icon-link-custom language-toggle d-none d-lg-flex" id="langSwitcher">
+                                <i data-feather="globe"></i>
+                                <span class="d-none d-lg-inline current-lang">EN</span>
+                            </a>
+                            <a href="#" class="icon-link-custom">
+                        <i data-feather="user"></i>
+                                <span class="d-none d-lg-inline">LOGIN</span>
+                    </a>
+                            <a href="#" class="icon-link-custom" id="cartBtn">
+                        <i data-feather="shopping-bag"></i>
+                                <span class="d-none d-lg-inline">CART</span>
+                                <span class="cart-count">2</span>
+                    </a>
+                        </div>
+                </div>
+            </div>
+            
+                <nav class="border-top pt-3 d-none d-lg-block">
+                    <ul class="nav justify-content-center gap-3 gap-lg-4">
+                        <li class="nav-item"><a href="index.html" class="nav-link-custom">HOME</a></li>
+                        <li class="nav-item submenu-dropdown">
+                            <a href="#products" class="nav-link-custom">PRODUCTS</a>
+                        </li>
+                        <li class="nav-item submenu-dropdown">
+                            <a href="#brands" class="nav-link-custom">BRANDS</a>
+                        </li>
+                        <li class="nav-item submenu-dropdown">
+                            <a href="category.html" class="nav-link-custom">COLLECTIONS</a>
+                        </li>
+                        <li class="nav-item d-none d-lg-block"><a href="#about" class="nav-link-custom">ABOUT</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link-custom">CONTACT</a></li>
+                </ul>
+            </nav>
+            </div>
+        </div>
+
+        <div class="header-scrolled">
+            <div class="container-fluid px-4 px-lg-5 position-relative">
+                <div class="d-flex align-items-center justify-content-center position-relative">
+                    <a href="#" class="icon-link-custom scrolled-icon position-absolute start-0" id="searchBtnScrolled">
+                    <i data-feather="search"></i>
+                        <span class="d-none d-lg-inline">SEARCH</span>
+                    </a>
+                    
+                    <nav class="w-100">
+                        <ul class="nav justify-content-center gap-3 gap-lg-4 align-items-center flex-nowrap">
+                            <li class="nav-item"><a href="index.html" class="nav-link-custom">HOME</a></li>
+                            <li class="nav-item"><a href="#products" class="nav-link-custom">PRODUCTS</a></li>
+                            <li class="nav-item brands-dropdown">
+                                <a href="#brands" class="nav-link-custom">BRANDS</a>
+                        </li>
+                            <li class="nav-item logo-center mx-3">
+                                <a href="index.html">
+                                    <img src="images/maison-logo.png" alt="Maison de Pierre" class="img-fluid">
+                                </a>
+                        </li>
+                            <li class="nav-item"><a href="category.html" class="nav-link-custom">COLLECTIONS</a></li>
+                            <li class="nav-item d-none d-lg-block"><a href="#about" class="nav-link-custom">ABOUT</a></li>
+                            <li class="nav-item"><a href="#contact" class="nav-link-custom">CONTACT</a></li>
+                    </ul>
+                </nav>
+                
+                    <div class="d-flex gap-3 scrolled-icon right position-absolute end-0 align-items-center">
+                        <a href="#" class="icon-link-custom language-toggle" id="langSwitcherScrolled">
+                            <i data-feather="globe"></i>
+                            <span class="d-none d-lg-inline current-lang">EN</span>
+                        </a>
+                        <a href="#" class="icon-link-custom">
+                        <i data-feather="user"></i>
+                            <span class="d-none d-lg-inline">LOGIN</span>
+                    </a>
+                        <a href="#" class="icon-link-custom" id="cartBtnScrolled">
+                        <i data-feather="shopping-bag"></i>
+                            <span class="d-none d-lg-inline">CART</span>
+                            <span class="cart-count">2</span>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation & Search (Same as Homepage) -->
+    <!-- Omitted for brevity - will be copied from homepage -->
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="category.html">Living Room</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Luxor Velvet Armchair</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row">
+                <!-- Product Images (Left Side - 55%) -->
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                    <div class="product-images-gallery">
+                        <!-- Main Image -->
+                        <div class="main-image-container">
+                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=1400&fit=crop&q=80" alt="Luxor Velvet Armchair" id="mainImage" class="main-product-image">
+                            <div class="product-badge-detail">BEST SELLER</div>
+                            <button class="zoom-button" id="zoomBtn">
+                                <i data-feather="maximize-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Thumbnail Gallery -->
+                        <div class="thumbnails-gallery">
+                            <button class="thumbnail-nav prev" onclick="scrollThumbnails(-1)">
+                                <i data-feather="chevron-left"></i>
+                            </button>
+                            <div class="thumbnails-container" id="thumbnailsContainer">
+                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=350&fit=crop&q=80" alt="View 1" class="thumbnail active" data-image="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=1400&fit=crop&q=80">
+                                <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=300&h=350&fit=crop&q=80" alt="View 2" class="thumbnail" data-image="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1200&h=1400&fit=crop&q=80">
+                                <img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?w=300&h=350&fit=crop&q=80" alt="View 3" class="thumbnail" data-image="https://images.unsplash.com/photo-1567016432779-094069958ea5?w=1200&h=1400&fit=crop&q=80">
+                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=350&fit=crop&q=80" alt="View 4" class="thumbnail" data-image="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=1400&fit=crop&q=80">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=350&fit=crop&q=80" alt="View 5" class="thumbnail" data-image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=1400&fit=crop&q=80">
+                            </div>
+                            <button class="thumbnail-nav next" onclick="scrollThumbnails(1)">
+                                <i data-feather="chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info (Right Side - 45%) -->
+                <div class="col-lg-5">
+                    <div class="product-info-section">
+                        <!-- Brand -->
+                        <div class="product-brand-detail">D&G</div>
+                        
+                        <!-- Product Title -->
+                        <h1 class="product-title-detail">Luxor Velvet Armchair</h1>
+                        
+                        <!-- Rating & Reviews -->
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i data-feather="star" class="star-filled"></i>
+                                <i data-feather="star" class="star-filled"></i>
+                                <i data-feather="star" class="star-filled"></i>
+                                <i data-feather="star" class="star-filled"></i>
+                                <i data-feather="star" class="star-half"></i>
+                            </div>
+                            <span class="rating-text">(48 Reviews)</span>
+                        </div>
+                        
+                        <!-- Price -->
+                        <div class="product-price-detail">
+                            <span class="current-price">$3,450</span>
+                            <span class="original-price">$4,200</span>
+                            <span class="discount-badge">-18%</span>
+                        </div>
+                        
+                        <!-- Short Description -->
+                        <p class="product-short-description">
+                            Exquisite velvet armchair with solid oak frame. Hand-crafted by master artisans, this statement piece combines contemporary design with timeless luxury.
+                        </p>
+                        
+                        <div class="divider-gold"></div>
+                        
+                        <!-- Product Options -->
+                        <div class="product-options-section">
+                            <!-- Color Selection -->
+                            <div class="option-group-detail">
+                                <label class="option-label-detail">Color: <span class="selected-value" id="selectedColor">Charcoal</span></label>
+                                <div class="color-swatches">
+                                    <button class="color-swatch-btn active" data-color="Charcoal" style="background-color: #36454F;"></button>
+                                    <button class="color-swatch-btn" data-color="Beige" style="background-color: #F5F5DC;"></button>
+                                    <button class="color-swatch-btn" data-color="Navy" style="background-color: #000080;"></button>
+                                    <button class="color-swatch-btn" data-color="Emerald" style="background-color: #50C878;"></button>
+                                </div>
+                            </div>
+                            
+                            <!-- Size Selection -->
+                            <div class="option-group-detail">
+                                <label class="option-label-detail">Size: <span class="selected-value" id="selectedSize">Standard</span></label>
+                                <div class="size-options">
+                                    <button class="size-btn" data-size="Compact">Compact</button>
+                                    <button class="size-btn active" data-size="Standard">Standard</button>
+                                    <button class="size-btn" data-size="Oversized">Oversized</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Quantity -->
+                            <div class="option-group-detail">
+                                <label class="option-label-detail">Quantity</label>
+                                <div class="quantity-selector-detail">
+                                    <button class="qty-btn-detail qty-minus" id="qtyMinus">-</button>
+                                    <input type="number" class="qty-input-detail" value="1" min="1" max="99" id="qtyInput">
+                                    <button class="qty-btn-detail qty-plus" id="qtyPlus">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add to Cart & Wishlist -->
+                        <div class="product-actions-detail">
+                            <button class="btn-add-cart-detail" id="addToCartDetail">
+                                <i data-feather="shopping-bag"></i>
+                                ADD TO CART
+                            </button>
+                            <button class="btn-wishlist-detail" id="addToWishlist">
+                                <i data-feather="heart"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Trust Badges -->
+                        <div class="trust-badges-detail">
+                            <div class="trust-badge-item">
+                                <i data-feather="truck"></i>
+                                <div class="trust-badge-text">
+                                    <strong>Free Delivery</strong>
+                                    <span>White Glove Service</span>
+                                </div>
+                            </div>
+                            <div class="trust-badge-item">
+                                <i data-feather="shield"></i>
+                                <div class="trust-badge-text">
+                                    <strong>2-Year Warranty</strong>
+                                    <span>Extended Protection</span>
+                                </div>
+                            </div>
+                            <div class="trust-badge-item">
+                                <i data-feather="award"></i>
+                                <div class="trust-badge-text">
+                                    <strong>100% Authentic</strong>
+                                    <span>Guaranteed Genuine</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Info -->
+                        <div class="product-meta-detail">
+                            <div class="meta-item">
+                                <span class="meta-label">SKU:</span>
+                                <span class="meta-value">DG-ARM-001</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Category:</span>
+                                <span class="meta-value"><a href="category.html">Living Room</a>, <a href="#">Seating</a></span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Tags:</span>
+                                <span class="meta-value">Armchair, Velvet, Luxury, D&G</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Share -->
+                        <div class="product-share">
+                            <span class="share-label">SHARE:</span>
+                            <a href="#" class="share-link"><i data-feather="facebook"></i></a>
+                            <a href="#" class="share-link"><i data-feather="twitter"></i></a>
+                            <a href="#" class="share-link"><i data-feather="instagram"></i></a>
+                            <a href="#" class="share-link"><i data-feather="mail"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Tabs (Description, Specifications, Reviews) -->
+    <section class="product-tabs-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row g-4">
+                <!-- Left: Vertical Tabs + Content -->
+                <div class="col-lg-8">
+                    <div class="product-tabs-vertical">
+                        <div class="tabs-nav-vertical">
+                            <button class="tab-btn-vertical active" data-tab="description">DESCRIPTION</button>
+                            <button class="tab-btn-vertical" data-tab="specifications">SPECIFICATIONS</button>
+                            <button class="tab-btn-vertical" data-tab="reviews">REVIEWS (48)</button>
+                        </div>
+                        
+                        <div class="tabs-content-vertical">
+                    <!-- Description Tab -->
+                    <div class="tab-pane active" id="description">
+                        <div class="row g-5">
+                            <div class="col-lg-8">
+                                <h3 class="tab-heading">Product Description</h3>
+                                <p>The Luxor Velvet Armchair represents the perfect marriage of contemporary design and timeless elegance. Meticulously crafted by master artisans, this statement piece features premium Italian velvet upholstery that exudes sophistication and comfort.</p>
+                                
+                                <p>Each armchair is hand-built using traditional techniques combined with modern innovation. The solid oak frame ensures durability and stability, while the ergonomic design provides exceptional comfort for extended periods of relaxation.</p>
+                                
+                                <h4 class="sub-heading">Key Features:</h4>
+                                <ul class="features-list">
+                                    <li>Premium Italian velvet upholstery in multiple colorways</li>
+                                    <li>Solid oak frame with reinforced joinery</li>
+                                    <li>High-density foam cushioning for superior comfort</li>
+                                    <li>Hand-finished brass accent details</li>
+                                    <li>Weight capacity: 300 lbs</li>
+                                    <li>Designed in Italy, crafted with precision</li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="info-box">
+                                    <h4 class="info-box-title">Care Instructions</h4>
+                                    <ul class="info-list">
+                                        <li>Vacuum regularly with soft brush</li>
+                                        <li>Professional cleaning recommended</li>
+                                        <li>Avoid direct sunlight</li>
+                                        <li>Rotate cushions periodically</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Specifications Tab -->
+                    <div class="tab-pane" id="specifications">
+                        <div class="specifications-grid">
+                            <div class="spec-row">
+                                <div class="spec-label">Dimensions (W x D x H)</div>
+                                <div class="spec-value">32" x 35" x 38"</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Seat Height</div>
+                                <div class="spec-value">18 inches</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Seat Depth</div>
+                                <div class="spec-value">22 inches</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Material</div>
+                                <div class="spec-value">Italian Velvet, Solid Oak</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Weight</div>
+                                <div class="spec-value">65 lbs</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Weight Capacity</div>
+                                <div class="spec-value">300 lbs</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Assembly Required</div>
+                                <div class="spec-value">Minimal (legs only)</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Made In</div>
+                                <div class="spec-value">Italy</div>
+                            </div>
+                            <div class="spec-row">
+                                <div class="spec-label">Warranty</div>
+                                <div class="spec-value">2 Years Manufacturer</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Tab -->
+                    <div class="tab-pane" id="reviews">
+                        <div class="reviews-summary">
+                            <div class="rating-overview">
+                                <div class="average-rating">4.5</div>
+                                <div class="rating-details">
+                                    <div class="stars-large">
+                                        <i data-feather="star" class="star-filled"></i>
+                                        <i data-feather="star" class="star-filled"></i>
+                                        <i data-feather="star" class="star-filled"></i>
+                                        <i data-feather="star" class="star-filled"></i>
+                                        <i data-feather="star" class="star-half"></i>
+                                    </div>
+                                    <p class="rating-count">Based on 48 reviews</p>
+                                </div>
+                            </div>
+                            
+                            <button class="btn-write-review">
+                                <i data-feather="edit-3"></i>
+                                WRITE A REVIEW
+                            </button>
+                        </div>
+                        
+                        <!-- Individual Reviews -->
+                        <div class="reviews-list">
+                            <!-- Review 1 -->
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <strong class="reviewer-name">Sarah M.</strong>
+                                        <div class="review-stars">
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                        </div>
+                                    </div>
+                                    <span class="review-date">2 weeks ago</span>
+                                </div>
+                                <h4 class="review-title">Absolutely Stunning!</h4>
+                                <p class="review-text">This armchair exceeded all my expectations. The velvet is incredibly soft and the construction is solid. It's the centerpiece of my living room now.</p>
+                            </div>
+                            
+                            <!-- Review 2 -->
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <strong class="reviewer-name">James K.</strong>
+                                        <div class="review-stars">
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star"></i>
+                                        </div>
+                                    </div>
+                                    <span class="review-date">1 month ago</span>
+                                </div>
+                                <h4 class="review-title">Great Quality</h4>
+                                <p class="review-text">Excellent craftsmanship and very comfortable. Delivery was smooth and professional. Only 4 stars because it took longer to arrive than expected.</p>
+                            </div>
+                            
+                            <!-- Review 3 -->
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <strong class="reviewer-name">Emily R.</strong>
+                                        <div class="review-stars">
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                            <i data-feather="star" class="star-filled"></i>
+                                        </div>
+                                    </div>
+                                    <span class="review-date">2 months ago</span>
+                                </div>
+                                <h4 class="review-title">Perfect Addition</h4>
+                                <p class="review-text">The perfect blend of style and comfort. The charcoal color is rich and elegant. Highly recommend for anyone looking for luxury furniture.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-5">
+                            <button class="btn-load-more-reviews">LOAD MORE REVIEWS</button>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Decorative Image -->
+                <div class="col-lg-4">
+                    <div class="tabs-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=1000&fit=crop&q=80" alt="Luxury Furniture" class="tabs-decorative-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">You May Also Like</h2>
+                <p class="section-subtitle">Curated selections to complement your choice</p>
+            </div>
+            
+            <div class="position-relative">
+                <div class="carousel-nav carousel-prev" onclick="scrollRelatedProducts(-1)">‹</div>
+                <div class="carousel-nav carousel-next" onclick="scrollRelatedProducts(1)">›</div>
+                
+                <div class="products-carousel" id="relatedProductsCarousel">
+                    <!-- Related Product 1 -->
+                    <div class="product-card" 
+                         data-brand="Vido"
+                         data-name="Marble Console Table"
+                         data-price="$5,200"
+                         data-image="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=800&h=1000&fit=crop&q=80"
+                         data-badge=""
+                         data-description="Stunning console table featuring premium Italian marble and brushed brass accents.">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=800&h=1000&fit=crop&q=80" alt="Marble Console Table" class="product-image">
+                            <div class="product-quick-view">QUICK VIEW</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand mb-2">Vido</div>
+                            <div class="product-details-row">
+                                <button class="product-add-to-cart">
+                                    <i data-feather="shopping-bag"></i>
+                                    <span>ADD TO CART</span>
+                                </button>
+                                <div>
+                                    <h3 class="product-name mb-2">Marble Console Table</h3>
+                                    <div class="product-price">$5,200</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Product 2 -->
+                    <div class="product-card" 
+                         data-brand="Voluspa"
+                         data-name="Oak Coffee Table"
+                         data-price="$3,800"
+                         data-image="https://images.unsplash.com/photo-1551298370-9d3d53740c72?w=800&h=1000&fit=crop&q=80"
+                         data-badge=""
+                         data-description="Handcrafted solid oak coffee table with natural wood grain.">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1551298370-9d3d53740c72?w=800&h=1000&fit=crop&q=80" alt="Oak Coffee Table" class="product-image">
+                            <div class="product-quick-view">QUICK VIEW</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand mb-2">Voluspa</div>
+                            <div class="product-details-row">
+                                <button class="product-add-to-cart">
+                                    <i data-feather="shopping-bag"></i>
+                                    <span>ADD TO CART</span>
+                                </button>
+                                <div>
+                                    <h3 class="product-name mb-2">Oak Coffee Table</h3>
+                                    <div class="product-price">$3,800</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Product 3 -->
+                    <div class="product-card" 
+                         data-brand="Bitossi"
+                         data-name="Brass Floor Lamp"
+                         data-price="$1,895"
+                         data-image="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&h=1000&fit=crop&q=80"
+                         data-badge=""
+                         data-description="Elegant brass floor lamp with adjustable arm and refined detailing.">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&h=1000&fit=crop&q=80" alt="Brass Floor Lamp" class="product-image">
+                            <div class="product-quick-view">QUICK VIEW</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand mb-2">Bitossi</div>
+                            <div class="product-details-row">
+                                <button class="product-add-to-cart">
+                                    <i data-feather="shopping-bag"></i>
+                                    <span>ADD TO CART</span>
+                                </button>
+                                <div>
+                                    <h3 class="product-name mb-2">Brass Floor Lamp</h3>
+                                    <div class="product-price">$1,895</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Product 4 -->
+                    <div class="product-card" 
+                         data-brand="Taschen"
+                         data-name="Marble Side Table"
+                         data-price="$1,650"
+                         data-image="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800&h=1000&fit=crop&q=80"
+                         data-badge=""
+                         data-description="Refined side table featuring premium marble top and brushed brass base.">
+                        <div class="product-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800&h=1000&fit=crop&q=80" alt="Side Table" class="product-image">
+                            <div class="product-quick-view">QUICK VIEW</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand mb-2">Taschen</div>
+                            <div class="product-details-row">
+                                <button class="product-add-to-cart">
+                                    <i data-feather="shopping-bag"></i>
+                                    <span>ADD TO CART</span>
+                                </button>
+                                <div>
+                                    <h3 class="product-name mb-2">Marble Side Table</h3>
+                                    <div class="product-price">$1,650</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as Homepage) -->
+    <footer class="py-5" style="padding-top: 80px !important; padding-bottom: 30px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <!-- Main Footer Content -->
+            <div class="row g-4 g-lg-5 mb-5">
+                <!-- About Maison de Pierre -->
+                <div class="col-12 col-lg-3 footer-section text-center">
+                    <div class="footer-logo mb-4">
+                        <img src="images/maison-logo.png" alt="Maison de Pierre" class="mx-auto" style="height: 70px;">
+            </div>
+                    <p class="footer-description">
+                        Curating the finest luxury furniture and home décor from the world's most prestigious brands.
+                    </p>
+                    <div class="footer-social mt-4 justify-content-center">
+                        <a href="https://www.instagram.com/maison.de.pierre/" target="_blank" class="social-icon">
+                            <i data-feather="instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i data-feather="facebook"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Shop -->
+                <div class="col-6 col-md-3 col-lg-2 footer-section">
+                    <h3 class="mb-4">Shop</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">New Arrivals</a></li>
+                        <li class="mb-2"><a href="#">Best Sellers</a></li>
+                        <li class="mb-2"><a href="#">Furniture</a></li>
+                        <li class="mb-2"><a href="#">Lighting</a></li>
+                        <li class="mb-2"><a href="#">Decor</a></li>
+                        <li class="mb-2"><a href="#">Sale</a></li>
+                </ul>
+            </div>
+
+                <!-- Customer Care -->
+                <div class="col-6 col-md-3 col-lg-2 footer-section">
+                    <h3 class="mb-4">Customer Care</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Contact Us</a></li>
+                        <li class="mb-2"><a href="#">Shipping Info</a></li>
+                        <li class="mb-2"><a href="#">Returns & Exchanges</a></li>
+                        <li class="mb-2"><a href="#">Track Order</a></li>
+                        <li class="mb-2"><a href="#">FAQs</a></li>
+                        <li class="mb-2"><a href="#">Size Guide</a></li>
+                </ul>
+            </div>
+
+                <!-- Company -->
+                <div class="col-6 col-md-3 col-lg-2 footer-section">
+                    <h3 class="mb-4">Company</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">About Us</a></li>
+                        <li class="mb-2"><a href="#">Our Brands</a></li>
+                        <li class="mb-2"><a href="#">Showrooms</a></li>
+                        <li class="mb-2"><a href="#">Careers</a></li>
+                        <li class="mb-2"><a href="#">Press</a></li>
+                        <li class="mb-2"><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+
+                <!-- Newsletter -->
+                <div class="col-12 col-lg-3 footer-section">
+                    <h3 class="mb-4">Stay Connected</h3>
+                    <p class="footer-newsletter-text mb-3">
+                        Subscribe to receive exclusive offers and latest news.
+                    </p>
+                    <form class="footer-newsletter-form">
+                        <input type="email" class="form-control mb-2" placeholder="Your email address">
+                        <button type="submit" class="footer-subscribe-btn">SUBSCRIBE</button>
+                    </form>
+                    <div class="footer-payment-methods mt-4">
+                        <p class="small mb-2" style="font-size: 10px; letter-spacing: 1px;">WE ACCEPT</p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="payment-icon">💳 VISA</span>
+                            <span class="payment-icon">💳 MC</span>
+                            <span class="payment-icon">💳 AMEX</span>
+        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom pt-4 border-top">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="footer-copyright mb-0">
+            © 2025 MAISON DE PIERRE. ALL RIGHTS RESERVED.
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 text-center text-md-end">
+                        <p class="footer-developer mb-0">
+                            <a href="https://josequal.net" target="_blank" class="developer-link">
+                                Developed by <span class="developer-name">JoSequal</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <div class="footer-links">
+                            <a href="#">Privacy Policy</a>
+                            <span class="mx-2">|</span>
+                            <a href="#">Terms & Conditions</a>
+                            <span class="mx-2">|</span>
+                            <a href="#">Cookie Policy</a>
+                            <span class="mx-2">|</span>
+                            <a href="#">Accessibility</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Zoom Modal -->
+    <div class="zoom-modal" id="zoomModal">
+        <button class="zoom-close" id="zoomClose">
+            <i data-feather="x"></i>
+        </button>
+        <img src="" alt="" id="zoomImage" class="zoom-image">
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/product-detail.js"></script>
+
+</body>
+</html>
+

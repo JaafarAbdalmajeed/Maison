@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Maison de Pierre</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/about.css">
+
+    <!-- Additional Required CSS -->
+    <link rel="stylesheet" href="app/design/frontend/Maison/default/web/css/components/nav-links-enhanced.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-animation">
+            <div class="loading-logo">
+                <img src="images/maison-logo.png" alt="Maison de Pierre">
+            </div>
+            <div class="loading-text">Loading Excellence</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Same Header as Homepage -->
+    <header id="mainHeader">
+        <div class="header-default">
+            <div class="container-fluid px-4 px-lg-5">
+                <div class="row align-items-center mb-3">
+                <div class="col-4 col-lg-3">
+                    <div class="d-flex gap-3 align-items-center">
+                        <button class="burger-menu d-lg-none" id="burgerMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a href="#" class="icon-link-custom" id="searchBtn">
+                        <i data-feather="search"></i>
+                            <span class="d-none d-lg-inline">SEARCH</span>
+                    </a>
+                </div>
+                </div>
+                    <div class="col-4 col-lg-6 text-center logo-top">
+                        <img src="images/maison-logo.png" alt="Maison de Pierre" class="img-fluid">
+                </div>
+                    <div class="col-4 col-lg-3">
+                        <div class="d-flex gap-3 justify-content-end align-items-center">
+                            <a href="#" class="icon-link-custom language-toggle d-none d-lg-flex" id="langSwitcher">
+                                <i data-feather="globe"></i>
+                                <span class="d-none d-lg-inline current-lang">EN</span>
+                            </a>
+                            <a href="login.html" class="icon-link-custom">
+                        <i data-feather="user"></i>
+                                <span class="d-none d-lg-inline">LOGIN</span>
+                    </a>
+                            <a href="checkout.html" class="icon-link-custom" id="cartBtn">
+                        <i data-feather="shopping-bag"></i>
+                                <span class="d-none d-lg-inline">CART</span>
+                                <span class="cart-count">2</span>
+                    </a>
+                        </div>
+                </div>
+            </div>
+            
+                <nav class="border-top pt-3 d-none d-lg-block">
+                    <ul class="nav justify-content-center gap-3 gap-lg-4">
+                        <li class="nav-item"><a href="index.html" class="nav-link-custom">HOME</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link-custom">NEW ARRIVALS</a></li>
+                        <li class="nav-item"><a href="category.html" class="nav-link-custom">PRODUCTS</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link-custom">BRANDS</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link-custom">COLLECTIONS</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link-custom">SALE</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-scrolled">
+            <div class="container-fluid px-4 px-lg-5">
+                <div class="d-flex align-items-center justify-content-between position-relative">
+                    <a href="#" class="scrolled-icon" id="searchBtnScrolled">
+                        <i data-feather="search"></i>
+                    </a>
+                    <nav>
+                        <ul class="nav gap-4 align-items-center justify-content-center flex-nowrap">
+                            <li class="nav-item"><a href="index.html" class="nav-link-custom">HOME</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link-custom">NEW ARRIVALS</a></li>
+                            <li class="nav-item submenu-dropdown"><a href="category.html" class="nav-link-custom">PRODUCTS</a></li>
+                            <li class="nav-item logo-center">
+                                <img src="images/maison-logo.png" alt="Maison de Pierre">
+                            </li>
+                            <li class="nav-item submenu-dropdown"><a href="#" class="nav-link-custom">BRANDS</a></li>
+                            <li class="nav-item submenu-dropdown"><a href="#" class="nav-link-custom">COLLECTIONS</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link-custom">SALE</a></li>
+                        </ul>
+                    </nav>
+                    <div class="d-flex gap-3 align-items-center">
+                        <a href="#" class="scrolled-icon language-toggle" id="langSwitcherScrolled">
+                            <i data-feather="globe"></i>
+                            <span class="current-lang">EN</span>
+                        </a>
+                        <a href="login.html" class="scrolled-icon">
+                            <i data-feather="user"></i>
+                        </a>
+                        <a href="checkout.html" class="scrolled-icon">
+                            <i data-feather="shopping-bag"></i>
+                            <span class="cart-count">2</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+        <div class="mobile-nav-panel">
+            <div class="mobile-nav-header">
+                <img src="images/maison-logo.png" alt="Maison de Pierre" style="height: 40px;">
+                <button class="mobile-nav-close" id="mobileNavClose">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="mobile-nav-content">
+                <ul class="mobile-nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="#">NEW ARRIVALS</a></li>
+                    <li><a href="category.html">PRODUCTS</a></li>
+                    <li><a href="#">BRANDS</a></li>
+                    <li><a href="#">COLLECTIONS</a></li>
+                    <li><a href="#">SALE</a></li>
+                </ul>
+            </div>
+            <div class="mobile-nav-footer">
+                <a href="#" class="mobile-lang-switch" id="mobileLangSwitch">
+                    <i data-feather="globe"></i>
+                    <span class="mobile-current-lang">EN</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchClose">
+                <i data-feather="x"></i>
+            </button>
+            <div class="search-content">
+                <h2 class="search-title">What are you looking for?</h2>
+                <form class="search-form" id="searchForm">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search for products, brands, categories..." autocomplete="off">
+                    <button type="button" class="search-clear" id="searchClear">
+                        <i data-feather="x"></i>
+                    </button>
+                </form>
+                <div class="search-suggestions">
+                    <h3 class="suggestions-title">Popular Searches</h3>
+                    <div class="suggestions-tags">
+                        <a href="#" class="suggestion-tag">Velvet Armchair</a>
+                        <a href="#" class="suggestion-tag">Table Lamp</a>
+                        <a href="#" class="suggestion-tag">Dining Table</a>
+                        <a href="#" class="suggestion-tag">Luxury Sofa</a>
+                    </div>
+                </div>
+                <div class="search-results" id="searchResults" style="display: none;">
+                    <h3 class="results-title">Search Results</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-image">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&h=600&fit=crop&q=80" alt="Maison de Pierre Showroom">
+            <div class="about-hero-overlay">
+                <div class="container-fluid px-4 px-lg-5">
+                    <h1 class="about-hero-title">Our Story</h1>
+                    <p class="about-hero-subtitle">Curating luxury for discerning tastes since 2010</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content-section">
+        <div class="container-fluid px-4 px-lg-5">
+            
+            <!-- Our Story -->
+            <div class="about-story">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1560185127-6a8e5d2a4b0c?w=800&h=900&fit=crop&q=80" alt="Luxury Showroom" class="about-image">
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="about-section-title">Who We Are</h2>
+                        <p class="about-text">Maison de Pierre was founded with a singular vision: to bring the world's most prestigious luxury furniture and home décor brands to discerning customers who appreciate exceptional craftsmanship and timeless design.</p>
+                        <p class="about-text">For over a decade, we have curated an exclusive collection of pieces from renowned brands including FRATO, Vido, Bitossi, Baci Milano, Voluspa, and Taschen. Each item in our collection is carefully selected for its quality, design excellence, and ability to transform living spaces into works of art.</p>
+                        <p class="about-text">Our commitment extends beyond simply selling furniture. We provide a comprehensive luxury experience, offering personalized design consultation, white glove delivery service, and ongoing support to ensure complete satisfaction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Our Values -->
+            <div class="about-values">
+                <h2 class="about-section-title text-center mb-5">Our Values</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i data-feather="award"></i>
+                            </div>
+                            <h3 class="value-title">Excellence</h3>
+                            <p class="value-text">We partner only with brands that meet our exacting standards for quality, craftsmanship, and design innovation.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i data-feather="shield"></i>
+                            </div>
+                            <h3 class="value-title">Authenticity</h3>
+                            <p class="value-text">Every piece we offer is 100% authentic, sourced directly from authorized manufacturers and distributors.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i data-feather="heart"></i>
+                            </div>
+                            <h3 class="value-title">Service</h3>
+                            <p class="value-text">Our dedicated team provides personalized attention to ensure your complete satisfaction from selection to delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Us -->
+            <div class="about-why">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 order-lg-2">
+                        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=900&fit=crop&q=80" alt="Luxury Interior" class="about-image">
+                    </div>
+                    <div class="col-lg-6 order-lg-1">
+                        <h2 class="about-section-title">Why Choose Maison de Pierre</h2>
+                        <div class="about-features">
+                            <div class="about-feature-item">
+                                <i data-feather="check-circle"></i>
+                                <div>
+                                    <h4>Curated Selection</h4>
+                                    <p>Access to exclusive pieces from the world's finest luxury brands</p>
+                                </div>
+                            </div>
+                            <div class="about-feature-item">
+                                <i data-feather="check-circle"></i>
+                                <div>
+                                    <h4>Expert Consultation</h4>
+                                    <p>Complimentary design advice from our experienced team</p>
+                                </div>
+                            </div>
+                            <div class="about-feature-item">
+                                <i data-feather="check-circle"></i>
+                                <div>
+                                    <h4>White Glove Service</h4>
+                                    <p>Professional delivery, assembly, and placement in your home</p>
+                                </div>
+                            </div>
+                            <div class="about-feature-item">
+                                <i data-feather="check-circle"></i>
+                                <div>
+                                    <h4>Quality Guarantee</h4>
+                                    <p>Manufacturer warranties and our commitment to your satisfaction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="about-team">
+                <h2 class="about-section-title text-center mb-5">Meet Our Team</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="team-card">
+                            <div class="team-image">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&q=80" alt="Team Member">
+                            </div>
+                            <h4 class="team-name">Michael Anderson</h4>
+                            <div class="team-role">Founder & CEO</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="team-card">
+                            <div class="team-image">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop&q=80" alt="Team Member">
+                            </div>
+                            <h4 class="team-name">Sarah Mitchell</h4>
+                            <div class="team-role">Design Director</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="team-card">
+                            <div class="team-image">
+                                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop&q=80" alt="Team Member">
+                            </div>
+                            <h4 class="team-name">David Chen</h4>
+                            <div class="team-role">Customer Experience Manager</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer (Same as Homepage) -->
+    <footer class="py-5" style="padding-top: 80px !important; padding-bottom: 30px !important;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row g-4 g-lg-5 mb-5">
+                <div class="col-12 col-lg-3 footer-section text-center">
+                    <div class="footer-logo mb-4">
+                        <img src="images/maison-logo.png" alt="Maison de Pierre" class="mx-auto" style="height: 70px;">
+            </div>
+                    <p class="footer-description">
+                        Curating the finest luxury furniture and home décor from the world's most prestigious brands.
+                    </p>
+                    <div class="footer-social mt-4 justify-content-center">
+                        <a href="https://www.instagram.com/maison.de.pierre/" target="_blank" class="social-icon">
+                            <i data-feather="instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i data-feather="facebook"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 footer-section">
+                    <h3 class="mb-4">Shop</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">New Arrivals</a></li>
+                        <li class="mb-2"><a href="#">Best Sellers</a></li>
+                        <li class="mb-2"><a href="#">Furniture</a></li>
+                        <li class="mb-2"><a href="#">Lighting</a></li>
+                        <li class="mb-2"><a href="#">Decor</a></li>
+                        <li class="mb-2"><a href="#">Sale</a></li>
+                </ul>
+            </div>
+                <div class="col-6 col-md-3 col-lg-2 footer-section">
+                    <h3 class="mb-4">Customer Care</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="contact.html">Contact Us</a></li>
+                        <li class="mb-2"><a href="#">Shipping Info</a></li>
+                        <li class="mb-2"><a href="#">Returns & Exchanges</a></li>
+                        <li class="mb-2"><a href="#">Track Order</a></li>
+                        <li class="mb-2"><a href="#">FAQs</a></li>
+                        <li class="mb-2"><a href="#">Size Guide</a></li>
+                </ul>
+            </div>
+                <div class="col-6 col-md-3 col-lg-2 footer-section">
+                    <h3 class="mb-4">Company</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="about.html">About Us</a></li>
+                        <li class="mb-2"><a href="#">Our Brands</a></li>
+                        <li class="mb-2"><a href="#">Showrooms</a></li>
+                        <li class="mb-2"><a href="#">Careers</a></li>
+                        <li class="mb-2"><a href="#">Press</a></li>
+                        <li class="mb-2"><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+                <div class="col-12 col-lg-3 footer-section">
+                    <h3 class="mb-4">Stay Connected</h3>
+                    <p class="footer-newsletter-text mb-3">
+                        Subscribe to receive exclusive offers and latest news.
+                    </p>
+                    <form class="footer-newsletter-form">
+                        <input type="email" class="form-control mb-2" placeholder="Your email address">
+                        <button type="submit" class="footer-subscribe-btn">SUBSCRIBE</button>
+                    </form>
+                    <div class="footer-payment-methods mt-4">
+                        <p class="small mb-2" style="font-size: 10px; letter-spacing: 1px;">WE ACCEPT</p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="payment-icon">💳 VISA</span>
+                            <span class="payment-icon">💳 MC</span>
+                            <span class="payment-icon">💳 AMEX</span>
+        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom pt-4 border-top">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="footer-copyright mb-0">
+            © 2025 MAISON DE PIERRE. ALL RIGHTS RESERVED.
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 text-center text-md-end">
+                        <p class="footer-developer mb-0">
+                            <a href="https://josequal.net" target="_blank" class="developer-link">
+                                Developed by <span class="developer-name">JoSequal</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <div class="footer-links">
+                            <a href="privacy.html">Privacy Policy</a>
+                            <span class="mx-2">|</span>
+                            <a href="terms.html">Terms & Conditions</a>
+                            <span class="mx-2">|</span>
+                            <a href="#">Cookie Policy</a>
+                            <span class="mx-2">|</span>
+                            <a href="#">Accessibility</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
+

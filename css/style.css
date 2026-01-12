@@ -1,0 +1,39 @@
+/* ==================== MAISON DE PIERRE - MAIN STYLESHEET ==================== */
+/* This file imports all necessary CSS files for the website */
+/* Author: JoSequal */
+
+/* ==================== CSS VARIABLES ==================== */
+@import url('../app/design/frontend/Maison/default/web/css/base/variables.css');
+
+/* ==================== BASE STYLES ==================== */
+@import url('../app/design/frontend/Maison/default/web/css/bootstrap.min.css');
+@import url('../app/design/frontend/Maison/default/web/css/base/reset.css');
+@import url('../app/design/frontend/Maison/default/web/css/base/typography.css');
+
+/* ==================== COMPONENTS ==================== */
+@import url('../app/design/frontend/Maison/default/web/css/components/header.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/footer.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/buttons.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/mobile-nav.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/search.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/loading.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/modals.css');
+@import url('../app/design/frontend/Maison/default/web/css/components/cart.css');
+
+/* ==================== PAGES ==================== */
+@import url('../app/design/frontend/Maison/default/web/css/pages/home.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/category.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/product.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/cart.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/checkout.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/account.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/brands.css');
+@import url('../app/design/frontend/Maison/default/web/css/pages/wishlist.css');
+
+/* ==================== RESPONSIVE ==================== */
+@import url('../app/design/frontend/Maison/default/web/css/main.css');
+
+/* ==================== FIXES ==================== */
+@import url('../app/design/frontend/Maison/default/web/css/magento-fixes.css');
+@import url('../app/design/frontend/Maison/default/web/css/header-transparent.css');
+@import url('../app/design/frontend/Maison/default/web/css/typography-fix.css');
