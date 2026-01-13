@@ -121,7 +121,9 @@
             <block class="Magento\Framework\View\Element\Template" 
                    name="product.detail.js" 
                    template="Magento_Catalog::product/view/js.phtml"/>
-            <script src="js/product-detail.js"/>
+            <block class="Magento\Framework\View\Element\Template" 
+                   name="product.detail.custom.js" 
+                   template="Magento_Catalog::product/view/product-detail-js.phtml"/>
         </referenceContainer>
     </body>
 </page>

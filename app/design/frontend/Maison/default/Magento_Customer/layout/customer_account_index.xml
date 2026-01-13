@@ -22,7 +22,7 @@
         
         <!-- Account JavaScript -->
         <referenceContainer name="before.body.end">
-            <script src="js/account.js"/>
+            <block class="Magento\Framework\View\Element\Template" name="account.custom.js" template="Magento_Customer::account-js.phtml"/>
         </referenceContainer>
     </body>
 </page>

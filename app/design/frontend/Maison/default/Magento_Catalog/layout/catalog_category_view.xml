@@ -141,7 +141,7 @@
             <!-- Initialize AJAX Filters -->
             <referenceContainer name="before.body.end">
                 <block class="Magento\Framework\View\Element\Template" name="ajax.filters.init" template="Magento_Catalog::category/ajax-filters-init.phtml"/>
-                <script src="js/category.js"/>
+                <block class="Magento\Framework\View\Element\Template" name="category.custom.js" template="Magento_Catalog::category/category-js.phtml"/>
             </referenceContainer>
             
             <!-- Quick View Modal -->

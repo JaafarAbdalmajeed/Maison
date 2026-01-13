@@ -27,7 +27,7 @@
         
         <!-- Checkout JavaScript -->
         <referenceContainer name="before.body.end">
-            <script src="js/checkout.js"/>
+            <block class="Magento\Framework\View\Element\Template" name="checkout.custom.js" template="Magento_Checkout::checkout-js.phtml"/>
         </referenceContainer>
     </body>
 </page>

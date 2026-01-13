@@ -61,7 +61,7 @@
             <block class="Magento\Framework\View\Element\Template" name="maison.feather.init" template="Magento_Theme::html/feather-init.phtml"/>
             
             <!-- Main JavaScript (Global) -->
-            <script src="js/main.js"/>
+            <block class="Magento\Framework\View\Element\Template" name="maison.main.js" template="Magento_Theme::html/main-js.phtml"/>
             
             <!-- Initialize theme using proper RequireJS -->
             <block class="Magento\Framework\View\Element\Template" name="maison.init" template="Magento_Theme::html/init.phtml"/>

@@ -22,7 +22,7 @@
         
         <!-- Auth JavaScript -->
         <referenceContainer name="before.body.end">
-            <script src="js/auth.js"/>
+            <block class="Magento\Framework\View\Element\Template" name="auth.custom.js" template="Magento_Customer::auth-js.phtml"/>
         </referenceContainer>
     </body>
 </page>

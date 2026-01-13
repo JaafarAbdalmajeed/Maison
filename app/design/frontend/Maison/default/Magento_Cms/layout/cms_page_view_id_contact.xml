@@ -21,7 +21,7 @@
         
         <!-- Contact JavaScript -->
         <referenceContainer name="before.body.end">
-            <script src="js/contact.js"/>
+            <block class="Magento\Framework\View\Element\Template" name="contact.custom.js" template="Magento_Cms::contact-js.phtml"/>
         </referenceContainer>
     </body>
 </page>
