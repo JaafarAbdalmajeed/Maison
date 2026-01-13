@@ -237,7 +237,7 @@ header.scrolled {
 }
 
 .header-default {
-    background-color: var(--white);
+    background-color: transparent;
     padding: 30px 0 20px;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -247,6 +247,7 @@ header.scrolled {
     padding: 20px 0;
     opacity: 0;
     transition: opacity 0.4s ease;
+    background-color: transparent;
 }
 
 .logo-top {
