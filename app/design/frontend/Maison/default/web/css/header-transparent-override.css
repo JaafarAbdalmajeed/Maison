@@ -1,0 +1,36 @@
+/* Header Transparency Override - Force transparent header */
+header#mainHeader,
+header,
+#mainHeader {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* When scrolled - add white background */
+header.scrolled,
+header#mainHeader.scrolled,
+#mainHeader.scrolled {
+    background: rgba(255, 255, 255, 0.98) !important;
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Remove any inherited backgrounds */
+.header-wrapper,
+.header-top-row,
+.header-nav {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Ensure nav items are visible */
+header .nav-link-custom,
+header .icon-link-custom {
+    color: #000 !important;
+}
+
+/* Remove border from nav */
+header .header-nav {
+    border-top: none !important;
+}
