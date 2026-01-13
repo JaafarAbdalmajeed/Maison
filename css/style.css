@@ -3,37 +3,38 @@
 /* Author: JoSequal */
 
 /* ==================== CSS VARIABLES ==================== */
-@import url('../app/design/frontend/Maison/default/web/css/base/variables.css');
+@import url('base/variables.css');
 
 /* ==================== BASE STYLES ==================== */
-@import url('../app/design/frontend/Maison/default/web/css/bootstrap.min.css');
-@import url('../app/design/frontend/Maison/default/web/css/base/reset.css');
-@import url('../app/design/frontend/Maison/default/web/css/base/typography.css');
+@import url('bootstrap.min.css');
+@import url('base/reset.css');
+@import url('base/typography.css');
 
 /* ==================== COMPONENTS ==================== */
-@import url('../app/design/frontend/Maison/default/web/css/components/header.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/footer.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/buttons.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/mobile-nav.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/search.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/loading.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/modals.css');
-@import url('../app/design/frontend/Maison/default/web/css/components/cart.css');
+@import url('components/header.css');
+@import url('components/footer.css');
+@import url('components/buttons.css');
+@import url('components/mobile-nav.css');
+@import url('components/search.css');
+@import url('components/loading.css');
+@import url('components/modals.css');
+@import url('components/cart.css');
+@import url('components/nav-links-enhanced.css');
 
 /* ==================== PAGES ==================== */
-@import url('../app/design/frontend/Maison/default/web/css/pages/home.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/category.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/product.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/cart.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/checkout.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/account.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/brands.css');
-@import url('../app/design/frontend/Maison/default/web/css/pages/wishlist.css');
+@import url('pages/home.css');
+@import url('pages/category.css');
+@import url('pages/product.css');
+@import url('pages/cart.css');
+@import url('pages/checkout.css');
+@import url('pages/account.css');
+@import url('pages/brands.css');
+@import url('pages/wishlist.css');
 
 /* ==================== RESPONSIVE ==================== */
-@import url('../app/design/frontend/Maison/default/web/css/main.css');
+@import url('main.css');
 
 /* ==================== FIXES ==================== */
-@import url('../app/design/frontend/Maison/default/web/css/magento-fixes.css');
-@import url('../app/design/frontend/Maison/default/web/css/header-transparent.css');
-@import url('../app/design/frontend/Maison/default/web/css/typography-fix.css');
+@import url('magento-fixes.css');
+@import url('header-transparent.css');
+@import url('typography-fix.css');

@@ -1,0 +1,258 @@
+/* ==================== MAGENTO WRAPPER FIXES ==================== */
+/* Fix Magento's default wrappers to match original template structure */
+
+/* Remove Magento default footer wrapper styles - page-footer wrapper */
+.page-footer {
+    display: contents !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.footer-container,
+.footer-container *,
+.footer.content,
+.footer.content * {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove all default Magento padding/margins/constraints */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+    z-index: 1;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+}
+
+.page-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header,
+.header-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.page-main {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+/* Fix product page content to start below header - Multiple selectors for maximum compatibility */
+/* IMPORTANT: This must come AFTER the general .page-main rule to override it */
+/* Using more specific selectors to ensure it overrides padding: 0 */
+/* Target exact DOM elements */
+main#maincontent.page-main,
+#maincontent.page-main,
+body.catalog-product-view .page-wrapper .page-main,
+body.catalog-product-view .page-main,
+.catalog-product-view .page-wrapper .page-main,
+.catalog-product-view .page-main,
+body.catalog-product-view #maincontent,
+.catalog-product-view #maincontent {
+    margin-top: 0 !important;
+    padding: 180px 0 0 0 !important; /* top right bottom left - override padding: 0 */
+}
+
+body.scrolled main#maincontent.page-main,
+body.scrolled #maincontent.page-main,
+body.scrolled.catalog-product-view .page-wrapper .page-main,
+body.scrolled.catalog-product-view .page-main,
+body.scrolled .catalog-product-view .page-wrapper .page-main,
+body.scrolled .catalog-product-view .page-main,
+body.scrolled.catalog-product-view #maincontent,
+body.scrolled .catalog-product-view #maincontent {
+    padding: 120px 0 0 0 !important; /* top right bottom left */
+}
+
+body.catalog-product-view .column.main,
+.catalog-product-view .column.main {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.columns {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+.column.main {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+.page-footer {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+/* Hide default Magento elements */
+.breadcrumbs {
+    display: none !important;
+}
+
+.page-title-wrapper {
+    display: none !important;
+}
+
+/* Header - minimal overrides only */
+header#mainHeader {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure page wrapper and main content are below header */
+.page-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure all page content stays below header */
+.page-main,
+main#maincontent,
+#maincontent,
+main.page-main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Force product page content below header */
+body.catalog-product-view .page-wrapper,
+.catalog-product-view .page-wrapper {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Ensure hero section is full viewport and breaks out of Magento wrappers */
+.hero-section {
+    margin-top: 0 !important;
+    height: 100vh !important;
+    min-height: 500px !important;
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    right: 50% !important;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
+    box-sizing: border-box !important;
+}
+
+/* All sections should be full width */
+section {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    right: 50% !important;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
+}
+
+/* Footer should be full width and match design structure */
+footer,
+footer-container,
+.footer-container,
+.footer.content {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    right: 50% !important;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Remove Magento default footer wrapper styles */
+.footer-container,
+.footer-container *,
+.footer.content,
+.footer.content * {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Reset any Magento default link styles */
+a {
+    text-decoration: none;
+}
+
+/* Reset Magento button styles */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Ensure container-fluid works correctly */
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Override any Magento heading styles */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+
