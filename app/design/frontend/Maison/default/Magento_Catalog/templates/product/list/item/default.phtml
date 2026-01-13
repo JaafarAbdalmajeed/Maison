@@ -120,65 +120,40 @@ $pos = $parentBlock ? $parentBlock->getPositioned() : null;
             <div class="product-brand"><?= $block->escapeHtml($brand) ?></div>
         <?php endif; ?>
         
-        <h3 class="product-name product-item-name">
-            <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" 
-               class="product-item-link"
-               title="<?= $block->escapeHtmlAttr($_product->getName()) ?>">
-                <?= /* @noEscape */ $_helper ? $_helper->productAttribute($_product, $_product->getName(), 'name') : $block->escapeHtml($_product->getName()) ?>
-            </a>
-        </h3>
-        
-        <div class="product-price price">
-            <?= /* @noEscape */ $parentBlock ? $parentBlock->getProductPrice($_product) : '' ?>
-        </div>
-        
         <div class="product-details-row">
             <?php if ($_product->isSaleable() && $parentBlock): ?>
                 <?php $postParams = $parentBlock->getAddToCartPostParams($_product); ?>
-                <form data-role="tocart-form"
-                      data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"
-                      action="<?= $block->escapeUrl($postParams['action']) ?>"
-                      data-mage-init='{"catalogAddToCart": {}}'
-                      method="post">
-                    <?php 
-                    $viewModel = $parentBlock->getData('viewModel');
-                    if ($viewModel) {
-                        $options = $viewModel->getOptionsData($_product);
-                        foreach ($options as $optionItem): ?>
-                            <input type="hidden"
-                                   name="<?= $block->escapeHtmlAttr($optionItem['name']) ?>"
-                                   value="<?= $block->escapeHtmlAttr($optionItem['value']) ?>">
-                        <?php endforeach;
-                    }
-                    ?>
-                    <input type="hidden"
-                           name="product"
-                           value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
-                    <input type="hidden"
-                           name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
-                           value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
-                    <?= $parentBlock->getBlockHtml('formkey') ?>
-                    <button type="submit"
-                            title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
-                            class="product-add-to-cart action tocart primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <path d="M16 10a4 4 0 0 1-8 0"></path>
-                        </svg>
-                        <span><?= $block->escapeHtml(__('ADD TO CART')) ?></span>
-                    </button>
-                </form>
+                <button type="button"
+                        class="product-add-to-cart"
+                        data-product-id="<?= (int)$_product->getId() ?>"
+                        data-product-name="<?= $block->escapeHtmlAttr($_product->getName()) ?>"
+                        data-product-url="<?= $block->escapeUrl($postParams['action']) ?>"
+                        data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>"
+                        data-form-key="<?= $block->escapeHtmlAttr($parentBlock->getBlockHtml('formkey')) ?>"
+                        data-post-params="<?= $block->escapeHtmlAttr(json_encode($postParams['data'])) ?>"
+                        title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>">
+                    <i data-feather="shopping-bag"></i>
+                    <span><?= $block->escapeHtml(__('ADD TO CART')) ?></span>
+                </button>
+                <div>
+                    <h3 class="product-name mb-2">
+                        <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>"
+                           title="<?= $block->escapeHtmlAttr($_product->getName()) ?>">
+                            <?= /* @noEscape */ $_helper ? $_helper->productAttribute($_product, $_product->getName(), 'name') : $block->escapeHtml($_product->getName()) ?>
+                        </a>
+                    </h3>
+                    <div class="product-price">
+                        <?= /* @noEscape */ $parentBlock ? $parentBlock->getProductPrice($_product) : '' ?>
+                    </div>
+                </div>
             <?php else: ?>
-                <?php if ($_product->isAvailable()): ?>
-                    <div class="stock available">
-                        <span><?= $block->escapeHtml(__('In stock')) ?></span>
-                    </div>
-                <?php else: ?>
-                    <div class="stock unavailable">
-                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
-                    </div>
-                <?php endif; ?>
+                <div class="product-unavailable">
+                    <?php if ($_product->isAvailable()): ?>
+                        <span class="stock available"><?= $block->escapeHtml(__('In stock')) ?></span>
+                    <?php else: ?>
+                        <span class="stock unavailable"><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
         </div>
     </div>

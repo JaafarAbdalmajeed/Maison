@@ -36,14 +36,13 @@
 
         <!-- Pages -->
         <css src="css/pages/home.css"/>
-        <css src="css/pages/category.css"/>
-        <css src="css/pages/product.css"/>
-        <css src="css/pages/product-detail.css"/>
+        <css src="css/pages/category-view.css"/>
+        <css src="css/pages/brands-view.css"/>
+        <css src="css/pages/product-view.css"/>
         <css src="css/pages/about.css"/>
         <css src="css/pages/cart.css"/>
         <css src="css/pages/checkout.css"/>
         <css src="css/pages/account.css"/>
-        <css src="css/pages/brands.css"/>
         <css src="css/pages/wishlist.css"/>
 
         <!-- Responsive -->

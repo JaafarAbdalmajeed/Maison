@@ -138,6 +138,11 @@
             <referenceContainer name="before.body.end">
                 <block class="Magento\Framework\View\Element\Template" name="ajax.filters.init" template="Magento_Catalog::category/ajax-filters-init.phtml"/>
             </referenceContainer>
+            
+            <!-- Quick View Modal -->
+            <referenceContainer name="before.body.end">
+                <block class="Magento\Framework\View\Element\Template" name="product.quick.view.modal" template="Magento_Catalog::product/quick-view-modal.phtml"/>
+            </referenceContainer>
     </body>
 </page>
 

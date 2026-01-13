@@ -235,6 +235,53 @@ define([
             });
         });
         
+        // Quick View Modal Handler
+        var $quickViewOverlay = $('#quickViewOverlay');
+        var $quickViewContent = $('#quickViewContent');
+        var $quickViewClose = $('#quickViewClose');
+        
+        // Open Quick View - Simplified: Just redirect to product page for now
+        // Full AJAX implementation can be added later if needed
+        $(document).on('click', '.product-quick-view', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            var $productCard = $(this).closest('.product-card, .product-item');
+            var productUrl = $productCard.find('.product-image-link, .product-item-link').first().attr('href');
+            
+            if (productUrl) {
+                // For now, just redirect to product page
+                // TODO: Implement full AJAX quick view modal in future
+                window.location.href = productUrl;
+            }
+        });
+        
+        // Close Quick View
+        function closeQuickView() {
+            $quickViewOverlay.removeClass('active');
+            $('body').css('overflow', '');
+        }
+        
+        if ($quickViewClose.length) {
+            $quickViewClose.on('click', closeQuickView);
+        }
+        
+        // Close on overlay click
+        if ($quickViewOverlay.length) {
+            $quickViewOverlay.on('click', function(e) {
+                if ($(e.target).is($quickViewOverlay)) {
+                    closeQuickView();
+                }
+            });
+        }
+        
+        // Close on Escape key
+        $(document).on('keydown', function(e) {
+            if ((e.key === 'Escape' || e.keyCode === 27) && $quickViewOverlay.hasClass('active')) {
+                closeQuickView();
+            }
+        });
+        
         console.log('✅ Maison Theme: All interactions initialized');
         console.log('✅ Maison Theme: Ready!');
     };
