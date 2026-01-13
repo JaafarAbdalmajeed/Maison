@@ -8,7 +8,12 @@ var config = {
             'filterSidebar': 'js/filter-sidebar',
             'ajaxFilters': 'js/ajax-filters',
             'productDetail': 'js/product-detail',
-            'cartCounter': 'js/cart-counter'
+            'cartCounter': 'js/cart-counter',
+            'categoryPage': 'js/category',
+            'checkoutPage': 'js/checkout',
+            'authPage': 'js/auth',
+            'contactPage': 'js/contact',
+            'accountPage': 'js/account'
         }
     },
     deps: [

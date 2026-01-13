@@ -60,6 +60,9 @@
             <!-- Initialize Feather Icons (direct, no RequireJS) -->
             <block class="Magento\Framework\View\Element\Template" name="maison.feather.init" template="Magento_Theme::html/feather-init.phtml"/>
             
+            <!-- Main JavaScript (Global) -->
+            <script src="js/main.js"/>
+            
             <!-- Initialize theme using proper RequireJS -->
             <block class="Magento\Framework\View\Element\Template" name="maison.init" template="Magento_Theme::html/init.phtml"/>
         </referenceContainer>

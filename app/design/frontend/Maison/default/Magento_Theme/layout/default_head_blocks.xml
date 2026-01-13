@@ -11,5 +11,26 @@
 
         <!-- Feather Icons -->
         <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" src_type="url"/>
+        
+        <!-- Bootstrap 5 CSS -->
+        <css src="css/bootstrap.min.css"/>
+        
+        <!-- Base Styles (Variables, Reset, Typography) -->
+        <css src="css/base/variables.css"/>
+        <css src="css/base/reset.css"/>
+        <css src="css/base/typography.css"/>
+        
+        <!-- Components (Global - Applied to all pages) -->
+        <css src="css/components/loading.css"/>
+        <css src="css/components/header.css"/>
+        <css src="css/components/mobile-nav.css"/>
+        <css src="css/components/buttons.css"/>
+        <css src="css/components/cart.css"/>
+        <css src="css/components/search.css"/>
+        <css src="css/components/modals.css"/>
+        <css src="css/components/footer.css"/>
+        
+        <!-- Main CSS (Global styles and responsive) -->
+        <css src="css/main.css"/>
     </head>
 </page>

@@ -1,0 +1,1405 @@
+/* ==================== ACCOUNT DASHBOARD STYLES ==================== */
+
+.account-section {
+    padding: 60px 0 120px;
+    background: var(--soft-beige);
+    min-height: calc(100vh - 200px);
+    margin-top: 180px;
+}
+
+/* Account Sidebar */
+.account-sidebar {
+    background: var(--white);
+    padding: 0;
+    position: sticky;
+    top: 30px;
+}
+
+.account-user-info {
+    padding: 35px 25px;
+    text-align: center;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--soft-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-avatar i {
+    width: 40px;
+    height: 40px;
+    stroke: var(--charcoal);
+}
+
+.user-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 5px;
+}
+
+.user-email {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+/* Account Navigation */
+.account-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 25px;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    position: relative;
+}
+
+.account-nav-item:hover {
+    background: var(--soft-beige);
+    color: var(--charcoal);
+}
+
+.account-nav-item.active {
+    background: var(--soft-beige);
+    color: var(--charcoal);
+    border-left-color: var(--primary-gold);
+}
+
+.account-nav-item i {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.account-nav-item.logout {
+    color: #e74c3c;
+    margin-top: 20px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.account-nav-item.logout:hover {
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.nav-badge {
+    margin-left: auto;
+    padding: 4px 10px;
+    background: var(--primary-gold);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 12px;
+}
+
+/* Account Content */
+.account-content {
+    display: none;
+}
+
+.account-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.account-title {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+}
+
+.account-subtitle {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* Stats Cards */
+.stat-card {
+    background: var(--white);
+    padding: 25px;
+    display: flex;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--soft-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-icon i {
+    width: 28px;
+    height: 28px;
+    stroke: var(--charcoal);
+}
+
+.stat-icon.gold {
+    background: rgba(194, 157, 89, 0.1);
+}
+
+.stat-icon.gold i {
+    stroke: var(--primary-gold);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    background: var(--white);
+    padding: 35px;
+    margin-bottom: 30px;
+}
+
+.section-header-dash {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header-dash h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin: 0;
+}
+
+.view-all-link {
+    font-size: 13px;
+    color: var(--primary-gold);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* Orders */
+.order-card-dash {
+    border: 1px solid #e8e8e8;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.order-header-dash {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.order-number {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--charcoal);
+}
+
+.order-date {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.order-status {
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 20px;
+}
+
+.order-status.delivered {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.order-status.processing {
+    background: rgba(243, 156, 18, 0.1);
+    color: #f39c12;
+}
+
+.order-status.pending {
+    background: rgba(149, 165, 166, 0.1);
+    color: #95a5a6;
+}
+
+.order-items-dash {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.order-items-dash img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.order-item-info-dash {
+    flex: 1;
+}
+
+.order-total {
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-top: 5px;
+}
+
+/* Orders Full List */
+.orders-list-full {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-card-full {
+    background: var(--white);
+    padding: 30px;
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.order-number-full {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+}
+
+.order-date-full {
+    font-size: 13px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.order-status-badge {
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 20px;
+}
+
+.order-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.order-item-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.order-item-row img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.order-item-details {
+    flex: 1;
+}
+
+.order-item-brand {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--primary-gold);
+    margin-bottom: 5px;
+}
+
+.order-item-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 5px;
+}
+
+.order-item-qty {
+    font-size: 13px;
+    color: #666;
+}
+
+.order-item-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+}
+
+.order-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.order-total-full {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-order-action {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--charcoal);
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-order-action:hover {
+    background: var(--charcoal);
+    color: var(--white);
+}
+
+/* Profile Form */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profile-section-box {
+    background: var(--white);
+    padding: 35px;
+}
+
+.profile-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 25px;
+}
+
+.form-control-profile {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    background: var(--white);
+    font-size: 14px;
+    color: var(--charcoal);
+    transition: all 0.3s ease;
+}
+
+.form-control-profile:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 3px rgba(194, 157, 89, 0.1);
+}
+
+.checkbox-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+}
+
+.btn-save-profile {
+    padding: 16px 40px;
+    background: var(--charcoal);
+    border: 1.5px solid var(--charcoal);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.btn-save-profile:hover {
+    background: var(--primary-gold);
+    border-color: var(--primary-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(194, 157, 89, 0.3);
+}
+
+/* Loyalty Program */
+.loyalty-overview-card {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    padding: 40px;
+    margin-bottom: 30px;
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loyalty-tier {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.tier-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(194, 157, 89, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tier-icon i {
+    width: 45px;
+    height: 45px;
+    stroke: var(--primary-gold);
+}
+
+.tier-name {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.tier-benefits {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.loyalty-points {
+    text-align: right;
+}
+
+.points-balance {
+    margin-bottom: 8px;
+}
+
+.points-value {
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--primary-gold);
+    line-height: 1;
+}
+
+.points-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 8px;
+}
+
+.points-value-cash {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Loyalty Progress */
+.loyalty-progress-card {
+    background: var(--white);
+    padding: 35px;
+    margin-bottom: 30px;
+}
+
+.loyalty-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+}
+
+.tier-progress {
+    margin-bottom: 15px;
+}
+
+.progress-bar-loyalty {
+    width: 100%;
+    height: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-fill-loyalty {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-gold), #d4af37);
+    transition: width 0.5s ease;
+}
+
+.progress-text-loyalty {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+}
+
+.progress-note {
+    font-size: 13px;
+    color: #999;
+    margin: 15px 0 0 0;
+}
+
+/* Tier Cards */
+.loyalty-tiers-grid {
+    background: var(--white);
+    padding: 35px;
+    margin-bottom: 30px;
+}
+
+.tier-card {
+    background: var(--white);
+    border: 2px solid #e8e8e8;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tier-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.tier-card.active {
+    border-color: var(--primary-gold);
+    background: rgba(194, 157, 89, 0.03);
+}
+
+.tier-card-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-gold);
+    color: var(--white);
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.tier-card-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tier-card-icon.silver {
+    background: rgba(192, 192, 192, 0.2);
+}
+
+.tier-card-icon.silver i {
+    stroke: #c0c0c0;
+    width: 35px;
+    height: 35px;
+}
+
+.tier-card-icon.gold {
+    background: rgba(194, 157, 89, 0.2);
+}
+
+.tier-card-icon.gold i {
+    stroke: var(--primary-gold);
+    width: 35px;
+    height: 35px;
+}
+
+.tier-card-icon.platinum {
+    background: rgba(229, 228, 226, 0.2);
+}
+
+.tier-card-icon.platinum i {
+    stroke: #e5e4e2;
+    width: 35px;
+    height: 35px;
+}
+
+.tier-card-name {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+}
+
+.tier-card-requirement {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.tier-card-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.tier-card-benefits li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.tier-card-benefits i {
+    width: 16px;
+    height: 16px;
+    stroke: var(--primary-gold);
+    flex-shrink: 0;
+}
+
+/* Points History */
+.loyalty-history-card {
+    background: var(--white);
+    padding: 35px;
+}
+
+.points-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.points-history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.points-history-item:last-child {
+    border-bottom: none;
+}
+
+.points-history-desc {
+    font-size: 14px;
+    color: var(--charcoal);
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.points-history-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.points-history-amount {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.points-history-amount.earned {
+    color: #2ecc71;
+}
+
+.points-history-amount.redeemed {
+    color: #e74c3c;
+}
+
+/* Gift Cards */
+.giftcard-balance-card {
+    background: linear-gradient(135deg, var(--primary-gold), #d4af37);
+    padding: 40px;
+    margin-bottom: 30px;
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.giftcard-balance-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.giftcard-balance-icon i {
+    width: 38px;
+    height: 38px;
+    stroke: var(--white);
+}
+
+.giftcard-balance-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.giftcard-balance-amount {
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.btn-check-balance {
+    padding: 12px 24px;
+    background: var(--white);
+    color: var(--primary-gold);
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-check-balance:hover {
+    background: var(--charcoal);
+    color: var(--white);
+}
+
+.giftcard-section-box {
+    background: var(--white);
+    padding: 35px;
+    margin-bottom: 30px;
+}
+
+.giftcard-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 15px;
+}
+
+.giftcard-section-desc {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.giftcard-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.giftcard-item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.giftcard-item-design {
+    aspect-ratio: 1.6;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.giftcard-item-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+.giftcard-item-bg.gold {
+    background: linear-gradient(135deg, var(--primary-gold), #d4af37);
+}
+
+.giftcard-item-content {
+    position: relative;
+    z-index: 1;
+    padding: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--white);
+}
+
+.giftcard-logo-mini {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    opacity: 0.9;
+}
+
+.giftcard-code {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.giftcard-balance-mini {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.giftcard-item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-giftcard-action {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-giftcard-action:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--white);
+}
+
+/* Purchase Gift Card Form */
+.giftcard-amount-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.giftcard-amount-option {
+    flex: 1;
+    min-width: 100px;
+}
+
+.giftcard-amount-option input {
+    display: none;
+}
+
+.giftcard-amount-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: var(--white);
+    border: 2px solid #e8e8e8;
+    color: var(--charcoal);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.giftcard-amount-option input:checked + .giftcard-amount-btn {
+    border-color: var(--primary-gold);
+    background: rgba(194, 157, 89, 0.05);
+    color: var(--primary-gold);
+}
+
+.giftcard-amount-option:hover .giftcard-amount-btn {
+    border-color: var(--primary-gold);
+}
+
+.btn-purchase-giftcard {
+    padding: 16px 40px;
+    background: var(--primary-gold);
+    border: 1.5px solid var(--primary-gold);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-purchase-giftcard:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-purchase-giftcard i {
+    width: 18px;
+    height: 18px;
+}
+
+/* Addresses */
+.addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.address-card {
+    background: var(--white);
+    padding: 30px;
+    border: 2px solid #e8e8e8;
+    transition: all 0.3s ease;
+}
+
+.address-card:hover {
+    border-color: var(--primary-gold);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.address-card.add-new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+}
+
+.address-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.address-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin: 0;
+}
+
+.address-badge {
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 12px;
+}
+
+.address-badge.default {
+    background: rgba(194, 157, 89, 0.1);
+    color: var(--primary-gold);
+}
+
+.address-card-content {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.address-card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-address-action {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-address-action:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--white);
+}
+
+.btn-add-address {
+    width: 100%;
+    padding: 20px;
+    background: transparent;
+    border: 2px dashed #ddd;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-add-address:hover {
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+}
+
+.btn-add-address i {
+    width: 30px;
+    height: 30px;
+}
+
+/* Payment Methods */
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.payment-card-item {
+    background: var(--white);
+    padding: 30px;
+    border: 2px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.payment-card-item:hover {
+    border-color: var(--primary-gold);
+}
+
+.payment-card-item.add-new {
+    justify-content: center;
+    min-height: 140px;
+}
+
+.payment-card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--soft-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.payment-card-icon i {
+    width: 24px;
+    height: 24px;
+    stroke: var(--charcoal);
+}
+
+.payment-card-info {
+    flex: 1;
+}
+
+.payment-card-type {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 5px;
+}
+
+.payment-card-expiry {
+    font-size: 13px;
+    color: #666;
+}
+
+.payment-card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-payment-action {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-payment-action:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--white);
+}
+
+.btn-add-payment {
+    padding: 15px;
+    background: transparent;
+    border: 2px dashed #ddd;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-add-payment:hover {
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+}
+
+.btn-add-payment i {
+    width: 24px;
+    height: 24px;
+}
+
+/* Wishlist */
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.wishlist-item {
+    background: var(--white);
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.wishlist-item:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.wishlist-remove {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: var(--white);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.wishlist-remove:hover {
+    background: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.wishlist-remove:hover i {
+    stroke: var(--white);
+}
+
+.wishlist-remove i {
+    width: 16px;
+    height: 16px;
+    stroke: #999;
+}
+
+.wishlist-item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.wishlist-brand {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--primary-gold);
+    margin-bottom: 8px;
+}
+
+.wishlist-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+}
+
+.wishlist-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 15px;
+}
+
+.btn-add-from-wishlist {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1.5px solid var(--charcoal);
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-add-from-wishlist:hover {
+    background: var(--charcoal);
+    color: var(--white);
+}
+
+.btn-add-from-wishlist i {
+    width: 16px;
+    height: 16px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .account-section {
+        padding: 40px 0 80px;
+        margin-top: 140px;
+    }
+
+    .account-sidebar {
+        position: relative;
+        top: 0;
+        margin-bottom: 30px;
+    }
+
+    .loyalty-overview-card,
+    .giftcard-balance-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+
+    .loyalty-points,
+    .giftcard-balance-info {
+        text-align: center;
+    }
+
+    .loyalty-tier {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .order-card-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .order-actions {
+        width: 100%;
+    }
+
+    .btn-order-action {
+        flex: 1;
+    }
+}
+
+@media (max-width: 767px) {
+    .account-section {
+        padding: 30px 0 60px;
+        margin-top: 70px;
+    }
+
+    .profile-section-box,
+    .dashboard-section,
+    .loyalty-progress-card,
+    .loyalty-tiers-grid,
+    .loyalty-history-card,
+    .giftcard-section-box {
+        padding: 25px;
+    }
+
+    .account-title {
+        font-size: 26px;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .wishlist-grid,
+    .addresses-grid,
+    .giftcard-list {
+        grid-template-columns: 1fr;
+    }
+
+    .order-item-row {
+        flex-direction: column;
+    }
+
+    .order-item-row img {
+        width: 100%;
+        height: 200px;
+    }
+}
+

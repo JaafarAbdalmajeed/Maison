@@ -1,0 +1,54 @@
+/* ==================== TYPOGRAPHY ==================== */
+/* Headings - Luxury Serif */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* Typography System */
+.section-title,
+.hero-title,
+.story-title,
+.category-overlay h3,
+.trust-heading {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    font-weight: 600;
+}
+
+.product-name,
+.brand-name,
+.brand-logo-text,
+.submenu-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.product-brand,
+.product-price {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.section-subtitle,
+.hero-subtitle,
+.trust-subtitle,
+.story-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+button,
+.btn,
+.hero-btn,
+.btn-hero,
+.btn-story,
+.category-link,
+.nav-link-custom,
+.submenu-list a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+

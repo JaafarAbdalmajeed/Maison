@@ -6,6 +6,10 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Auth CSS (for login page) -->
+        <css src="css/auth.css"/>
+    </head>
     <body>
         <attribute name="class" value="customer-account-login"/>
         
@@ -14,6 +18,11 @@
             <container name="login.container" htmlTag="div" htmlClass="login-container">
                 <!-- Login content will be rendered here by Magento -->
             </container>
+        </referenceContainer>
+        
+        <!-- Auth JavaScript -->
+        <referenceContainer name="before.body.end">
+            <script src="js/auth.js"/>
         </referenceContainer>
     </body>
 </page>

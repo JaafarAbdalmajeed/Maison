@@ -1,0 +1,10 @@
+/* ==================== GLOBAL RESETS & BASE STYLES ==================== */
+body {
+    font-family: 'Inter', 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--white);
+    overflow-x: hidden;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+

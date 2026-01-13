@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Customer Account Dashboard Layout
+ * Custom layout for account dashboard page with luxury design
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Account CSS (for account pages) -->
+        <css src="css/account.css"/>
+    </head>
+    <body>
+        <attribute name="class" value="customer-account-index"/>
+        
+        <!-- Account Dashboard Container -->
+        <referenceContainer name="content">
+            <container name="account.container" htmlTag="div" htmlClass="account">
+                <!-- Account content will be rendered here by Magento -->
+            </container>
+        </referenceContainer>
+        
+        <!-- Account JavaScript -->
+        <referenceContainer name="before.body.end">
+            <script src="js/account.js"/>
+        </referenceContainer>
+    </body>
+</page>

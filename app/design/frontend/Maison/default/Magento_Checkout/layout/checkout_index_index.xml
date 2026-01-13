@@ -8,6 +8,10 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       layout="1column"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Checkout CSS (ONLY for this page) -->
+        <css src="css/checkout.css"/>
+    </head>
     <body>
         <attribute name="class" value="checkout-index-index"/>
 
@@ -20,5 +24,10 @@
 
         <!-- Move checkout root into our container -->
         <move element="checkout.root" destination="checkout.container.inner" before="-"/>
+        
+        <!-- Checkout JavaScript -->
+        <referenceContainer name="before.body.end">
+            <script src="js/checkout.js"/>
+        </referenceContainer>
     </body>
 </page>

@@ -7,11 +7,8 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <!-- Bootstrap 5 CSS -->
-        <css src="css/bootstrap.min.css"/>
-        
-        <!-- Product View CSS (ONLY for this page) -->
-        <css src="css/pages/product-view.css"/>
+        <!-- Product Detail CSS (ONLY for this page) -->
+        <css src="css/product-detail.css"/>
     </head>
     
     <body>
@@ -124,6 +121,7 @@
             <block class="Magento\Framework\View\Element\Template" 
                    name="product.detail.js" 
                    template="Magento_Catalog::product/view/js.phtml"/>
+            <script src="js/product-detail.js"/>
         </referenceContainer>
     </body>
 </page>
