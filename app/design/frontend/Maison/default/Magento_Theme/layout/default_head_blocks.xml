@@ -29,8 +29,11 @@
         <css src="css/components/search.css"/>
         <css src="css/components/modals.css"/>
         <css src="css/components/footer.css"/>
-        
+
         <!-- Main CSS (Global styles and responsive) -->
         <css src="css/main.css"/>
+
+        <!-- Header Transparency Override - MUST load last to override everything -->
+        <css src="css/header-transparent-override.css"/>
     </head>
 </page>
