@@ -281,8 +281,8 @@
     /* Ensure main takes proper width */
     main.col-lg-9 {
         flex: 0 0 auto !important;
-        width: 75% !important;
-        max-width: 75% !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
     
     /* Ensure row uses flexbox properly */
