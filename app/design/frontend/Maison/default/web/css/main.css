@@ -13,6 +13,7 @@
 /* Reusable components - Load in logical order */
 @import 'components/loading.css';
 @import 'components/header.css';
+@import 'header-transparent-override.css';
 @import 'components/buttons.css';
 @import 'components/mobile-nav.css';
 @import 'components/cart.css';
