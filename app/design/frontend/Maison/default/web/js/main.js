@@ -419,11 +419,13 @@ if (searchOverlay) {
     });
 }
 
-// Handle search input
+// Handle search input with autocomplete
 if (searchInput) {
+    let searchTimeout;
+
     searchInput.addEventListener('input', function() {
         const value = this.value.trim();
-        
+
         // Show/hide clear button
         if (value.length > 0) {
             if (searchClear) searchClear.style.display = 'block';
@@ -432,17 +434,77 @@ if (searchInput) {
             if (searchResults) searchResults.style.display = 'none';
             if (searchSuggestions) searchSuggestions.style.display = 'block';
         }
-        
+
         // Show results when typing (minimum 2 characters)
         if (value.length >= 2) {
             if (searchSuggestions) searchSuggestions.style.display = 'none';
             if (searchResults) searchResults.style.display = 'block';
-            
-            // Here you would integrate with Magento search API
-            // Example: performSearch(value);
-            console.log('Searching for:', value);
+
+            // Clear previous timeout
+            clearTimeout(searchTimeout);
+
+            // Debounce search request
+            searchTimeout = setTimeout(function() {
+                performMagentoSearch(value);
+            }, 300);
         }
     });
+
+    // Add Enter key handler
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const value = this.value.trim();
+            if (value) {
+                searchForm.submit();
+            }
+        }
+    });
+}
+
+// Perform Magento search using AJAX
+function performMagentoSearch(query) {
+    // Use Magento's catalogsearch autocomplete
+    const searchUrl = '/catalogsearch/ajax/suggest/?q=' + encodeURIComponent(query);
+
+    fetch(searchUrl)
+        .then(response => response.json())
+        .then(data => {
+            displaySearchResults(data, query);
+        })
+        .catch(error => {
+            console.log('Search request:', query);
+            // Fallback - just log the search
+        });
+}
+
+// Display search results in the overlay
+function displaySearchResults(data, query) {
+    if (!searchResults) return;
+
+    // Clear previous results
+    searchResults.innerHTML = '';
+
+    if (data && data.length > 0) {
+        const resultsContainer = document.createElement('div');
+        resultsContainer.className = 'search-results-list';
+
+        data.forEach(item => {
+            const resultItem = document.createElement('a');
+            resultItem.href = item.url || '#';
+            resultItem.className = 'search-result-item';
+            resultItem.innerHTML = `
+                <div class="search-result-info">
+                    <span class="search-result-title">${item.title || item.name || ''}</span>
+                    ${item.price ? `<span class="search-result-price">${item.price}</span>` : ''}
+                </div>
+            `;
+            resultsContainer.appendChild(resultItem);
+        });
+
+        searchResults.appendChild(resultsContainer);
+    } else {
+        searchResults.innerHTML = '<p class="no-results">No results found for "' + query + '"</p>';
+    }
 }
 
 // Clear search
@@ -456,16 +518,19 @@ if (searchClear && searchInput) {
     });
 }
 
-// Prevent form submission (will be handled by AJAX in Magento)
+// Handle form submission - redirect to search results
 const searchForm = document.getElementById('searchForm');
 if (searchForm && searchInput) {
     searchForm.addEventListener('submit', function(e) {
-        e.preventDefault();
         const query = searchInput.value.trim();
         if (query) {
-            // In Magento, redirect to search results or handle with AJAX
+            // Allow form to submit normally - it will redirect to catalogsearch/result
+            // The form action is already set in the template
             console.log('Search submitted:', query);
-            // window.location.href = BASE_URL + 'catalogsearch/result/?q=' + encodeURIComponent(query);
+            return true;
+        } else {
+            e.preventDefault();
+            return false;
         }
     });
 }

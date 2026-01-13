@@ -7,6 +7,13 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
+    background-color: transparent;
+    box-shadow: none;
+    transition: all 0.4s ease;
+}
+
+/* Header when scrolled */
+header.scrolled {
     background-color: var(--white);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
@@ -30,14 +37,15 @@ header {
     padding: 15px 0;
 }
 
-/* When scrolled - hide completely */
+/* When scrolled - keep visible with smaller padding */
 header.scrolled .header-top-row {
-    display: none !important;
+    padding: 10px 0;
 }
 
-/* Ensure top cart button is hidden when scrolled */
-header.scrolled #cartBtn {
-    display: none !important;
+/* Keep logo smaller when scrolled */
+header.scrolled .header-logo {
+    height: 50px;
+    transition: height 0.4s ease;
 }
 
 /* Logo */
@@ -71,14 +79,17 @@ header.scrolled #cartBtn {
 
 /* Navigation */
 .header-nav {
-    padding: 12px 0;
-    border-top: 1px solid #f0f0f0;
+    padding: 0;
+    border-top: none;
     transition: all 0.4s ease;
 }
 
-header.scrolled .header-nav {
-    padding: 15px 0;
-    border-top: none;
+.header-nav .container-fluid {
+    padding: 12px 0;
+}
+
+header.scrolled .header-nav .container-fluid {
+    padding: 0;
 }
 
 /* Navigation Menu */
@@ -110,49 +121,35 @@ header.scrolled .nav-menu {
     grid-column: 2;
 }
 
-/* Logo in Navigation (Hidden before scroll) */
+/* Logo in Navigation (Always hidden - logo stays at top) */
 .nav-logo-placeholder {
-    display: none;
+    display: none !important;
 }
 
 header.scrolled .nav-logo-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: none !important;
 }
 
-.nav-logo-placeholder .header-logo {
-    height: 55px;
-    width: auto;
-}
-
-/* Scrolled Icons - Hidden before scroll */
+/* Scrolled Icons - Always hidden (icons stay at top) */
 .header-scrolled-icons-left,
 .header-scrolled-icons-right {
     display: none !important;
-    gap: 25px;
-    align-items: center;
 }
 
 header.scrolled .header-scrolled-icons-left {
-    display: flex !important;
-    grid-column: 1;
-    justify-content: flex-start;
-}
-
-header.scrolled .header-scrolled-icons-right {
-    display: flex !important;
-    grid-column: 3;
-    justify-content: flex-end;
-}
-
-/* Ensure scrolled cart button is hidden when not scrolled */
-#cartBtnScrolled {
     display: none !important;
 }
 
-header.scrolled #cartBtnScrolled {
-    display: inline-flex !important;
+header.scrolled .header-scrolled-icons-right {
+    display: none !important;
+}
+
+/* Ensure scrolled cart button is always hidden */
+#cartBtnScrolled,
+#searchBtnScrolled,
+#langSwitcherScrolled,
+#accountScrolled {
+    display: none !important;
 }
 
 /* ==================== NAVIGATION LINKS ==================== */
@@ -162,7 +159,7 @@ header.scrolled #cartBtnScrolled {
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--text-dark);
+    color: #000;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
@@ -182,7 +179,7 @@ header.scrolled #cartBtnScrolled {
     font-weight: 500;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--text-dark);
+    color: #000;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -195,6 +192,10 @@ header.scrolled #cartBtnScrolled {
     color: var(--primary-gold);
 }
 
+.icon-link-custom svg {
+    stroke: #000;
+}
+
 .icon-link-custom svg,
 .icon-link-custom i {
     width: 20px;
@@ -203,10 +204,14 @@ header.scrolled #cartBtnScrolled {
 }
 
 /* Cart Badge */
+.icon-link-custom {
+    position: relative;
+}
+
 .cart-count {
     position: absolute;
-    top: -5px;
-    left: 10px;
+    top: -8px;
+    right: -8px;
     background-color: var(--primary-gold);
     color: var(--white);
     font-size: 9px;
