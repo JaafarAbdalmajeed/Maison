@@ -32,7 +32,12 @@ header {
 
 /* When scrolled - hide completely */
 header.scrolled .header-top-row {
-    display: none;
+    display: none !important;
+}
+
+/* Ensure top cart button is hidden when scrolled */
+header.scrolled #cartBtn {
+    display: none !important;
 }
 
 /* Logo */
@@ -124,21 +129,30 @@ header.scrolled .nav-logo-placeholder {
 /* Scrolled Icons - Hidden before scroll */
 .header-scrolled-icons-left,
 .header-scrolled-icons-right {
-    display: none;
+    display: none !important;
     gap: 25px;
     align-items: center;
 }
 
 header.scrolled .header-scrolled-icons-left {
-    display: flex;
+    display: flex !important;
     grid-column: 1;
     justify-content: flex-start;
 }
 
 header.scrolled .header-scrolled-icons-right {
-    display: flex;
+    display: flex !important;
     grid-column: 3;
     justify-content: flex-end;
+}
+
+/* Ensure scrolled cart button is hidden when not scrolled */
+#cartBtnScrolled {
+    display: none !important;
+}
+
+header.scrolled #cartBtnScrolled {
+    display: inline-flex !important;
 }
 
 /* ==================== NAVIGATION LINKS ==================== */
