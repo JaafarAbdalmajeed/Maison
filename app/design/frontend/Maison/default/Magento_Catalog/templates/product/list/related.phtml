@@ -1,0 +1,211 @@
+<?php
+/**
+ * Related Products Template - Custom Design
+ * @var \Magento\Catalog\Block\Product\ProductList\Related $block
+ */
+$_items = $block->getItems();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+$priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+$type = 'related';
+
+if (!$_items->count()) {
+    return;
+}
+?>
+
+<!-- Related Products Section -->
+<section class="related-products-section">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h2 class="section-title"><?= __('You May Also Like') ?></h2>
+            <p class="section-subtitle"><?= __('Curated selections to complement your choice') ?></p>
+        </div>
+
+        <div class="position-relative">
+            <div class="carousel-nav carousel-prev" onclick="scrollRelatedProducts(-1)">‹</div>
+            <div class="carousel-nav carousel-next" onclick="scrollRelatedProducts(1)">›</div>
+
+            <div class="products-carousel" id="relatedProductsCarousel">
+                <?php foreach ($_items as $_item):
+                    $productUrl = $_item->getProductUrl();
+                    $productName = $block->escapeHtml($_item->getName());
+
+                    // Get product image
+                    $imageUrl = '';
+                    try {
+                        $imageUrl = $imageHelper->init($_item, 'product_page_image_small')->getUrl();
+                    } catch (\Exception $e) {
+                        $imageUrl = $imageHelper->getDefaultPlaceholderUrl('small_image');
+                    }
+
+                    // Get manufacturer/brand
+                    $manufacturer = $_item->getAttributeText('manufacturer') ?: '';
+
+                    // Get price
+                    $priceHtml = $block->getProductPrice($_item);
+
+                    // Get description
+                    $description = $_item->getShortDescription() ? strip_tags($_item->getShortDescription()) : '';
+                    if (strlen($description) > 120) {
+                        $description = substr($description, 0, 120) . '...';
+                    }
+
+                    // Get badge
+                    $badge = '';
+                    try {
+                        if ($_item->getData('new')) {
+                            $badge = 'NEW';
+                        } elseif ($_item->getData('bestseller')) {
+                            $badge = 'BEST SELLER';
+                        }
+                    } catch (\Exception $e) {
+                        // No badge
+                    }
+                ?>
+
+                <div class="product-card"
+                     data-brand="<?= $block->escapeHtmlAttr($manufacturer) ?>"
+                     data-name="<?= $block->escapeHtmlAttr($productName) ?>"
+                     data-price="<?= $block->escapeHtmlAttr($priceHtml) ?>"
+                     data-image="<?= $block->escapeUrl($imageUrl) ?>"
+                     data-badge="<?= $block->escapeHtmlAttr($badge) ?>"
+                     data-description="<?= $block->escapeHtmlAttr($description) ?>">
+                    <div class="product-image-wrapper">
+                        <a href="<?= $block->escapeUrl($productUrl) ?>">
+                            <img src="<?= $block->escapeUrl($imageUrl) ?>"
+                                 alt="<?= $productName ?>"
+                                 class="product-image">
+                        </a>
+                        <?php if ($badge): ?>
+                            <div class="product-badge"><?= $block->escapeHtml(__($badge)) ?></div>
+                        <?php endif; ?>
+                        <a href="<?= $block->escapeUrl($productUrl) ?>" class="product-quick-view">
+                            <?= __('QUICK VIEW') ?>
+                        </a>
+                    </div>
+                    <div class="product-info">
+                        <?php if ($manufacturer): ?>
+                            <div class="product-brand mb-2"><?= $block->escapeHtml($manufacturer) ?></div>
+                        <?php endif; ?>
+                        <div class="product-details-row">
+                            <button class="product-add-to-cart"
+                                    onclick="addToCartFromRelated(<?= (int)$_item->getId() ?>, '<?= $block->escapeJs($productName) ?>'); return false;">
+                                <i data-feather="shopping-bag"></i>
+                                <span><?= __('ADD TO CART') ?></span>
+                            </button>
+                            <div>
+                                <h3 class="product-name mb-2">
+                                    <a href="<?= $block->escapeUrl($productUrl) ?>">
+                                        <?= $productName ?>
+                                    </a>
+                                </h3>
+                                <div class="product-price"><?= /* @noEscape */ $priceHtml ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+require(['jquery', 'mage/url', 'Magento_Customer/js/customer-data', 'Magento_Ui/js/modal/alert'], function($, urlBuilder, customerData, alert) {
+    'use strict';
+
+    // Scroll related products carousel
+    window.scrollRelatedProducts = function(direction) {
+        var carousel = document.getElementById('relatedProductsCarousel');
+        if (!carousel) return;
+
+        var scrollAmount = 300;
+        carousel.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    // Add to cart from related products
+    window.addToCartFromRelated = function(productId, productName) {
+        if (!productId) return;
+
+        var addUrl = urlBuilder.build('checkout/cart/add');
+        var formKey = $('input[name="form_key"]').val();
+
+        if (!formKey) {
+            // Try to get from cookie
+            var formKeyInput = $('[name="form_key"]').first();
+            if (formKeyInput.length) {
+                formKey = formKeyInput.val();
+            }
+        }
+
+        // Show loading
+        $('body').trigger('processStart');
+
+        $.ajax({
+            url: addUrl,
+            type: 'POST',
+            data: {
+                product: productId,
+                form_key: formKey,
+                qty: 1
+            },
+            dataType: 'json',
+            success: function(response) {
+                $('body').trigger('processStop');
+
+                if (response.backUrl || !response.error) {
+                    // Success
+                    alert({
+                        title: $.mage.__('Success'),
+                        content: $.mage.__('You added %1 to your shopping cart.').replace('%1', productName),
+                        actions: {
+                            always: function(){}
+                        }
+                    });
+
+                    // Reload cart section
+                    var sections = ['cart'];
+                    customerData.invalidate(sections);
+                    customerData.reload(sections, true);
+
+                    // Trigger cart update events
+                    $('body').trigger('updateMiniCart');
+                    $(document).trigger('ajax:addToCart', {productIds: [productId]});
+                    $('[data-block="minicart"]').trigger('contentUpdated');
+                } else {
+                    // Error
+                    alert({
+                        title: $.mage.__('Error'),
+                        content: response.message || $.mage.__('Could not add product to cart.'),
+                        actions: {
+                            always: function(){}
+                        }
+                    });
+                }
+            },
+            error: function() {
+                $('body').trigger('processStop');
+                alert({
+                    title: $.mage.__('Error'),
+                    content: $.mage.__('An error occurred. Please try again.'),
+                    actions: {
+                        always: function(){}
+                    }
+                });
+            }
+        });
+    };
+
+    // Initialize feather icons for related products
+    setTimeout(function() {
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    }, 500);
+});
+</script>

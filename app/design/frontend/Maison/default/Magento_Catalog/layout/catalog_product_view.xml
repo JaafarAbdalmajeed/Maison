@@ -43,9 +43,16 @@
         
         <!-- Move related products after product.info.details -->
         <move element="catalog.product.related" destination="product.view.wrapper" after="product.info.details" />
-        
+
         <!-- Move upsell products after related -->
         <move element="product.info.upsell" destination="product.view.wrapper" after="catalog.product.related" />
+
+        <!-- Use custom template for related products -->
+        <referenceBlock name="catalog.product.related">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Magento_Catalog::product/list/related.phtml</argument>
+            </action>
+        </referenceBlock>
         
         <!-- Ensure product media gallery is properly configured -->
         <referenceBlock name="product.info.media">

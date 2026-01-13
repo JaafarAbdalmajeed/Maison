@@ -51,12 +51,96 @@ if (!$actionUrl || !$productId) {
     
     <!-- Product Options Section -->
     <div class="product-options-section">
+        <?php
+        // Get configurable product options (color, size, etc.)
+        $configurableOptions = [];
+        if ($_product->getTypeId() === 'configurable'):
+            try {
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $productTypeInstance = $_product->getTypeInstance();
+                $productTypeInstance->setStoreFilter($_product->getStoreId(), $_product);
+                $configurableAttributesData = $productTypeInstance->getConfigurableAttributesAsArray($_product);
+
+                foreach ($configurableAttributesData as $attrData):
+                    $configurableOptions[$attrData['attribute_code']] = $attrData;
+                endforeach;
+            } catch (\Exception $e) {
+                // Configurable options not available
+            }
+        endif;
+
+        // Color Selection
+        if (isset($configurableOptions['color']) || $_product->getResource()->getAttribute('color')): ?>
+            <div class="option-group-detail">
+                <label class="option-label-detail"><?= __('Color') ?>: <span class="selected-value" id="selectedColor"><?= __('Select Color') ?></span></label>
+                <div class="color-swatches">
+                    <?php
+                    if (isset($configurableOptions['color'])):
+                        $colorOptions = $configurableOptions['color']['values'];
+                        $firstColor = true;
+                        foreach ($colorOptions as $option):
+                            $colorCode = $option['swatch_value'] ?? '#CCCCCC';
+                            $colorLabel = $block->escapeHtml($option['label']);
+                            $activeClass = $firstColor ? 'active' : '';
+                            ?>
+                            <button type="button"
+                                    class="color-swatch-btn <?= $activeClass ?>"
+                                    data-color="<?= $colorLabel ?>"
+                                    data-option-id="<?= $option['value_index'] ?>"
+                                    style="background-color: <?= $colorCode ?>;"
+                                    title="<?= $colorLabel ?>"></button>
+                            <?php
+                            $firstColor = false;
+                        endforeach;
+                    else:
+                        // Fallback: show example colors if no configurable options
+                        ?>
+                        <button type="button" class="color-swatch-btn active" data-color="Charcoal" style="background-color: #36454F;"></button>
+                        <button type="button" class="color-swatch-btn" data-color="Beige" style="background-color: #F5F5DC;"></button>
+                        <button type="button" class="color-swatch-btn" data-color="Navy" style="background-color: #000080;"></button>
+                        <button type="button" class="color-swatch-btn" data-color="Emerald" style="background-color: #50C878;"></button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif;
+
+        // Size Selection
+        if (isset($configurableOptions['size']) || $_product->getResource()->getAttribute('size')): ?>
+            <div class="option-group-detail">
+                <label class="option-label-detail"><?= __('Size') ?>: <span class="selected-value" id="selectedSize"><?= __('Select Size') ?></span></label>
+                <div class="size-options">
+                    <?php
+                    if (isset($configurableOptions['size'])):
+                        $sizeOptions = $configurableOptions['size']['values'];
+                        $firstSize = true;
+                        foreach ($sizeOptions as $option):
+                            $sizeLabel = $block->escapeHtml($option['label']);
+                            $activeClass = $firstSize ? 'active' : '';
+                            ?>
+                            <button type="button"
+                                    class="size-btn <?= $activeClass ?>"
+                                    data-size="<?= $sizeLabel ?>"
+                                    data-option-id="<?= $option['value_index'] ?>"><?= $sizeLabel ?></button>
+                            <?php
+                            $firstSize = false;
+                        endforeach;
+                    else:
+                        // Fallback: show example sizes if no configurable options
+                        ?>
+                        <button type="button" class="size-btn" data-size="Compact">Compact</button>
+                        <button type="button" class="size-btn active" data-size="Standard">Standard</button>
+                        <button type="button" class="size-btn" data-size="Oversized">Oversized</button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <?php if ($_product->hasOptions()): ?>
             <div class="product-options-wrapper">
                 <?= $block->getChildHtml('product.info.options') ?>
             </div>
         <?php endif; ?>
-        
+
         <!-- Quantity -->
         <div class="option-group-detail">
             <label class="option-label-detail"><?= __('Quantity') ?></label>
@@ -93,6 +177,26 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
     var productName = '<?= $block->escapeJs($_product->getName()) ?>';
     var productSku = '<?= $block->escapeJs($_product->getSku()) ?>';
     
+    // Color swatch selection
+    $(document).on('click', '.color-swatch-btn', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var colorName = $(this).data('color');
+        $('.color-swatch-btn').removeClass('active');
+        $(this).addClass('active');
+        $('#selectedColor').text(colorName);
+    });
+
+    // Size button selection
+    $(document).on('click', '.size-btn', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var sizeName = $(this).data('size');
+        $('.size-btn').removeClass('active');
+        $(this).addClass('active');
+        $('#selectedSize').text(sizeName);
+    });
+
     // Quantity controls
     $(document).on('click', '#qtyPlus', function(e) {
         e.preventDefault();
@@ -105,7 +209,7 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
             qtyInput.val(currentVal + 1).trigger('change');
         }
     });
-    
+
     $(document).on('click', '#qtyMinus', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -117,6 +221,18 @@ require(['jquery', 'domReady!', 'mage/url', 'Magento_Ui/js/modal/alert', 'Magent
             qtyInput.val(currentVal - 1).trigger('change');
         }
     });
+
+    // Set initial selected values on page load
+    setTimeout(function() {
+        var selectedColor = $('.color-swatch-btn.active').data('color');
+        if (selectedColor) {
+            $('#selectedColor').text(selectedColor);
+        }
+        var selectedSize = $('.size-btn.active').data('size');
+        if (selectedSize) {
+            $('#selectedSize').text(selectedSize);
+        }
+    }, 100);
     
     // Show success message
     function showSuccessMessage(message) {
