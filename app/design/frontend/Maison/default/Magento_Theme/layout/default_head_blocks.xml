@@ -1,85 +1,56 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Maison de Pierre - Head Blocks (Professional Way)
+ * Maison de Pierre - Head Blocks (Simplified and Fixed)
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <!-- Bootstrap 5 -->
-        <css src="css/bootstrap.min.css"/>
-        
         <!-- Google Fonts -->
         <css src="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700;800&amp;family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap" src_type="url"/>
-        
-        <!-- Magento Wrapper Fixes (MUST load before other styles) -->
+
+        <!-- Feather Icons -->
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" src_type="url"/>
+
+        <!-- Bootstrap 5 -->
+        <css src="css/bootstrap.min.css"/>
+
+        <!-- Magento Fixes (MUST load first) -->
         <css src="css/magento-fixes.css"/>
-        
-        <!-- Typography Fix (Override Magento fonts) -->
-        <css src="css/typography-fix.css"/>
-        
+
         <!-- Base Styles -->
         <css src="css/base/variables.css"/>
         <css src="css/base/reset.css"/>
         <css src="css/base/typography.css"/>
-        
+
         <!-- Components -->
         <css src="css/components/loading.css"/>
         <css src="css/components/header.css"/>
+        <css src="css/components/footer.css"/>
         <css src="css/components/buttons.css"/>
         <css src="css/components/mobile-nav.css"/>
-        <css src="css/components/cart.css"/>
         <css src="css/components/search.css"/>
         <css src="css/components/modals.css"/>
-        <css src="css/components/footer.css"/>
-        
+        <css src="css/components/cart.css"/>
+        <css src="css/components/nav-links-enhanced.css"/>
+
         <!-- Pages -->
         <css src="css/pages/home.css"/>
-        <css src="css/pages/404.css"/>
         <css src="css/pages/category.css"/>
-        <css src="css/pages/wishlist.css"/>
-        <css src="css/pages/account.css"/>
-        <css src="css/pages/cms.css"/>
-        <css src="css/pages/brands.css"/>
-        <css src="css/pages/product-enhanced.css"/>
-        <css src="css/pages/category-enhanced.css"/>
-        <css src="css/pages/brands-enhanced.css"/>
-        <css src="css/pages/product-detail-modern.css"/>
-        <css src="css/components/nav-links-enhanced.css"/>
-        <css src="css/pages/product-detail-final.css"/>
-        <!-- Product Detail Custom CSS (from product-detail.css) -->
+        <css src="css/pages/product.css"/>
         <css src="css/pages/product-detail.css"/>
-        
-        <!-- Cart Page Styles (Load new redesign LAST to override old styles) -->
-        <css src="css/pages/cart.css"/>
-        <css src="css/pages/cart-enhanced.css"/>
-        <css src="css/pages/cart-fixed.css"/>
-        <css src="css/pages/cart-redesign.css"/>
-        
-        <!-- Checkout Page Styles (Load new redesign LAST to override old styles) -->
-        <css src="css/pages/checkout.css"/>
-        <css src="css/pages/checkout-redesign.css"/>
-        
-        <!-- About & Contact Page Styles -->
         <css src="css/pages/about.css"/>
-        <css src="css/pages/contact.css"/>
-        
-        <!-- Pages Override (MUST load LAST to ensure new designs override old) -->
-        <css src="css/pages/pages-override.css"/>
-        
+        <css src="css/pages/cart.css"/>
+        <css src="css/pages/checkout.css"/>
+        <css src="css/pages/account.css"/>
+        <css src="css/pages/brands.css"/>
+        <css src="css/pages/wishlist.css"/>
+
         <!-- Responsive -->
         <css src="css/main.css"/>
-        
-        <!-- RTL Support -->
-        <css src="css/rtl.css"/>
-        
-        <!-- Header Scroll Fix (MUST load LAST to override everything!) -->
-        <css src="css/header-scroll-fix.css"/>
-        
-        <!-- Transparent Header Override (FINAL - Maximum Specificity) -->
+
+        <!-- Fixes (MUST load last) -->
+        <css src="css/typography-fix.css"/>
         <css src="css/header-transparent.css"/>
-        
-        <!-- Product Page Fix (MUST load VERY LAST to override everything!) -->
-        <css src="css/pages/product.css"/>
     </head>
 </page>
