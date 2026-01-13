@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Maison de Pierre</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-logo">
+            <img src="images/maison-logo.png" alt="Maison de Pierre" style="height: 80px; display: block; margin: 0 auto;">
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="header-default">
+            <div class="container-fluid px-4 px-lg-5">
+                <div class="row align-items-center mb-3">
+                    <div class="col-4 col-lg-3">
+                        <div class="d-flex gap-3 align-items-center">
+                            <button class="burger-menu d-lg-none" id="burgerMenu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <a href="#" class="icon-link-custom" id="searchBtn">
+                                <i data-feather="search"></i>
+                                <span class="d-none d-lg-inline">SEARCH</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-4 col-lg-6 text-center logo-top">
+                        <a href="index.html">
+                            <img src="images/maison-logo.png" alt="Maison de Pierre" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <div class="d-flex gap-3 justify-content-end align-items-center">
+                            <a href="#" class="icon-link-custom language-toggle d-none d-lg-flex" id="langSwitcher">
+                                <i data-feather="globe"></i>
+                                <span class="d-none d-lg-inline current-lang">EN</span>
+                            </a>
+                            <a href="#" class="icon-link-custom">
+                                <i data-feather="user"></i>
+                                <span class="d-none d-lg-inline">LOGIN</span>
+                            </a>
+                            <a href="#" class="icon-link-custom" id="cartBtn">
+                                <i data-feather="shopping-bag"></i>
+                                <span class="d-none d-lg-inline">CART</span>
+                                <span class="cart-count">2</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="border-top pt-3 d-none d-lg-block">
+                    <ul class="nav justify-content-center gap-3 gap-lg-4">
+                        <li class="nav-item"><a href="index.html" class="nav-link-custom">HOME</a></li>
+                        <li class="nav-item"><a href="#products" class="nav-link-custom">PRODUCTS</a></li>
+                        <li class="nav-item"><a href="#brands" class="nav-link-custom">BRANDS</a></li>
+                        <li class="nav-item"><a href="category.html" class="nav-link-custom">COLLECTIONS</a></li>
+                        <li class="nav-item d-none d-lg-block"><a href="about.html" class="nav-link-custom">ABOUT</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link-custom">CONTACT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-scrolled">
+            <div class="container-fluid px-4 px-lg-5 position-relative">
+                <div class="d-flex align-items-center justify-content-center position-relative">
+                    <a href="#" class="icon-link-custom scrolled-icon position-absolute start-0" id="searchBtnScrolled">
+                        <i data-feather="search"></i>
+                        <span class="d-none d-lg-inline">SEARCH</span>
+                    </a>
+
+                    <nav class="w-100">
+                        <ul class="nav justify-content-center gap-3 gap-lg-4 align-items-center flex-nowrap">
+                            <li class="nav-item"><a href="index.html" class="nav-link-custom">HOME</a></li>
+                            <li class="nav-item"><a href="#products" class="nav-link-custom">PRODUCTS</a></li>
+                            <li class="nav-item"><a href="#brands" class="nav-link-custom">BRANDS</a></li>
+                            <li class="nav-item logo-center mx-3">
+                                <a href="index.html">
+                                    <img src="images/maison-logo.png" alt="Maison de Pierre" class="img-fluid">
+                                </a>
+                            </li>
+                            <li class="nav-item"><a href="category.html" class="nav-link-custom">COLLECTIONS</a></li>
+                            <li class="nav-item d-none d-lg-block"><a href="about.html" class="nav-link-custom">ABOUT</a></li>
+                            <li class="nav-item"><a href="#contact" class="nav-link-custom">CONTACT</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="d-flex gap-3 scrolled-icon right position-absolute end-0 align-items-center">
+                        <a href="#" class="icon-link-custom language-toggle" id="langSwitcherScrolled">
+                            <i data-feather="globe"></i>
+                            <span class="d-none d-lg-inline current-lang">EN</span>
+                        </a>
+                        <a href="#" class="icon-link-custom">
+                            <i data-feather="user"></i>
+                            <span class="d-none d-lg-inline">LOGIN</span>
+                        </a>
+                        <a href="#" class="icon-link-custom" id="cartBtnScrolled">
+                            <i data-feather="shopping-bag"></i>
+                            <span class="d-none d-lg-inline">CART</span>
+                            <span class="cart-count">2</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+        <div class="mobile-nav-panel">
+            <div class="mobile-nav-header">
+                <img src="images/maison-logo.png" alt="Maison de Pierre" style="height: 40px;">
+                <button class="mobile-nav-close" id="mobileNavClose">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="mobile-nav-content">
+                <ul class="mobile-nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="#">NEW ARRIVALS</a></li>
+                    <li><a href="category.html">PRODUCTS</a></li>
+                    <li><a href="#">BRANDS</a></li>
+                    <li><a href="#">COLLECTIONS</a></li>
+                    <li><a href="#">SALE</a></li>
+                </ul>
+            </div>
+            <div class="mobile-nav-footer">
+                <a href="#" class="mobile-lang-switch" id="mobileLangSwitch">
+                    <i data-feather="globe"></i>
+                    <span class="mobile-current-lang">EN</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchClose">
+                <i data-feather="x"></i>
+            </button>
+            <div class="search-content">
+                <h2 class="search-title">What are you looking for?</h2>
+                <form class="search-form" id="searchForm">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search for products, brands, categories..." autocomplete="off">
+                    <button type="button" class="search-clear" id="searchClear">
+                        <i data-feather="x"></i>
+                    </button>
+                </form>
+                <div class="search-suggestions">
+                    <h3 class="suggestions-title">Popular Searches</h3>
+                    <div class="suggestions-tags">
+                        <a href="#" class="suggestion-tag">Velvet Armchair</a>
+                        <a href="#" class="suggestion-tag">Table Lamp</a>
+                        <a href="#" class="suggestion-tag">Dining Table</a>
+                        <a href="#" class="suggestion-tag">Luxury Sofa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumbs -->
+    <section class="breadcrumbs-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Cart</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section" style="padding: 60px 0 120px; background-color: var(--soft-beige);">
+        <div class="container-fluid px-4 px-lg-5">
+
+            <!-- Page Title -->
+            <div class="text-center mb-5">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 600; color: var(--dark-brown); letter-spacing: 2px; text-transform: uppercase;">Secure Checkout</h1>
+                <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-dark); margin-top: 15px;">Complete your purchase securely</p>
+            </div>
+
+            <div class="row g-5">
+                <!-- Checkout Form (Left Side - 60%) -->
+                <div class="col-lg-7">
+
+                    <!-- Shipping Information -->
+                    <div class="checkout-card mb-4" style="background: white; padding: 40px; border: 1px solid var(--light-gray); border-radius: 8px;">
+                        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--dark-brown); margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid var(--light-gray);">
+                            <i data-feather="map-pin" style="width: 24px; height: 24px; margin-right: 10px; color: var(--primary-gold);"></i>
+                            Shipping Address
+                        </h2>
+
+                        <form id="checkoutForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">First Name *</label>
+                                    <input type="text" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">Last Name *</label>
+                                    <input type="text" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">Email Address *</label>
+                                    <input type="email" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">Phone Number *</label>
+                                    <input type="tel" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">Street Address *</label>
+                                    <input type="text" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">City *</label>
+                                    <input type="text" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">Postal Code *</label>
+                                    <input type="text" class="form-control" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--dark-brown); text-transform: uppercase; letter-spacing: 0.5px;">Country *</label>
+                                    <select class="form-select" required style="padding: 12px 15px; border: 1px solid var(--light-gray); border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                        <option value="">Select Country</option>
+                                        <option value="UAE">United Arab Emirates</option>
+                                        <option value="SA">Saudi Arabia</option>
+                                        <option value="US">United States</option>
+                                        <option value="UK">United Kingdom</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Shipping Method -->
+                    <div class="checkout-card mb-4" style="background: white; padding: 40px; border: 1px solid var(--light-gray); border-radius: 8px;">
+                        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--dark-brown); margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid var(--light-gray);">
+                            <i data-feather="truck" style="width: 24px; height: 24px; margin-right: 10px; color: var(--primary-gold);"></i>
+                            Delivery Method
+                        </h2>
+
+                        <div class="shipping-options">
+                            <div class="shipping-option mb-3" style="border: 2px solid var(--primary-gold); background: var(--soft-beige); padding: 20px; border-radius: 8px; cursor: pointer;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <input type="radio" name="shipping" checked style="width: 20px; height: 20px;">
+                                        <div>
+                                            <strong style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--dark-brown);">White Glove Delivery</strong>
+                                            <p style="margin: 5px 0 0; font-size: 14px; color: var(--text-dark);">Professional delivery and setup service</p>
+                                        </div>
+                                    </div>
+                                    <span style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 18px; color: var(--primary-gold);">FREE</span>
+                                </div>
+                            </div>
+
+                            <div class="shipping-option" style="border: 1px solid var(--light-gray); background: white; padding: 20px; border-radius: 8px; cursor: pointer;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <input type="radio" name="shipping" style="width: 20px; height: 20px;">
+                                        <div>
+                                            <strong style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--dark-brown);">Express Delivery</strong>
+                                            <p style="margin: 5px 0 0; font-size: 14px; color: var(--text-dark);">Delivery within 2-3 business days</p>
+                                        </div>
+                                    </div>
+                                    <span style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 18px; color: var(--dark-brown);">$99.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="checkout-card" style="background: white; padding: 40px; border: 1px solid var(--light-gray); border-radius: 8px;">
+                        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--dark-brown); margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid var(--light-gray);">
+                            <i data-feather="credit-card" style="width: 24px; height: 24px; margin-right: 10px; color: var(--primary-gold);"></i>
+                            Payment Method
+                        </h2>
+
+                        <div class="payment-options">
+                            <div class="payment-option mb-3" style="border: 2px solid var(--primary-gold); background: var(--soft-beige); padding: 20px; border-radius: 8px; cursor: pointer;">
+                                <div class="d-flex align-items-center gap-3">
+                                    <input type="radio" name="payment" checked style="width: 20px; height: 20px;">
+                                    <i data-feather="credit-card" style="width: 20px; height: 20px; color: var(--primary-gold);"></i>
+                                    <strong style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--dark-brown);">Credit / Debit Card</strong>
+                                </div>
+                            </div>
+
+                            <div class="payment-option mb-3" style="border: 1px solid var(--light-gray); background: white; padding: 20px; border-radius: 8px; cursor: pointer;">
+                                <div class="d-flex align-items-center gap-3">
+                                    <input type="radio" name="payment" style="width: 20px; height: 20px;">
+                                    <i data-feather="smartphone" style="width: 20px; height: 20px; color: var(--dark-brown);"></i>
+                                    <strong style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--dark-brown);">PayPal</strong>
+                                </div>
+                            </div>
+
+                            <div class="payment-option" style="border: 1px solid var(--light-gray); background: white; padding: 20px; border-radius: 8px; cursor: pointer;">
+                                <div class="d-flex align-items-center gap-3">
+                                    <input type="radio" name="payment" style="width: 20px; height: 20px;">
+                                    <i data-feather="dollar-sign" style="width: 20px; height: 20px; color: var(--dark-brown);"></i>
+                                    <strong style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--dark-brown);">Bank Transfer</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary (Right Side - 40%) -->
+                <div class="col-lg-5">
+                    <div class="order-summary" style="background: white; padding: 40px; border: 1px solid var(--light-gray); border-radius: 8px; position: sticky; top: 150px;">
+                        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--dark-brown); margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid var(--light-gray);">
+                            <i data-feather="shopping-bag" style="width: 24px; height: 24px; margin-right: 10px; color: var(--primary-gold);"></i>
+                            Order Summary
+                        </h2>
+
+                        <!-- Cart Items -->
+                        <div class="cart-items mb-4">
+                            <div class="cart-item d-flex gap-3 mb-3 pb-3" style="border-bottom: 1px solid var(--light-gray);">
+                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&h=120&fit=crop&q=80" alt="Product" style="width: 80px; height: 100px; object-fit: cover; border-radius: 4px;">
+                                <div class="flex-grow-1">
+                                    <h3 style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--dark-brown); margin-bottom: 5px;">Luxor Velvet Armchair</h3>
+                                    <p style="font-size: 14px; color: var(--text-dark); margin-bottom: 5px;">Color: Navy Blue</p>
+                                    <p style="font-size: 14px; color: var(--text-dark); margin-bottom: 10px;">Qty: 1</p>
+                                    <p style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; color: var(--primary-gold);">$3,240.00</p>
+                                </div>
+                            </div>
+
+                            <div class="cart-item d-flex gap-3 mb-3 pb-3" style="border-bottom: 1px solid var(--light-gray);">
+                                <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&h=120&fit=crop&q=80" alt="Product" style="width: 80px; height: 100px; object-fit: cover; border-radius: 4px;">
+                                <div class="flex-grow-1">
+                                    <h3 style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--dark-brown); margin-bottom: 5px;">Marble Side Table</h3>
+                                    <p style="font-size: 14px; color: var(--text-dark); margin-bottom: 5px;">Material: White Marble</p>
+                                    <p style="font-size: 14px; color: var(--text-dark); margin-bottom: 10px;">Qty: 1</p>
+                                    <p style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; color: var(--primary-gold);">$1,890.00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order Totals -->
+                        <div class="order-totals">
+                            <div class="d-flex justify-content-between mb-3" style="padding: 15px 0; border-bottom: 1px solid var(--light-gray);">
+                                <span style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-dark);">Subtotal</span>
+                                <span style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--dark-brown);">$5,130.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3" style="padding: 15px 0; border-bottom: 1px solid var(--light-gray);">
+                                <span style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-dark);">Shipping</span>
+                                <span style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--primary-gold);">FREE</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3" style="padding: 15px 0; border-bottom: 1px solid var(--light-gray);">
+                                <span style="font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-dark);">Tax</span>
+                                <span style="font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--dark-brown);">$256.50</span>
+                            </div>
+                            <div class="d-flex justify-content-between" style="padding: 20px 0;">
+                                <span style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; color: var(--dark-brown);">Total</span>
+                                <span style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--primary-gold);">$5,386.50</span>
+                            </div>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <button class="btn w-100" id="placeOrderBtn" style="background: var(--primary-gold); color: white; padding: 18px; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border: none; border-radius: 4px; transition: all 0.3s ease;">
+                            <i data-feather="lock" style="width: 18px; height: 18px; margin-right: 8px;"></i>
+                            Place Secure Order
+                        </button>
+
+                        <!-- Trust Badges -->
+                        <div class="trust-badges mt-4" style="text-align: center; padding-top: 20px; border-top: 1px solid var(--light-gray);">
+                            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dark);">
+                                    <i data-feather="shield" style="width: 16px; height: 16px; color: var(--primary-gold);"></i>
+                                    Secure Payment
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dark);">
+                                    <i data-feather="truck" style="width: 16px; height: 16px; color: var(--primary-gold);"></i>
+                                    Free Delivery
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dark);">
+                                    <i data-feather="rotate-ccw" style="width: 16px; height: 16px; color: var(--primary-gold);"></i>
+                                    Easy Returns
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--dark-brown); color: white; padding: 80px 0 30px;">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <img src="images/maison-logo.png" alt="Maison de Pierre" style="height: 60px; filter: brightness(0) invert(1); margin-bottom: 20px;">
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.8; margin-top: 20px;">Curating luxury furniture from the world's most prestigious brands since 2010.</p>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 20px;">Quick Links</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 10px;"><a href="index.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Home</a></li>
+                                <li style="margin-bottom: 10px;"><a href="about.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">About Us</a></li>
+                                <li style="margin-bottom: 10px;"><a href="category.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Products</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none;">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 20px;">Customer Service</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 10px;"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none;">Shipping Info</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none;">Returns</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none;">FAQ</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none;">Terms & Conditions</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 20px;">Contact</h3>
+                            <p style="color: rgba(255,255,255,0.8); margin-bottom: 10px;">Email: info@maisondepierre.com</p>
+                            <p style="color: rgba(255,255,255,0.8); margin-bottom: 10px;">Phone: +971 4 123 4567</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <p style="color: rgba(255,255,255,0.6); margin: 0;">&copy; 2024 Maison de Pierre. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+
+    <script>
+        // Place Order Button Functionality
+        document.getElementById('placeOrderBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Get form
+            const form = document.getElementById('checkoutForm');
+
+            // Check if form is valid
+            if (form.checkValidity()) {
+                // Change button text and style
+                const btn = this;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i data-feather="check-circle"></i> Order Placed!';
+                btn.style.background = '#28a745';
+
+                // Re-initialize feather icons
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
+                }
+
+                // Show success message
+                setTimeout(function() {
+                    alert('Thank you for your order! Your order has been placed successfully. We will send you a confirmation email shortly.');
+
+                    // Reset cart count
+                    localStorage.setItem('cartCount', '0');
+
+                    // Redirect to home page
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                // Show validation errors
+                form.reportValidity();
+            }
+        });
+
+        // Payment option selection
+        document.querySelectorAll('.payment-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+
+                // Update styles
+                document.querySelectorAll('.payment-option').forEach(function(opt) {
+                    opt.style.border = '1px solid var(--light-gray)';
+                    opt.style.background = 'white';
+                });
+
+                this.style.border = '2px solid var(--primary-gold)';
+                this.style.background = 'var(--soft-beige)';
+            });
+        });
+
+        // Shipping option selection
+        document.querySelectorAll('.shipping-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+
+                // Update styles
+                document.querySelectorAll('.shipping-option').forEach(function(opt) {
+                    opt.style.border = '1px solid var(--light-gray)';
+                    opt.style.background = 'white';
+                });
+
+                this.style.border = '2px solid var(--primary-gold)';
+                this.style.background = 'var(--soft-beige)';
+            });
+        });
+    </script>
+
+</body>
+</html>
