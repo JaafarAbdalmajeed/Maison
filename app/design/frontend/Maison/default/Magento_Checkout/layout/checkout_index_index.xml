@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Maison de Pierre - Checkout Page Layout
+ * Ensures checkout page loads with proper styling
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="checkout-index-index"/>
+
+        <!-- Ensure checkout container has proper classes -->
+        <referenceContainer name="content">
+            <container name="checkout.container" htmlTag="div" htmlClass="checkout-container">
+                <container name="checkout.container.inner" htmlTag="div" htmlClass="container-fluid px-4 px-lg-5 py-5"/>
+            </container>
+        </referenceContainer>
+
+        <!-- Move checkout root into our container -->
+        <move element="checkout.root" destination="checkout.container.inner" before="-"/>
+    </body>
+</page>
