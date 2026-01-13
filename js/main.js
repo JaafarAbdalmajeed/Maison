@@ -333,6 +333,122 @@
             });
         });
 
+        // ==================== ADD TO CART FUNCTIONALITY ====================
+        const addToCartBtns = document.querySelectorAll('.btn-add-cart-detail, .product-add-to-cart');
+        const cartCountElements = document.querySelectorAll('.cart-count');
+
+        // Get cart count from localStorage
+        function getCartCount() {
+            return parseInt(localStorage.getItem('cartCount') || '0');
+        }
+
+        // Update cart count
+        function updateCartCount(count) {
+            localStorage.setItem('cartCount', count.toString());
+            cartCountElements.forEach(function(el) {
+                el.textContent = count;
+                if (count > 0) {
+                    el.style.display = 'flex';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize cart count on page load
+        updateCartCount(getCartCount());
+
+        // Add to cart button click handler
+        addToCartBtns.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Get quantity if on product detail page
+                let quantity = 1;
+                const qtyInput = document.getElementById('qtyInput');
+                if (qtyInput) {
+                    quantity = parseInt(qtyInput.value) || 1;
+                }
+
+                // Update cart count
+                const currentCount = getCartCount();
+                const newCount = currentCount + quantity;
+                updateCartCount(newCount);
+
+                // Add button animation
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i data-feather="check"></i> ADDED';
+                this.style.background = 'var(--primary-gold)';
+
+                // Re-initialize feather icons
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
+                }
+
+                // Reset button after 2 seconds
+                setTimeout(function() {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    if (typeof feather !== 'undefined') {
+                        feather.replace();
+                    }
+                }, 2000);
+
+                // Show success message (optional)
+                showCartNotification(quantity);
+            });
+        });
+
+        // Show cart notification
+        function showCartNotification(quantity) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'cart-notification';
+            notification.innerHTML = '<i data-feather="check-circle"></i> ' + quantity + ' item(s) added to cart';
+            notification.style.cssText = 'position: fixed; top: 100px; right: 20px; background: var(--primary-gold); color: white; padding: 15px 25px; border-radius: 5px; z-index: 10000; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideInRight 0.3s ease;';
+
+            document.body.appendChild(notification);
+
+            // Re-initialize feather icons
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+
+            // Remove notification after 3 seconds
+            setTimeout(function() {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(function() {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
         // ==================== RE-INITIALIZE FEATHER ICONS ====================
         // Re-initialize feather icons periodically for dynamic content
         setInterval(function() {
