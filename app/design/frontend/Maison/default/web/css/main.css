@@ -624,19 +624,7 @@
         padding-top: 100px !important;
     }
     
-    .product-view {
-        padding: 0 0 60px;
-    }
-    .product-view .page-title-wrapper .page-title {
-        font-size: 32px;
-    }
-    .product-view .product-info-main {
-        padding: 0 20px;
-        margin-top: 30px;
-    }
-    .product-view .product.media {
-        margin-bottom: 30px;
-    }
+    /* Product view styles are in product-view.css - removed to avoid conflicts */
     
     /* Cart Page Responsive */
     .cart-container {

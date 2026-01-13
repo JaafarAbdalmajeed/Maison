@@ -1,11 +1,17 @@
 /* ==================== PRODUCT VIEW PAGE - CLEAN CSS ==================== */
 /* Specific selectors to avoid conflicts with other pages */
+/* This is the ONLY CSS file for product detail pages */
 
 /* ==================== PAGE LAYOUT ==================== */
 body.catalog-product-view #maincontent,
 body.catalog-product-view .page-main {
-    padding-top: 140px;
-    padding-bottom: 60px;
+    padding-top: 140px !important;
+    padding-bottom: 60px !important;
+}
+
+body.scrolled.catalog-product-view #maincontent,
+body.scrolled.catalog-product-view .page-main {
+    padding-top: 120px !important;
 }
 
 body.catalog-product-view .product-view {
@@ -208,7 +214,6 @@ body.catalog-product-view .divider-gold {
     margin: 30px 0;
 }
 
-/* ==================== PRODUCT ACTIONS ==================== */
 /* ==================== PRODUCT ACTIONS ==================== */
 body.catalog-product-view .product-actions-detail {
     display: flex;

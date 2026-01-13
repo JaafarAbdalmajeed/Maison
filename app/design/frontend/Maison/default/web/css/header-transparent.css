@@ -90,25 +90,7 @@ html body .submenu-dropdown:not(:hover) .fullscreen-submenu {
     background-color: var(--primary-gold) !important;
 }
 
-/* ==================== PRODUCT PAGE FIX - FINAL OVERRIDE ==================== */
-/* This ensures product page content starts below header - highest priority */
-/* Target exact DOM elements with maximum specificity */
-html body main#maincontent.page-main,
-html body #maincontent.page-main,
-html body.catalog-product-view main#maincontent.page-main,
-html body.catalog-product-view #maincontent.page-main {
-    padding: 180px 0 0 0 !important; /* top right bottom left */
-    margin-top: 0 !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-html body.scrolled main#maincontent.page-main,
-html body.scrolled #maincontent.page-main,
-html body.scrolled.catalog-product-view main#maincontent.page-main,
-html body.scrolled.catalog-product-view #maincontent.page-main {
-    padding: 120px 0 0 0 !important;
-}
+/* Product page styles are in product-view.css - removed to avoid conflicts */
 
 /* ==================== NAVIGATION LINKS COLOR - ALWAYS BLACK ==================== */
 /* All text and icons are always black, regardless of scroll state */
