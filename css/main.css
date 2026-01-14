@@ -606,7 +606,9 @@
     }
     .products-list .product-item .product-image-container {
         flex: 0 0 100%;
-        max-width: 100%;
+        width: 100%;
+        height: auto;
+    
     }
     
     /* Product Detail Page Responsive */

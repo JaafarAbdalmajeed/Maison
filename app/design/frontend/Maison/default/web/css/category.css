@@ -2,8 +2,10 @@
 
 /* ==================== CATEGORY HEADER/BANNER ==================== */
 .category-header {
-    margin-top: 170px;
+    margin-top: 0px;
     margin-bottom: 0;
+    height: 100vh;
+
 }
 
 .category-banner {
@@ -837,7 +839,9 @@
 /* Tablet */
 @media (max-width: 1199px) {
     .category-header {
-        margin-top: 150px;
+        margin-top: 0px;
+        height: 100vh;
+
     }
     
     .category-banner {
@@ -934,7 +938,9 @@
 /* Mobile */
 @media (max-width: 767px) {
     .category-header {
-        margin-top: 90px;
+        margin-top: 0px;
+        height: 100vh;
+
     }
     
     .category-banner {
