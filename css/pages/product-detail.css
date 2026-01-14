@@ -125,6 +125,13 @@
     stroke: var(--white);
 }
 
+/* Product Image Container 2 */
+.product-image-container-2 {
+    width: 100% !important;
+    height: auto;
+    aspect-ratio: 240 / 300;
+}
+
 /* Thumbnails Gallery */
 .thumbnails-gallery {
     position: relative;
