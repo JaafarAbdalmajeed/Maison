@@ -191,6 +191,13 @@ body.catalog-product-view .column.main .product-view,
     visibility: visible !important;
 }
 
+@media screen and (min-width: 768px), print {
+    .page-layout-1column .product-info-main {
+        width: 100%;
+        height: auto;
+    }
+}
+
 @media (max-width: 991px) {
     .product-view .product-info-main,
     .product-view .product-info-column {

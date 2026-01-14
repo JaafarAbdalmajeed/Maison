@@ -89,7 +89,9 @@
 
 /* ==================== PRODUCT IMAGE ENHANCED ==================== */
 .cart.table-wrapper .product-image-container {
-    width: 140px;
+    width: 100%;
+    height: auto;
+
     position: relative;
     overflow: hidden;
     border: 1px solid var(--light-gray);
@@ -100,6 +102,9 @@
 .cart.table-wrapper .product-image-container:hover {
     border-color: var(--primary-gold);
     transform: scale(1.05);
+    width: 100%;
+    height: auto;
+
 }
 
 .cart.table-wrapper .product-image-photo {
@@ -111,6 +116,9 @@
 
 .cart.table-wrapper .product-image-container:hover .product-image-photo {
     transform: scale(1.1);
+    width: 100%;
+    height: auto;
+
 }
 
 /* ==================== PRODUCT INFO ENHANCED ==================== */
@@ -846,8 +854,9 @@
     }
     
     .cart.table-wrapper .product-image-container {
-        width: 100px;
-    }
+        width: 100%;
+        height: auto;
+        }
     
     .cart.table-wrapper .qty {
         width: 50px;

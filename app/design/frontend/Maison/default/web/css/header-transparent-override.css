@@ -9,7 +9,7 @@ body header {
     background-color: transparent !important;
     background-image: none !important;
     box-shadow: none !important;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(3px);
 }
 
 /* When scrolled - add white background */
@@ -35,15 +35,17 @@ body header .container-fluid {
     background-image: none !important;
 }
 
-/* Ensure nav items are visible with black color and shadow for contrast */
-body header .nav-link-custom,
-body header .icon-link-custom {
-    color: #000 !important;
-    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+/* Ensure nav items are visible with white color when at top */
+body header:not(.scrolled) .nav-link-custom,
+body header:not(.scrolled) .icon-link-custom {
+    color: #fff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* Black color when scrolled */
 body header.scrolled .nav-link-custom,
 body header.scrolled .icon-link-custom {
+    color: #000 !important;
     text-shadow: none;
 }
 
@@ -54,12 +56,14 @@ body header .header-nav {
     border: none !important;
 }
 
-/* Ensure SVG icons are visible */
-body header .icon-link-custom svg {
-    stroke: #000 !important;
-    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.5));
+/* Ensure SVG icons are visible - white when at top */
+body header:not(.scrolled) .icon-link-custom svg {
+    stroke: #fff !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
+/* Black SVG icons when scrolled */
 body header.scrolled .icon-link-custom svg {
+    stroke: #000 !important;
     filter: none;
 }

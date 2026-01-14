@@ -1193,6 +1193,9 @@ section {
 .product-detail-section,
 .product-tabs-section {
     padding: 0;
+    height: 100vh;
+    
+
 }
 
 .section-header {

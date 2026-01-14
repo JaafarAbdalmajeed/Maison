@@ -34,8 +34,6 @@ header::before {
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -1;
@@ -933,7 +931,6 @@ html body header .header-top-row {
     left: auto !important;
     top: auto !important;
     width: auto !important;
-    max-width: none !important;
 }
 
 /* Force header nav visibility on desktop */

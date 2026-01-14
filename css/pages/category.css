@@ -142,6 +142,8 @@
 .category-header {
     margin-bottom: 0;
     margin-top: 170px;
+    height: 100vh;
+
 }
 
 .category-banner {
@@ -1017,6 +1019,8 @@
     
     .category-header {
         margin-bottom: 0 !important;
+        height: 100vh;
+
     }
     
     /* Hide desktop filter sidebar on mobile/tablet */
@@ -1064,7 +1068,9 @@
 
 @media (max-width: 767px) {
     .category-header {
-        margin-top: 67px;
+        margin-top: 0px;
+        height: 100vh;
+
     }
 
     .breadcrumbs-section {

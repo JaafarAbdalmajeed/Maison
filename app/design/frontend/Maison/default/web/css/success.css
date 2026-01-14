@@ -1,10 +1,48 @@
 /* ==================== SUCCESS PAGE STYLES ==================== */
 
+/* Ensure success page content is visible */
+body.checkout-onepage-success .page-main,
+body.checkout-onepage-success #maincontent,
+body.checkout-onepage-success .page-main .columns,
+body.checkout-onepage-success .column.main {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+body.checkout-onepage-success .page-main,
+body.checkout-onepage-success #maincontent {
+    padding-top: 180px !important;
+    padding-bottom: 60px !important;
+}
+
+body.scrolled.checkout-onepage-success .page-main,
+body.scrolled.checkout-onepage-success #maincontent {
+    padding-top: 120px !important;
+}
+
+/* Hide loading screen on success page */
+body.checkout-onepage-success .loading-screen,
+body.checkout-onepage-success #loadingScreen {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Ensure placeholder doesn't hide success content */
+body.checkout-onepage-success .placeholder,
+body.checkout-onepage-success [data-role="checkout-loader"] {
+    display: none !important;
+}
+
 .success-section {
     padding: 100px 0;
     background: var(--soft-beige);
     min-height: calc(100vh - 200px);
-    margin-top: 180px;
+    margin-top: 0;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .success-content-wrapper {

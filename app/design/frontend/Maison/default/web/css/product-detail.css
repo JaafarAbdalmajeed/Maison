@@ -43,6 +43,7 @@
 /* Product Detail Section */
 .product-detail-section {
     padding: 80px 0;
+    margin-top: 100px;
     background-color: var(--white);
 }
 
@@ -1079,6 +1080,8 @@
     
     .product-detail-section {
         padding: 40px 0;
+        margin-top: 100px;
+
     }
     
     .product-images-gallery {
@@ -1121,6 +1124,8 @@
     
     .product-detail-section {
         padding: 30px 0;
+        margin-top: 100px;
+
     }
     
     .main-image-container {

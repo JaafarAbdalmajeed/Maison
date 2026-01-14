@@ -825,7 +825,7 @@
     
     main.col-lg-9 {
         
-        max-width: 100%;
+        max-width: 100% !important;
     }
     
     .category-content .row {

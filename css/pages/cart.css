@@ -50,7 +50,9 @@
 
 /* Product Image */
 .cart.table-wrapper .product-image-container {
-    width: 120px;
+    width: 100%;
+    height: auto;
+
 }
 
 .cart.table-wrapper .product-image-photo {
