@@ -148,7 +148,8 @@
 
 .category-banner {
     position: relative;
-    height: 350px;
+    height: 100vh !important;
+
     overflow: hidden;
 }
 
@@ -164,6 +165,7 @@
     top: 0;
     left: 0;
     right: 0;
+    height: 100vh !important;
     bottom: 0;
     background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
     display: flex;
@@ -1084,7 +1086,8 @@
     }
     
     .category-banner {
-        height: 220px;
+        height: 100vh !important;
+
     }
     
     .category-title {

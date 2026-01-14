@@ -10,7 +10,8 @@
 
 .category-banner {
     position: relative;
-    height: 500px;
+    height: 100vh !important;
+
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -22,6 +23,7 @@
     top: 0;
     left: 0;
     right: 0;
+    height: 100vh !important;
     bottom: 0;
     background: linear-gradient(135deg, rgba(44, 36, 32, 0.7), rgba(44, 36, 32, 0.5));
     display: flex;
@@ -679,7 +681,8 @@
 
 @media (max-width: 991.98px) {
     .category-banner {
-        height: 400px;
+        height: 100vh !important;
+
         background-attachment: scroll;
     }
 
@@ -722,7 +725,8 @@
 
 @media (max-width: 767.98px) {
     .category-banner {
-        height: 350px;
+        height: 100vh !important;
+
     }
 
     .category-title {
